@@ -1,0 +1,820 @@
+{
+  "thesis": "B",
+  "title": "Tidal Triggering of Great Earthquakes",
+  "generated": "2026-04-02T22:32:01.044161+00:00",
+  "catalog": {
+    "source": "USGS FDSNWS",
+    "startYear": 1960,
+    "endYear": 2026,
+    "totalRawEvents": 902,
+    "subductionEvents": 536,
+    "afterDeclustering": {
+      "standard": 390,
+      "extended": 317,
+      "allSettings": 707
+    }
+  },
+  "methodology": {
+    "primaryMagThreshold": 7.5,
+    "syzygyWindowDays": 3,
+    "alpha": 0.01,
+    "declustering": "Gardner-Knopoff (standard + 1.5x extended)",
+    "tidalComputation": "Meeus lunar phase algorithm (sub-degree accuracy)",
+    "nullExpectation": 0.4064,
+    "bonferroniAlpha": 0.0025
+  },
+  "results": {
+    "primary": {
+      "label": "PRIMARY",
+      "magThreshold": 7.5,
+      "windowDays": 3,
+      "n": 147,
+      "syzygyCount": 52,
+      "quadratureCount": 54,
+      "neutralCount": 41,
+      "expectedFraction": 0.4064,
+      "observedFraction": 0.3537,
+      "rateRatio": 0.871,
+      "pValue": 0.917509,
+      "ci95": [
+        0.0,
+        1.0
+      ]
+    },
+    "permutation": {
+      "pValue": 0.912709,
+      "observedSyzygy": 52,
+      "n": 147,
+      "nPermutations": 10000
+    },
+    "magnitudeSweep": [
+      {
+        "label": "M7.0+",
+        "magThreshold": 7.0,
+        "windowDays": 3,
+        "n": 390,
+        "syzygyCount": 161,
+        "quadratureCount": 145,
+        "neutralCount": 84,
+        "expectedFraction": 0.4064,
+        "observedFraction": 0.4128,
+        "rateRatio": 1.016,
+        "pValue": 0.416318,
+        "ci95": [
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "label": "M7.5+",
+        "magThreshold": 7.5,
+        "windowDays": 3,
+        "n": 147,
+        "syzygyCount": 52,
+        "quadratureCount": 54,
+        "neutralCount": 41,
+        "expectedFraction": 0.4064,
+        "observedFraction": 0.3537,
+        "rateRatio": 0.871,
+        "pValue": 0.917509,
+        "ci95": [
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "label": "M8.0+",
+        "magThreshold": 8.0,
+        "windowDays": 3,
+        "n": 40,
+        "syzygyCount": 19,
+        "quadratureCount": 12,
+        "neutralCount": 9,
+        "expectedFraction": 0.4064,
+        "observedFraction": 0.475,
+        "rateRatio": 1.169,
+        "pValue": 0.233585,
+        "ci95": [
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "label": "M8.5+",
+        "magThreshold": 8.5,
+        "windowDays": 3,
+        "n": 8,
+        "syzygyCount": 4,
+        "quadratureCount": 3,
+        "neutralCount": 1,
+        "expectedFraction": 0.4064,
+        "observedFraction": 0.5,
+        "rateRatio": 1.23,
+        "pValue": 0.420717,
+        "ci95": [
+          0.5,
+          0.5
+        ]
+      }
+    ],
+    "bonferroniAlpha": 0.0025,
+    "windowSweep": [
+      {
+        "label": "\u00b11d",
+        "magThreshold": 7.5,
+        "windowDays": 1,
+        "n": 147,
+        "syzygyCount": 23,
+        "quadratureCount": 16,
+        "neutralCount": 108,
+        "expectedFraction": 0.1355,
+        "observedFraction": 0.1565,
+        "rateRatio": 1.155,
+        "pValue": 0.260538,
+        "ci95": [
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "label": "\u00b12d",
+        "magThreshold": 7.5,
+        "windowDays": 2,
+        "n": 147,
+        "syzygyCount": 39,
+        "quadratureCount": 35,
+        "neutralCount": 73,
+        "expectedFraction": 0.2709,
+        "observedFraction": 0.2653,
+        "rateRatio": 0.979,
+        "pValue": 0.59173,
+        "ci95": [
+          0.0,
+          1.0
+        ]
+      },
+      {
+        "label": "\u00b13d",
+        "magThreshold": 7.5,
+        "windowDays": 3,
+        "n": 147,
+        "syzygyCount": 52,
+        "quadratureCount": 54,
+        "neutralCount": 41,
+        "expectedFraction": 0.4064,
+        "observedFraction": 0.3537,
+        "rateRatio": 0.871,
+        "pValue": 0.917509,
+        "ci95": [
+          0.0,
+          1.0
+        ]
+      }
+    ],
+    "robustExtended": {
+      "label": "EXTENDED_DECLUSTER",
+      "magThreshold": 7.5,
+      "windowDays": 3,
+      "n": 128,
+      "syzygyCount": 47,
+      "quadratureCount": 50,
+      "neutralCount": 31,
+      "expectedFraction": 0.4064,
+      "observedFraction": 0.3672,
+      "rateRatio": 0.904,
+      "pValue": 0.839453,
+      "ci95": [
+        0.0,
+        1.0
+      ]
+    },
+    "robustAllSettings": {
+      "label": "ALL_SETTINGS",
+      "magThreshold": 7.5,
+      "windowDays": 3,
+      "n": 240,
+      "syzygyCount": 98,
+      "quadratureCount": 83,
+      "neutralCount": 59,
+      "expectedFraction": 0.4064,
+      "observedFraction": 0.4083,
+      "rateRatio": 1.005,
+      "pValue": 0.499723,
+      "ci95": [
+        0.0,
+        1.0
+      ]
+    },
+    "temporalSplit": {
+      "pre1990": {
+        "label": "PRE-1990",
+        "magThreshold": 7.5,
+        "windowDays": 3,
+        "n": 52,
+        "syzygyCount": 19,
+        "quadratureCount": 14,
+        "neutralCount": 19,
+        "expectedFraction": 0.4064,
+        "observedFraction": 0.3654,
+        "rateRatio": 0.899,
+        "pValue": 0.769794,
+        "ci95": [
+          0.0,
+          1.0
+        ]
+      },
+      "post1990": {
+        "label": "POST-1990",
+        "magThreshold": 7.5,
+        "windowDays": 3,
+        "n": 95,
+        "syzygyCount": 33,
+        "quadratureCount": 40,
+        "neutralCount": 22,
+        "expectedFraction": 0.4064,
+        "observedFraction": 0.3474,
+        "rateRatio": 0.855,
+        "pValue": 0.899737,
+        "ci95": [
+          0.0,
+          1.0
+        ]
+      }
+    },
+    "syzygyDetail": {
+      "syzygyCount": 52,
+      "quadratureCount": 54,
+      "newMoonHits": 27,
+      "fullMoonHits": 25,
+      "ratio": 0.96
+    },
+    "zoneBreakdown": [
+      {
+        "zone": "Chile-Peru",
+        "total": 31,
+        "syzygy": 15,
+        "fraction": 0.484
+      },
+      {
+        "zone": "Tonga-Kermadec",
+        "total": 15,
+        "syzygy": 6,
+        "fraction": 0.4
+      },
+      {
+        "zone": "Solomon Islands",
+        "total": 15,
+        "syzygy": 3,
+        "fraction": 0.2
+      },
+      {
+        "zone": "Central America",
+        "total": 13,
+        "syzygy": 4,
+        "fraction": 0.308
+      },
+      {
+        "zone": "Japan Trench",
+        "total": 12,
+        "syzygy": 5,
+        "fraction": 0.417
+      },
+      {
+        "zone": "New Hebrides",
+        "total": 12,
+        "syzygy": 2,
+        "fraction": 0.167
+      },
+      {
+        "zone": "Kuril-Kamchatka",
+        "total": 11,
+        "syzygy": 5,
+        "fraction": 0.455
+      },
+      {
+        "zone": "Sumatra-Java",
+        "total": 11,
+        "syzygy": 5,
+        "fraction": 0.455
+      },
+      {
+        "zone": "Alaska-Aleutian",
+        "total": 8,
+        "syzygy": 4,
+        "fraction": 0.5
+      },
+      {
+        "zone": "Philippine",
+        "total": 7,
+        "syzygy": 2,
+        "fraction": 0.286
+      },
+      {
+        "zone": "Izu-Bonin-Mariana",
+        "total": 6,
+        "syzygy": 1,
+        "fraction": 0.167
+      },
+      {
+        "zone": "Ryukyu",
+        "total": 2,
+        "syzygy": 0,
+        "fraction": 0.0
+      },
+      {
+        "zone": "Nankai",
+        "total": 1,
+        "syzygy": 0,
+        "fraction": 0.0
+      },
+      {
+        "zone": "Puerto Rico",
+        "total": 1,
+        "syzygy": 0,
+        "fraction": 0.0
+      },
+      {
+        "zone": "Andaman",
+        "total": 1,
+        "syzygy": 0,
+        "fraction": 0.0
+      },
+      {
+        "zone": "Makran",
+        "total": 1,
+        "syzygy": 0,
+        "fraction": 0.0
+      }
+    ],
+    "hitEvents": [
+      {
+        "date": "1960-05-22 19:11 UTC",
+        "mag": 9.5,
+        "place": "1960 Great Chilean Earthquake (Valdivia Earthquake)",
+        "zone": "Chile-Peru",
+        "phase": 331.7,
+        "tidalType": "new_moon",
+        "distFromSyzygy_deg": 28.3
+      },
+      {
+        "date": "1964-03-28 03:36 UTC",
+        "mag": 9.2,
+        "place": "The 1964 Prince William Sound, Alaska Earthquake",
+        "zone": "Alaska-Aleutian",
+        "phase": 184.6,
+        "tidalType": "full_moon",
+        "distFromSyzygy_deg": 4.6
+      },
+      {
+        "date": "2004-12-26 00:58 UTC",
+        "mag": 9.1,
+        "place": "2004 Sumatra - Andaman Islands Earthquake",
+        "zone": "Sumatra-Java",
+        "phase": 173.8,
+        "tidalType": "full_moon",
+        "distFromSyzygy_deg": 6.2
+      },
+      {
+        "date": "2010-02-27 06:34 UTC",
+        "mag": 8.8,
+        "place": "2010 Maule, Chile Earthquake",
+        "zone": "Chile-Peru",
+        "phase": 163.9,
+        "tidalType": "full_moon",
+        "distFromSyzygy_deg": 16.1
+      },
+      {
+        "date": "2001-06-23 20:33 UTC",
+        "mag": 8.4,
+        "place": "6 km SSW of Atico, Peru",
+        "zone": "Chile-Peru",
+        "phase": 28.9,
+        "tidalType": "new_moon",
+        "distFromSyzygy_deg": 28.9
+      },
+      {
+        "date": "2007-09-12 11:10 UTC",
+        "mag": 8.4,
+        "place": "122 km SW of Bengkulu, Indonesia",
+        "zone": "Sumatra-Java",
+        "phase": 10.4,
+        "tidalType": "new_moon",
+        "distFromSyzygy_deg": 10.4
+      },
+      {
+        "date": "1994-10-04 13:22 UTC",
+        "mag": 8.3,
+        "place": "48 km E of Shikotan, Russia",
+        "zone": "Japan Trench",
+        "phase": 348.6,
+        "tidalType": "new_moon",
+        "distFromSyzygy_deg": 11.4
+      },
+      {
+        "date": "2013-05-24 05:44 UTC",
+        "mag": 8.3,
+        "place": "2013 Sea of Okhotsk Earthquake",
+        "zone": "Kuril-Kamchatka",
+        "phase": 167.7,
+        "tidalType": "full_moon",
+        "distFromSyzygy_deg": 12.3
+      },
+      {
+        "date": "1969-08-11 21:27 UTC",
+        "mag": 8.2,
+        "place": "1969 Hokkaido Toho-oki Earthquake",
+        "zone": "Japan Trench",
+        "phase": 342.9,
+        "tidalType": "new_moon",
+        "distFromSyzygy_deg": 17.1
+      },
+      {
+        "date": "2014-04-01 23:46 UTC",
+        "mag": 8.2,
+        "place": "93 km NW of Iquique, Chile",
+        "zone": "Chile-Peru",
+        "phase": 30.8,
+        "tidalType": "new_moon",
+        "distFromSyzygy_deg": 30.8
+      },
+      {
+        "date": "2017-09-08 04:49 UTC",
+        "mag": 8.2,
+        "place": "2017 Tehuantepec, Mexico Earthquake",
+        "zone": "Central America",
+        "phase": 198.8,
+        "tidalType": "full_moon",
+        "distFromSyzygy_deg": 18.8
+      },
+      {
+        "date": "2003-09-25 19:50 UTC",
+        "mag": 8.16,
+        "place": "2003 Tokachi-Oki Earthquake",
+        "zone": "Japan Trench",
+        "phase": 352.1,
+        "tidalType": "new_moon",
+        "distFromSyzygy_deg": 7.9
+      },
+      {
+        "date": "2007-04-01 20:39 UTC",
+        "mag": 8.1,
+        "place": "2007 Solomon Islands Earthquake",
+        "zone": "Solomon Islands",
+        "phase": 172.9,
+        "tidalType": "full_moon",
+        "distFromSyzygy_deg": 7.1
+      },
+      {
+        "date": "1970-07-31 17:08 UTC",
+        "mag": 8,
+        "place": "95 km N of San Antonio del Estrecho, Peru",
+        "zone": "Chile-Peru",
+        "phase": 342.9,
+        "tidalType": "new_moon",
+        "distFromSyzygy_deg": 17.1
+      },
+      {
+        "date": "1976-01-14 16:47 UTC",
+        "mag": 8,
+        "place": "1976 Kermadec Islands, New Zealand Earthquake",
+        "zone": "Tonga-Kermadec",
+        "phase": 148.0,
+        "tidalType": "full_moon",
+        "distFromSyzygy_deg": 32.0
+      },
+      {
+        "date": "1986-05-07 22:47 UTC",
+        "mag": 8,
+        "place": "1986 Atka, Alaska Earthquake",
+        "zone": "Alaska-Aleutian",
+        "phase": 351.8,
+        "tidalType": "new_moon",
+        "distFromSyzygy_deg": 8.2
+      },
+      {
+        "date": "1995-07-30 05:11 UTC",
+        "mag": 8,
+        "place": "36 km NNE of Antofagasta, Chile",
+        "zone": "Chile-Peru",
+        "phase": 27.3,
+        "tidalType": "new_moon",
+        "distFromSyzygy_deg": 27.3
+      },
+      {
+        "date": "1995-10-09 15:35 UTC",
+        "mag": 8,
+        "place": "1995 Colima-Jalisco, Mexico Earthquake",
+        "zone": "Central America",
+        "phase": 192.0,
+        "tidalType": "full_moon",
+        "distFromSyzygy_deg": 12.0
+      },
+      {
+        "date": "2007-08-15 23:40 UTC",
+        "mag": 8,
+        "place": "41 km SW of San Vicente de Ca\u00f1ete, Peru",
+        "zone": "Chile-Peru",
+        "phase": 35.2,
+        "tidalType": "new_moon",
+        "distFromSyzygy_deg": 35.2
+      },
+      {
+        "date": "2000-06-04 16:28 UTC",
+        "mag": 7.9,
+        "place": "103 km S of Bengkulu, Indonesia",
+        "zone": "Sumatra-Java",
+        "phase": 28.3,
+        "tidalType": "new_moon",
+        "distFromSyzygy_deg": 28.3
+      },
+      {
+        "date": "2002-11-03 22:12 UTC",
+        "mag": 7.9,
+        "place": "2002 Denali Fault, Alaska Earthquake",
+        "zone": "Alaska-Aleutian",
+        "phase": 347.3,
+        "tidalType": "new_moon",
+        "distFromSyzygy_deg": 12.7
+      },
+      {
+        "date": "1971-07-09 03:03 UTC",
+        "mag": 7.8,
+        "place": "19 km NNE of Hacienda La Calera, Chile",
+        "zone": "Chile-Peru",
+        "phase": 185.6,
+        "tidalType": "full_moon",
+        "distFromSyzygy_deg": 5.6
+      },
+      {
+        "date": "1997-10-14 09:53 UTC",
+        "mag": 7.8,
+        "place": "192 km WSW of Haveluloto, Tonga",
+        "zone": "Tonga-Kermadec",
+        "phase": 156.6,
+        "tidalType": "full_moon",
+        "distFromSyzygy_deg": 23.4
+      },
+      {
+        "date": "2007-12-09 07:28 UTC",
+        "mag": 7.8,
+        "place": "south of the Fiji Islands",
+        "zone": "Tonga-Kermadec",
+        "phase": 353.2,
+        "tidalType": "new_moon",
+        "distFromSyzygy_deg": 6.8
+      },
+      {
+        "date": "2020-07-22 06:12 UTC",
+        "mag": 7.8,
+        "place": "2020 Perryville, Alaska Earthquake",
+        "zone": "Alaska-Aleutian",
+        "phase": 15.8,
+        "tidalType": "new_moon",
+        "distFromSyzygy_deg": 15.8
+      },
+      {
+        "date": "1975-05-10 14:27 UTC",
+        "mag": 7.7,
+        "place": "44 km SSE of Ca\u00f1ete, Chile",
+        "zone": "Chile-Peru",
+        "phase": 351.1,
+        "tidalType": "new_moon",
+        "distFromSyzygy_deg": 8.9
+      },
+      {
+        "date": "1978-11-29 19:52 UTC",
+        "mag": 7.7,
+        "place": "2 km ESE of San Agust\u00edn Loxicha, Mexico",
+        "zone": "Central America",
+        "phase": 350.1,
+        "tidalType": "new_moon",
+        "distFromSyzygy_deg": 9.9
+      },
+      {
+        "date": "1986-10-20 06:46 UTC",
+        "mag": 7.7,
+        "place": "Kermadec Islands region",
+        "zone": "Tonga-Kermadec",
+        "phase": 207.8,
+        "tidalType": "full_moon",
+        "distFromSyzygy_deg": 27.8
+      },
+      {
+        "date": "1996-11-12 16:59 UTC",
+        "mag": 7.7,
+        "place": "60 km SW of Changuillo, Peru",
+        "zone": "Chile-Peru",
+        "phase": 14.7,
+        "tidalType": "new_moon",
+        "distFromSyzygy_deg": 14.7
+      },
+      {
+        "date": "1997-04-21 12:02 UTC",
+        "mag": 7.7,
+        "place": "171 km NNW of Sola, Vanuatu",
+        "zone": "New Hebrides",
+        "phase": 164.4,
+        "tidalType": "full_moon",
+        "distFromSyzygy_deg": 15.6
+      },
+      {
+        "date": "2008-07-05 02:12 UTC",
+        "mag": 7.7,
+        "place": "Sea of Okhotsk",
+        "zone": "Kuril-Kamchatka",
+        "phase": 26.9,
+        "tidalType": "new_moon",
+        "distFromSyzygy_deg": 26.9
+      },
+      {
+        "date": "1966-12-28 08:18 UTC",
+        "mag": 7.67,
+        "place": "9 km SSW of Taltal, Chile",
+        "zone": "Chile-Peru",
+        "phase": 184.5,
+        "tidalType": "full_moon",
+        "distFromSyzygy_deg": 4.5
+      },
+      {
+        "date": "1971-12-15 08:29 UTC",
+        "mag": 7.62,
+        "place": "55 km ESE of Ust\u2019-Kamchatsk Staryy, Russia",
+        "zone": "Kuril-Kamchatka",
+        "phase": 330.0,
+        "tidalType": "new_moon",
+        "distFromSyzygy_deg": 30.0
+      },
+      {
+        "date": "1963-12-18 00:30 UTC",
+        "mag": 7.6,
+        "place": "south of the Fiji Islands",
+        "zone": "Tonga-Kermadec",
+        "phase": 19.6,
+        "tidalType": "new_moon",
+        "distFromSyzygy_deg": 19.6
+      },
+      {
+        "date": "1974-10-03 14:21 UTC",
+        "mag": 7.6,
+        "place": "77 km WSW of Callao, Peru",
+        "zone": "Chile-Peru",
+        "phase": 201.0,
+        "tidalType": "full_moon",
+        "distFromSyzygy_deg": 21.0
+      },
+      {
+        "date": "1978-03-24 19:47 UTC",
+        "mag": 7.6,
+        "place": "134 km SE of Kuril\u2019sk, Russia",
+        "zone": "Japan Trench",
+        "phase": 180.9,
+        "tidalType": "full_moon",
+        "distFromSyzygy_deg": 0.9
+      },
+      {
+        "date": "1979-03-14 11:07 UTC",
+        "mag": 7.6,
+        "place": "12 km SSE of Vallecitos de Zaragoza, Mexico",
+        "zone": "Central America",
+        "phase": 186.7,
+        "tidalType": "full_moon",
+        "distFromSyzygy_deg": 6.7
+      },
+      {
+        "date": "1991-12-22 08:43 UTC",
+        "mag": 7.6,
+        "place": "248 km E of Kuril\u2019sk, Russia",
+        "zone": "Kuril-Kamchatka",
+        "phase": 190.4,
+        "tidalType": "full_moon",
+        "distFromSyzygy_deg": 10.4
+      },
+      {
+        "date": "1994-03-09 23:28 UTC",
+        "mag": 7.6,
+        "place": "240 km E of Levuka, Fiji",
+        "zone": "Tonga-Kermadec",
+        "phase": 336.9,
+        "tidalType": "new_moon",
+        "distFromSyzygy_deg": 23.1
+      },
+      {
+        "date": "2012-08-31 12:47 UTC",
+        "mag": 7.6,
+        "place": "89 km E of Sulangan, Philippines",
+        "zone": "Philippine",
+        "phase": 180.5,
+        "tidalType": "full_moon",
+        "distFromSyzygy_deg": 0.5
+      },
+      {
+        "date": "2015-11-24 22:45 UTC",
+        "mag": 7.6,
+        "place": "155 km WNW of I\u00f1apari, Peru",
+        "zone": "Chile-Peru",
+        "phase": 168.2,
+        "tidalType": "full_moon",
+        "distFromSyzygy_deg": 11.8
+      },
+      {
+        "date": "2015-11-24 22:50 UTC",
+        "mag": 7.6,
+        "place": "185 km WNW of I\u00f1apari, Peru",
+        "zone": "Chile-Peru",
+        "phase": 168.3,
+        "tidalType": "full_moon",
+        "distFromSyzygy_deg": 11.7
+      },
+      {
+        "date": "1969-11-21 02:05 UTC",
+        "mag": 7.54,
+        "place": "209 km WSW of Sinabang, Indonesia",
+        "zone": "Sumatra-Java",
+        "phase": 146.3,
+        "tidalType": "full_moon",
+        "distFromSyzygy_deg": 33.7
+      },
+      {
+        "date": "1978-03-23 03:15 UTC",
+        "mag": 7.5,
+        "place": "55 km SE of Kuril\u2019sk, Russia",
+        "zone": "Japan Trench",
+        "phase": 161.2,
+        "tidalType": "full_moon",
+        "distFromSyzygy_deg": 18.8
+      },
+      {
+        "date": "1984-11-20 08:15 UTC",
+        "mag": 7.5,
+        "place": "45 km SW of Sarangani, Philippines",
+        "zone": "Philippine",
+        "phase": 326.7,
+        "tidalType": "new_moon",
+        "distFromSyzygy_deg": 33.3
+      },
+      {
+        "date": "1990-12-30 19:14 UTC",
+        "mag": 7.5,
+        "place": "104 km ENE of Kimbe, Papua New Guinea",
+        "zone": "Solomon Islands",
+        "phase": 168.2,
+        "tidalType": "full_moon",
+        "distFromSyzygy_deg": 11.8
+      },
+      {
+        "date": "1996-02-21 12:51 UTC",
+        "mag": 7.5,
+        "place": "123 km WSW of Puerto Santa, Peru",
+        "zone": "Chile-Peru",
+        "phase": 35.1,
+        "tidalType": "new_moon",
+        "distFromSyzygy_deg": 35.1
+      },
+      {
+        "date": "2007-09-28 13:38 UTC",
+        "mag": 7.5,
+        "place": "Volcano Islands, Japan region",
+        "zone": "Izu-Bonin-Mariana",
+        "phase": 199.5,
+        "tidalType": "full_moon",
+        "distFromSyzygy_deg": 19.5
+      },
+      {
+        "date": "2010-06-12 19:26 UTC",
+        "mag": 7.5,
+        "place": "Nicobar Islands, India region",
+        "zone": "Sumatra-Java",
+        "phase": 2.3,
+        "tidalType": "new_moon",
+        "distFromSyzygy_deg": 2.3
+      },
+      {
+        "date": "2015-05-05 01:44 UTC",
+        "mag": 7.5,
+        "place": "131 km SSW of Kokopo, Papua New Guinea",
+        "zone": "Solomon Islands",
+        "phase": 190.1,
+        "tidalType": "full_moon",
+        "distFromSyzygy_deg": 10.1
+      },
+      {
+        "date": "2018-12-05 04:18 UTC",
+        "mag": 7.5,
+        "place": "166 km ESE of Tadine, New Caledonia",
+        "zone": "New Hebrides",
+        "phase": 336.2,
+        "tidalType": "new_moon",
+        "distFromSyzygy_deg": 23.8
+      },
+      {
+        "date": "2020-03-25 02:49 UTC",
+        "mag": 7.5,
+        "place": "221 km SSE of Severo-Kuril\u2019sk, Russia",
+        "zone": "Kuril-Kamchatka",
+        "phase": 9.9,
+        "tidalType": "new_moon",
+        "distFromSyzygy_deg": 9.9
+      }
+    ]
+  }
+}

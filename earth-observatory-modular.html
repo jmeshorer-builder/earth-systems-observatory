@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>
+// Global error handler — prevents white screen of death
+window.onerror = function(msg, src, line, col, err) {
+  // Hide loading screen even on error
+  var ld = document.getElementById('loading');
+  if (ld) { ld.style.opacity = '0'; setTimeout(function(){ ld.style.display='none'; }, 500); }
+  console.error('[ESO Error]', msg, 'at', src, line+':'+col);
+  return false; // don't suppress
+};
+window.addEventListener('unhandledrejection', function(e) {
+  console.warn('[ESO Promise]', e.reason);
+});
+</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Earth Systems Observatory · Phase 4</title>
+<link rel="preconnect" href="https://fonts.bunny.net">
+<link href="https://fonts.bunny.net/css?family=space-mono:400,700|syne:400,600,700,800&display=swap" rel="stylesheet">
+<!-- Map libraries: Leaflet (always) + optional Google Maps upgrade -->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+
+<link rel="stylesheet" href="eso-style.css">
+</head>
+<body>
+
+<!-- LOADING -->
+<div id="loading">
+  <div style="font-size:44px;animation:pulse-op 2s infinite">🌍</div>
+  <div id="loading-title">Earth Systems Observatory</div>
+  <div id="loading-sub">Phase 4 — Real Data · History · Forecast · AI Q&amp;A</div>
+  <div id="loading-bar"><div id="loading-bar-fill"></div></div>
+  <div id="loading-layers">Initializing 15 sensor layers...</div>
+</div>
+
+<!-- HEADER -->
+<div id="header">
+  <div style="display:flex;align-items:center;gap:6px;">
+    <button class="panel-toggle-btn" id="btn-toggle-left" onclick="toggleLeftPanel()" title="Toggle layers panel">☰</button>
+    <div id="logo">
+      <h1>Earth Systems Observatory</h1>
+      <span class="badge badge-live"><span class="live-dot"></span>LIVE</span>
+      <span class="badge badge-phase">PHASE 4</span>
+    </div>
+  </div>
+  <div id="header-right">
+    <div id="layer-count-display">0 LAYERS</div>
+    <div>UTC <span id="utc-clock">--:--:--</span></div>
+    <div id="doy-display">DOY —</div>
+    <div id="notif-bell" onclick="openNotifDrawer()" title="Notifications ([ ] to toggle panels)">
+      🔔 <span id="notif-count">0</span>
+    </div>
+    <button class="panel-toggle-btn" id="btn-toggle-right" onclick="toggleRightPanel()" title="Toggle data panel">⊟</button>
+    <button id="eso-guide-btn" onclick="toggleFieldGuide()" title="Field Guide — learn what everything means [?]" aria-label="Open Field Guide">? Guide</button>
+    <button id="eso-theme-btn" onclick="toggleLightMode()" title="Toggle light/dark mode" aria-label="Toggle display theme" style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(255,255,255,.15);color:var(--text-dim);background:none;cursor:pointer;transition:all .2s;border-radius:2px;white-space:nowrap;">☀ Light</button>
+    <button id="eso-tour-btn" onclick="startTour()" title="Take a guided tour of ESO" aria-label="Start guided tour" style="font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(0,229,255,.25);color:var(--text-dim);background:none;cursor:pointer;transition:all .2s;border-radius:2px;white-space:nowrap;">▶ Tour</button>
+    <button id="eso-mode-btn" onclick="toggleESOMode()" title="Toggle Simple/Expert view" aria-label="Toggle display mode">📖 Simple View</button>
+    <span id="thesis-mode-indicator">THESIS MODE ACTIVE</span>
+    <button id="eso-ask-btn" onclick="openESOChat()" title="Ask ESO — query current data" aria-label="Ask ESO a question">💬 Ask ESO</button>
+  </div>
+</div>
+
+<!-- ══ BEGINNER MODE BANNER ══ -->
+<div id="eso-beginner-banner" aria-live="polite" role="region" aria-label="Current conditions summary"></div>
+
+
+<!-- ══ LIVE STATUS STRIP ══ -->
+<div id="status-strip">
+  <div class="ss-metric" data-tip="<strong>Geomagnetic Kp Index</strong>Global disturbance of Earth's magnetic field (scale 0–9). 0–2 = Quiet · 3–4 = Unsettled · 5–6 = Storm · 7+ = Severe Storm. High Kp means auroras may be visible at lower latitudes and GPS/radio may be disrupted.<em>Source: NOAA SWPC 7-day feed</em>">
+    <span class="ss-label">GEO&nbsp;Kp</span>
+    <span class="ss-val" id="ss-kp-val">—</span>
+    <span class="ss-badge ss-q" id="ss-kp-badge">—</span>
+  </div>
+  <div class="ss-metric" data-tip="<strong>Earthquake Risk</strong>Composite risk score based on current Kp, solar wind pressure, lunar tidal alignment, and recent seismicity. Reflects probability of elevated M5+ activity in the next 24–48 h.<em>Hover the ⚠ Risk tab for detail</em>">
+    <span class="ss-label">EQ&nbsp;RISK</span>
+    <span class="ss-val" id="ss-eq-val">—</span>
+    <span class="ss-badge ss-clr" id="ss-eq-badge">CLEAR</span>
+  </div>
+  <div class="ss-metric" data-tip="<strong>Tsunami Risk</strong>Assessed from recent large earthquakes (M6.5+) near coastal or subduction zones. Clears automatically when no qualifying event detected in the past 4 hours.">
+    <span class="ss-label">TSUNAMI</span>
+    <span class="ss-val" id="ss-ts-val">—</span>
+    <span class="ss-badge ss-clr" id="ss-ts-badge">CLEAR</span>
+  </div>
+  <div class="ss-metric" data-tip="<strong>Syzygy Alignment</strong>How closely the Moon, Earth, and Sun are aligned right now (0–100%). 100% = perfect alignment (new or full moon). Higher alignment = stronger gravitational tidal stress on tectonic faults and ocean tides.<em>Peaks every ~14 days (new + full moon)</em>">
+    <span class="ss-label" title="Moon-Earth-Sun alignment (Syzygy)">MOON&nbsp;ALIGN</span>
+    <span class="ss-val" id="ss-syz-val">—<span class="ss-unit">%</span></span>
+  </div>
+  <div class="ss-metric" data-tip="<strong>Solar Flares</strong>Current solar X-ray flare class. C = Minor (radio blackouts possible) · M = Moderate (radio/GPS disruption) · X = Major (widespread satellite and radio impact possible). NONE = Sun is quiet.">
+    <span class="ss-label">FLARES</span>
+    <span class="ss-val" id="ss-flare-val" style="font-size:11px;color:var(--text-dim)">NONE</span>
+  </div>
+  <div class="ss-metric ss-clickable" id="ss-alert-metric" onclick="openNotifDrawer()" data-tip="<strong>Active Alerts</strong>Total alerts across all monitored Earth systems. Includes geomagnetic storms, major earthquakes, solar flares, and chain-of-events detections. Click to open the Alerts drawer.">
+    <span class="ss-label">ALERTS</span>
+    <span class="ss-val" id="ss-alert-val" style="color:var(--text-dim)">0</span>
+  </div>
+  <div class="ss-metric ss-clickable" id="ss-net-metric" onclick="retryApis()" data-tip="<strong>Network / Data Status</strong>● LIVE = real-time APIs active (USGS, NOAA, Open-Meteo). ○ MODELS = running on built-in physics models as offline fallback. Click to retry live data connections.<em>Exponential backoff: retries every 2→4→8→10 min automatically</em>">
+    <span class="ss-label">NET</span>
+    <span class="ss-val ss-net-off" id="ss-net-val" style="font-size:11px;letter-spacing:0">○ MODELS</span>
+  </div>
+</div>
+
+<!-- ══ NOTIFICATION BELL (in header) ══ -->
+<!-- inserted into header-right -->
+
+<!-- ══ NOTIFICATION DRAWER ══ -->
+<div id="notif-overlay" onclick="closeNotifDrawer()"></div>
+<div id="notif-drawer">
+  <div class="notif-drawer-header">
+    <div class="notif-drawer-title">🔔 Notifications</div>
+    <span class="notif-close-btn" onclick="closeNotifDrawer()">✕</span>
+  </div>
+  <div class="notif-filter-bar">
+    <button class="notif-filter-btn active" onclick="setNotifFilter('all')"       id="nf-all">All</button>
+    <button class="notif-filter-btn"        onclick="setNotifFilter('critical')"  id="nf-critical">🔴 Critical</button>
+    <button class="notif-filter-btn"        onclick="setNotifFilter('watch')"     id="nf-watch">🟠 Watch</button>
+    <button class="notif-filter-btn"        onclick="setNotifFilter('advisory')"  id="nf-advisory">🟡 Advisory</button>
+    <button class="notif-filter-btn"        onclick="setNotifFilter('info')"      id="nf-info">🔵 Info</button>
+    <button class="notif-filter-btn"        onclick="setNotifFilter('forecast')"  id="nf-forecast">🔮 Forecast</button>
+    <button class="notif-filter-btn"        onclick="setNotifFilter('chain')"     id="nf-chain">⛓ Chains</button>
+    <button class="notif-filter-btn"        onclick="setNotifFilter('discovery')" id="nf-discovery">🔍 Discovery</button>
+  </div>
+  <div id="notif-summary-strip"></div>
+  <div id="notif-list"></div>
+  <div class="notif-drawer-footer">
+    <button class="notif-clear-btn" onclick="clearAllNotifs()">Clear All</button>
+    <button id="digest-toggle-btn" onclick="toggleDigestMode()" title="Digest mode batches low-priority advisories into a single notification every 15 minutes instead of firing individually." style="font-family:'Space Mono',monospace;font-size:7.5px;letter-spacing:.08em;padding:3px 8px;border:1px solid rgba(255,255,255,.2);color:var(--text-dim);cursor:pointer;background:none;text-transform:uppercase;border-radius:2px;transition:all .2s;">DIGEST: OFF</button>
+    <span class="notif-scan-status" id="notif-scan-status">Scanning every 60s</span>
+  </div>
+</div>
+
+<!-- ══ TOAST ══ -->
+<div id="notif-toast" onclick="handleToastClick()" title="Click to view details">
+  <div class="notif-toast-inner">
+    <span class="notif-toast-icon" id="toast-icon">⚡</span>
+    <div class="notif-toast-body">
+      <div class="notif-toast-headline" id="toast-headline"></div>
+      <div class="notif-toast-sub"      id="toast-sub"></div>
+      <div style="font-size:7px;color:rgba(255,255,255,.35);margin-top:3px;letter-spacing:.1em">CLICK TO VIEW → </div>
+</div>
+    <span class="notif-toast-dismiss" onclick="closeToast();event.stopPropagation()" title="Dismiss">✕</span>
+  </div>
+</div>
+
+<div id="left-edge-tab" class="panel-edge-tab" onclick="toggleLeftPanel()">LAYERS</div>
+<div id="right-edge-tab" class="panel-edge-tab" onclick="toggleRightPanel()">DATA</div>
+
+<!-- MAP -->
+<div id="map">
+</div>
+<!-- MAP TIMESTAMP WATERMARK -->
+<div id="map-timestamp">UTC <span id="map-ts-text">--:--:--</span> · <span id="map-ts-date">---</span></div>
+
+<!-- LEFT PANEL -->
+<div id="layer-panel">
+  <div id="panel-title">
+    Data Layers
+    <span id="active-count">0 active</span>
+  </div>
+  <div id="layers-list">
+
+    <!-- Region filter — controls earthquake & SST bounding box -->
+    <div style="padding:5px 10px 4px;border-bottom:1px solid var(--border);flex-shrink:0;">
+      <div style="font-size:7px;color:var(--text-dim);letter-spacing:.1em;margin-bottom:4px;">📍 REGION FOCUS</div>
+      <div style="display:flex;flex-wrap:wrap;gap:3px;" id="region-filter-row">
+        <button id="rgn-global"    onclick="setRegionFilter('global')"    style="background:rgba(0,229,255,.2);border:1px solid rgba(0,229,255,.5);color:var(--c-cyan);padding:1px 5px;font-size:7px;cursor:pointer;border-radius:2px;font-family:inherit;">Global</button>
+        <button id="rgn-pacific"   onclick="setRegionFilter('pacific')"   style="background:none;border:1px solid rgba(255,255,255,.15);color:var(--text-dim);padding:1px 5px;font-size:7px;cursor:pointer;border-radius:2px;font-family:inherit;">Pacific Ring</button>
+        <button id="rgn-americas"  onclick="setRegionFilter('americas')"  style="background:none;border:1px solid rgba(255,255,255,.15);color:var(--text-dim);padding:1px 5px;font-size:7px;cursor:pointer;border-radius:2px;font-family:inherit;">Americas</button>
+        <button id="rgn-europe"    onclick="setRegionFilter('europe')"    style="background:none;border:1px solid rgba(255,255,255,.15);color:var(--text-dim);padding:1px 5px;font-size:7px;cursor:pointer;border-radius:2px;font-family:inherit;">Eur-Africa</button>
+        <button id="rgn-asia"      onclick="setRegionFilter('asia')"      style="background:none;border:1px solid rgba(255,255,255,.15);color:var(--text-dim);padding:1px 5px;font-size:7px;cursor:pointer;border-radius:2px;font-family:inherit;">Asia-Pac</button>
+        <button id="rgn-atlantic"  onclick="setRegionFilter('atlantic')"  style="background:none;border:1px solid rgba(255,255,255,.15);color:var(--text-dim);padding:1px 5px;font-size:7px;cursor:pointer;border-radius:2px;font-family:inherit;">Atlantic</button>
+      </div>
+    </div>
+
+    <div class="domain-group">
+      <div class="domain-label">☀️ Space Weather<button class="domain-all-btn" onclick="toggleDomain(['solar','geomagnetic','cosmic','solarwind','xray'])">ALL</button></div>
+      <div class="layer-item" data-layer="solar" onclick="toggleLayer('solar')" data-tip="<strong>Solar Irradiance</strong>Total solar energy output reaching Earth. Varies ~0.1% over the 11-year solar cycle. Currently in Solar Cycle 25. Drives long-term climate and modulates cosmic ray shielding.<em>Calculated from solar cycle position · NASA POWER</em>">
+        <div class="layer-dot" style="background:#ffd600;box-shadow:0 0 6px #ffd600"></div>
+        <div class="layer-info"><div class="layer-name">Solar Irradiance</div><div class="layer-source">NASA POWER model</div></div>
+        <div class="layer-status s-calc">CALC</div><div class="layer-toggle"></div>
+      </div>
+      <div class="layer-item" data-layer="geomagnetic" onclick="toggleLayer('geomagnetic')" data-tip="<strong>Geomagnetic Kp Index</strong>Global disturbance level of Earth's magnetic field (0–9). Driven by solar wind interaction with the magnetosphere. Kp≥5 = Storm. Correlated with aurora visibility, GPS errors, and elevated seismicity risk.<em>Real-time feed · NOAA SWPC</em>">
+        <div class="layer-dot" style="background:#b84fff;box-shadow:0 0 6px #b84fff"></div>
+        <div class="layer-info"><div class="layer-name">Geomagnetic Kp</div><div class="layer-source">NOAA SWPC model</div></div>
+        <div class="layer-status s-calc">CALC</div><div class="layer-toggle"></div>
+      </div>
+      <div class="layer-item" data-layer="cosmic" onclick="toggleLayer('cosmic')" data-tip="<strong>Cosmic Ray Flux</strong>High-energy particles from outside the solar system constantly bombarding Earth. Flux rises during solar minimum (weak solar wind = less shielding). May trigger cloud nucleation and influence climate on long timescales.<em>Inversely correlated with solar activity · NMDB</em>">
+        <div class="layer-dot" style="background:#ff4fa0;box-shadow:0 0 6px #ff4fa0"></div>
+        <div class="layer-info"><div class="layer-name">Cosmic Ray Flux</div><div class="layer-source">NMDB model</div></div>
+        <div class="layer-status s-calc">CALC</div><div class="layer-toggle"></div>
+      </div>
+      <div class="layer-item" data-layer="solarwind" onclick="toggleLayer('solarwind')" data-tip="<strong>Solar Wind Pressure</strong>Stream of charged particles (protons, electrons) flowing from the Sun at 400–800 km/s. Elevated pressure compresses Earth's magnetosphere, increases Kp, and may trigger geomagnetic storms. Watch this and Kp together.<em>Model-derived · NASA ACE satellite</em>">
+        <div class="layer-dot" style="background:#aaff00;box-shadow:0 0 6px #aaff00"></div>
+        <div class="layer-info"><div class="layer-name">Solar Wind Pressure</div><div class="layer-source">NASA ACE model</div></div>
+        <div class="layer-status s-calc">CALC</div><div class="layer-toggle"></div>
+      </div>
+      <div class="layer-item" id="layer-xray" data-layer="xray" onclick="toggleLayer('xray')" data-tip="<strong>X-Ray Flux / Solar Flares</strong>Solar X-ray intensity measured by NOAA GOES satellites. Classes: B (background) → C (minor) → M (moderate) → X (major). M and X flares can cause radio blackouts and ionospheric disruption within minutes of occurrence.<em>Live data · NOAA GOES satellite</em>">
+        <div class="layer-dot" style="background:#ff8c00"></div>
+        <div class="layer-info"><div class="layer-name">X-Ray / Solar Flares</div><div class="layer-source">NOAA GOES</div></div>
+        <div class="layer-status s-live">LIVE</div><div class="layer-toggle"></div>
+      </div>
+    </div>
+
+    <div class="domain-group">
+      <div class="domain-label">🌋 Core & Crust<button class="domain-all-btn" onclick="toggleDomain(['seismic','magnetic','volcanic','gravity','geotherm'])">ALL</button></div>
+      <div class="layer-item" data-layer="seismic" onclick="toggleLayer('seismic')" data-tip="<strong>Seismic Activity</strong>Earthquakes M4.5+ from the past 24–48 hours. Dot size = magnitude, color = focal depth (red = shallow &lt;30km, orange = intermediate, blue = deep &gt;300km). Shallow quakes near coasts carry tsunami risk.<em>Live feed · USGS FDSNWS real-time API</em>">
+        <div class="layer-dot" style="background:#ff3d3d;box-shadow:0 0 6px #ff3d3d"></div>
+        <div class="layer-info"><div class="layer-name">Seismic Activity</div><div class="layer-source">USGS fault zones</div></div>
+        <div class="layer-status s-live">LIVE</div><div class="layer-toggle"></div>
+      </div>
+      <!-- Seismic filter bar + depth key — visible only when seismic layer is active -->
+      <div id="seismic-depth-key" style="display:none;padding:2px 10px 3px;font-size:7.5px;color:var(--text-dim);line-height:2;letter-spacing:.06em;">
+        <span title="Depth < 30 km — highest tsunami risk"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#ff3d3d;border:2px solid #ff3d3d;margin-right:3px;vertical-align:middle;"></span>Shallow &lt;30 km</span>
+        <span title="Depth 30–300 km"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#ff6d00;border:1.5px solid #ff6d00;opacity:.8;margin-right:3px;vertical-align:middle;"></span>Mid 30–300 km</span>
+        <span title="Depth > 300 km — rare deep-focus"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:transparent;border:1.5px solid #4a7a99;margin-right:3px;vertical-align:middle;"></span>Deep &gt;300 km</span>
+      </div>
+      <div id="seismic-filter-bar" style="display:none;padding:3px 10px 5px;align-items:center;gap:4px;font-size:7px;color:var(--text-dim);letter-spacing:.08em;flex-wrap:wrap;">
+        <span>Min M:</span>
+        <button id="eq-mag-3"  onclick="setSeismicFilter('mag','3');event.stopPropagation();"   style="background:none;border:1px solid rgba(255,255,255,.2);color:var(--text-dim);padding:1px 5px;font-size:7px;cursor:pointer;border-radius:2px;font-family:inherit;">3+</button>
+        <button id="eq-mag-4"  onclick="setSeismicFilter('mag','4');event.stopPropagation();"   style="background:none;border:1px solid rgba(255,255,255,.2);color:var(--text-dim);padding:1px 5px;font-size:7px;cursor:pointer;border-radius:2px;font-family:inherit;">4+</button>
+        <button id="eq-mag-45" onclick="setSeismicFilter('mag','4.5');event.stopPropagation();" style="background:rgba(255,61,61,.25);border:1px solid rgba(255,61,61,.6);color:#ff3d3d;padding:1px 5px;font-size:7px;cursor:pointer;border-radius:2px;font-family:inherit;">4.5+</button>
+        <button id="eq-mag-5"  onclick="setSeismicFilter('mag','5');event.stopPropagation();"   style="background:none;border:1px solid rgba(255,255,255,.2);color:var(--text-dim);padding:1px 5px;font-size:7px;cursor:pointer;border-radius:2px;font-family:inherit;">5+</button>
+        <button id="eq-mag-6"  onclick="setSeismicFilter('mag','6');event.stopPropagation();"   style="background:none;border:1px solid rgba(255,255,255,.2);color:var(--text-dim);padding:1px 5px;font-size:7px;cursor:pointer;border-radius:2px;font-family:inherit;">6+</button>
+        <span style="margin-left:4px;">Window:</span>
+        <button id="eq-win-1d"  onclick="setSeismicFilter('win','1d');event.stopPropagation();"  style="background:rgba(255,61,61,.25);border:1px solid rgba(255,61,61,.6);color:#ff3d3d;padding:1px 5px;font-size:7px;cursor:pointer;border-radius:2px;font-family:inherit;">24h</button>
+        <button id="eq-win-7d"  onclick="setSeismicFilter('win','7d');event.stopPropagation();"  style="background:none;border:1px solid rgba(255,255,255,.2);color:var(--text-dim);padding:1px 5px;font-size:7px;cursor:pointer;border-radius:2px;font-family:inherit;">7d</button>
+        <button id="eq-win-30d" onclick="setSeismicFilter('win','30d');event.stopPropagation();" style="background:none;border:1px solid rgba(255,255,255,.2);color:var(--text-dim);padding:1px 5px;font-size:7px;cursor:pointer;border-radius:2px;font-family:inherit;">30d</button>
+      </div>
+      <div style="padding:2px 10px 4px;display:none;" id="seismic-heatmap-bar">
+        <button id="heatmap-toggle-btn" onclick="loadSeismHeatmap()" style="background:none;border:1px solid rgba(255,61,61,.3);color:var(--text-dim);padding:2px 8px;font-size:7px;cursor:pointer;border-radius:2px;font-family:inherit;letter-spacing:.07em;">🌡 Density Map</button>
+        <span style="font-size:7px;color:var(--text-dim);margin-left:6px;opacity:.7;">Past-year M5+ density</span>
+      </div>
+      <div class="layer-item" data-layer="magnetic" onclick="toggleLayer('magnetic')" data-tip="<strong>Earth's Magnetic Field</strong>Strength and direction of Earth's dipole magnetic field from the World Magnetic Model. The field is gradually weakening and the magnetic poles are drifting northward. The South Atlantic Anomaly is a region of significantly reduced field strength.<em>Static model updated every 5 years · NOAA WMM</em>">
+        <div class="layer-dot" style="background:#00e5ff;box-shadow:0 0 6px #00e5ff"></div>
+        <div class="layer-info"><div class="layer-name">Magnetic Field</div><div class="layer-source">NOAA WMM</div></div>
+        <div class="layer-status s-model">MODEL</div><div class="layer-toggle"></div>
+      </div>
+      <div class="layer-item" data-layer="volcanic" onclick="toggleLayer('volcanic')" data-tip="<strong>Volcanic Activity</strong>Currently active and recently active volcanoes worldwide. Alert levels range from normal → advisory → watch → warning. Concentrated along subduction zones (Ring of Fire) and mid-ocean ridges.<em>Live database · Smithsonian Global Volcanism Program</em>">
+        <div class="layer-dot" style="background:#ff6d00;box-shadow:0 0 6px #ff6d00"></div>
+        <div class="layer-info"><div class="layer-name">Volcanic Activity</div><div class="layer-source">Smithsonian GVP</div></div>
+        <div class="layer-status s-live">LIVE</div><div class="layer-toggle"></div>
+      </div>
+      <div class="layer-item" data-layer="gravity" onclick="toggleLayer('gravity')" data-tip="<strong>Gravity Anomaly</strong>Subtle variations in Earth's gravitational field caused by density differences in the crust and mantle. Mountain ranges cause positive anomalies; ocean trenches cause negative ones. Used to locate deep mass concentrations.<em>From NASA GRACE satellite measurements</em>">
+        <div class="layer-dot" style="background:#40c8ff;box-shadow:0 0 6px #40c8ff"></div>
+        <div class="layer-info"><div class="layer-name">Gravity Anomaly</div><div class="layer-source">NASA GRACE model</div></div>
+        <div class="layer-status s-model">MODEL</div><div class="layer-toggle"></div>
+      </div>
+      <div class="layer-item" data-layer="geotherm" onclick="toggleLayer('geotherm')" data-tip="<strong>Geothermal Heat Flow</strong>Heat escaping from Earth's interior to the surface (mW/m²). High values mark hotspots (Hawaii, Iceland), mid-ocean ridges, and volcanic arcs. Drives mantle convection and tectonic plate motion.<em>International Heat Flow Commission dataset</em>">
+        <div class="layer-dot" style="background:#ff3d3d;box-shadow:0 0 6px #ff3d3d"></div>
+        <div class="layer-info"><div class="layer-name">Geothermal Heat</div><div class="layer-source">IHFC dataset</div></div>
+        <div class="layer-status s-model">MODEL</div><div class="layer-toggle"></div>
+      </div>
+    </div>
+
+    <div class="domain-group">
+      <div class="domain-label">🌤️ Atmosphere<button class="domain-all-btn" onclick="toggleDomain(['wind','schumann','ionosphere','pressure'])">ALL</button></div>
+      <div class="layer-item" data-layer="wind" onclick="toggleLayer('wind')" data-tip="<strong>Surface Wind Speed</strong>Real-time wind patterns at 10m altitude from a global grid of weather stations. Shows atmospheric circulation, jet streams, and developing storm systems. Color-coded by speed (green = calm, white = storm force).<em>Live data · Open-Meteo Weather API</em>">
+        <div class="layer-dot" style="background:#00ff88;box-shadow:0 0 6px #00ff88"></div>
+        <div class="layer-info"><div class="layer-name">Wind Speed</div><div class="layer-source">Open-Meteo API</div></div>
+        <div class="layer-status s-live">LIVE</div><div class="layer-toggle"></div>
+      </div>
+      <div class="layer-item" data-layer="precipitation" onclick="toggleLayer('precipitation')" tabindex="0" role="checkbox" aria-checked="false" aria-label="Precipitation layer" data-tip="<strong>Precipitation</strong>Global precipitation rate (mm/h) from Open-Meteo forecast API. Blue shading shows active rainfall — deeper blue = heavier. Highlights convective systems, fronts, and monsoon zones. Updates hourly.">
+        <span class="layer-dot" style="background:#74b9ff;"></span>
+        <div class="layer-info">
+          <span class="layer-name">Precipitation</span>
+          <span class="layer-source">LIVE · Open-Meteo · hourly</span>
+        </div>
+        <div class="layer-badges"><span class="layer-badge lb-live">LIVE</span></div>
+      </div>
+      <div class="layer-item" data-layer="schumann" onclick="toggleLayer('schumann')" data-tip="<strong>Schumann Resonance</strong>Electromagnetic standing waves in the Earth-ionosphere cavity, driven primarily by global lightning. Base frequency ~7.83 Hz — sometimes called Earth's 'heartbeat'. Frequency and amplitude change with ionospheric disturbances from solar activity.<em>Calculated from global lightning activity</em>">
+        <div class="layer-dot" style="background:#ff6d00;box-shadow:0 0 6px #ff6d00"></div>
+        <div class="layer-info"><div class="layer-name">Schumann Resonance</div><div class="layer-source">GDTC model</div></div>
+        <div class="layer-status s-calc">CALC</div><div class="layer-toggle"></div>
+      </div>
+      <div class="layer-item" data-layer="ionosphere" onclick="toggleLayer('ionosphere')" data-tip="<strong>Ionospheric TEC (Total Electron Content)</strong>Density of free electrons in the ionosphere (50–1000 km altitude), measured in TECU. High TEC slows GPS signals and causes positioning errors. Elevated by solar flares, disrupted by geomagnetic storms. Also anomalously high before major earthquakes (LAIC effect).<em>Physics model · NASA/JPL</em>">
+        <div class="layer-dot" style="background:#00ffc8;box-shadow:0 0 6px #00ffc8"></div>
+        <div class="layer-info"><div class="layer-name">Ionospheric TEC</div><div class="layer-source">NASA/JPL model</div></div>
+        <div class="layer-status s-calc">CALC</div><div class="layer-toggle"></div>
+      </div>
+      <div class="layer-item" id="layer-pressure" data-layer="pressure" onclick="toggleLayer('pressure')" data-tip="<strong>Atmospheric Pressure</strong>Sea-level air pressure (hPa) showing high and low pressure systems. Highs bring fair weather; lows bring storms. Contour lines (isobars) show the shape of the pressure field. Tightly spaced isobars = strong winds.<em>Live synoptic grid · Open-Meteo</em>">
+        <div class="layer-dot" style="background:#7ec8e3"></div>
+        <div class="layer-info"><div class="layer-name">Atm. Pressure</div><div class="layer-source">Open-Meteo</div></div>
+        <div class="layer-status s-live">LIVE</div><div class="layer-toggle"></div>
+      </div>
+    </div>
+
+    <div class="domain-group">
+      <div class="domain-label">🌊 Oceans<button class="domain-all-btn" onclick="toggleDomain(['sst','tides'])">ALL</button></div>
+      <div class="layer-item" data-layer="sst" onclick="toggleLayer('sst')" data-tip="<strong>Sea Surface Temperature</strong>Ocean surface temperature from a global sampling grid. Toggle between <em>Absolute</em> (actual °C) and <em>Anomaly</em> (departure from climatological average — more meaningful for climate science). Anomalies (warmer or cooler than average) influence hurricane intensity, fisheries migration, and atmospheric moisture. El Niño = broad warm patch in central Pacific.<em>Live data · Open-Meteo Marine API</em>">
+        <div class="layer-dot" style="background:#00b4d8;box-shadow:0 0 6px #00b4d8"></div>
+        <div class="layer-info">
+          <div class="layer-name">Sea Surface Temp</div>
+          <div class="layer-source">Open-Meteo Marine</div>
+        </div>
+        <div class="layer-status s-live">LIVE</div>
+        <div class="layer-toggle"></div>
+      </div>
+      <!-- SST mode toggle — only visible when SST layer is active -->
+      <div id="sst-mode-bar" style="display:none;padding:3px 10px 5px;align-items:center;gap:4px;font-size:7px;color:var(--text-dim);letter-spacing:.08em;">
+        <span>SST view:</span>
+        <button id="sst-abs-btn" onclick="setSSTMode('abs');event.stopPropagation();" style="background:rgba(0,180,216,.25);border:1px solid rgba(0,180,216,.6);color:#00b4d8;padding:1px 6px;font-size:7px;cursor:pointer;border-radius:2px;font-family:inherit;">ABSOLUTE</button>
+        <button id="sst-anom-btn" onclick="setSSTMode('anom');event.stopPropagation();" style="background:none;border:1px solid rgba(255,255,255,.2);color:var(--text-dim);padding:1px 6px;font-size:7px;cursor:pointer;border-radius:2px;font-family:inherit;">ANOMALY</button>
+        <span style="color:var(--text-dim);font-size:7px;opacity:.6" title="Anomaly = departure from latitude-adjusted seasonal climatology">ⓘ</span>
+      </div>
+      <div class="layer-item" data-layer="tides" onclick="toggleLayer('tides')" data-tip="<strong>Tidal Gravitational Force</strong>Combined gravitational pull of Moon and Sun creating tidal stress on Earth's oceans, crust, and tectonic faults. Peaks at new and full moon (syzygy). Research shows elevated fault-slip probability at tidal maxima — especially near subduction zones.<em>Deterministic lunar/solar calculation · JPL</em>">
+        <div class="layer-dot" style="background:#40c8ff;box-shadow:0 0 6px #40c8ff"></div>
+        <div class="layer-info"><div class="layer-name">Tidal Force</div><div class="layer-source">JPL lunar model</div></div>
+        <div class="layer-status s-calc">CALC</div><div class="layer-toggle"></div>
+      </div>
+    </div>
+
+  </div>
+  <div id="left-panel-footer" style="padding:8px 14px;border-top:1px solid var(--border);font-size:8px;color:var(--text-dim);line-height:1.6;flex-shrink:0;display:flex;justify-content:space-between;align-items:center;gap:8px;">
+    <span>💡 15 layers · 4 domains · <span style="color:var(--c-cyan)">Phase 4</span></span>
+    <span style="cursor:pointer;color:var(--text-dim);font-size:10px;" onclick="this.parentElement.style.display='none'" title="Dismiss">✕</span>
+  </div>
+</div>
+
+<!-- RIGHT PANEL -->
+<div id="right-panel">
+  <!-- Fullscreen close button (only visible in panel-fs mode) -->
+  <div id="panel-fs-close" onclick="togglePanelFS()">⊠ EXIT FULL</div>
+
+  <!-- Always-visible live metrics strip -->
+  <div id="panel-metrics">
+    <div class="pm-item">
+      <span class="pm-label">KP</span>
+      <span class="pm-val" id="pm-kp" style="color:var(--c-green)">—</span>
+      <span class="pm-badge ss-q" id="pm-kp-badge">—</span>
+    </div>
+    <div class="pm-item">
+      <span class="pm-label">TIDE</span>
+      <span class="pm-val" id="pm-syz">—</span><span style="font-size:8px;color:var(--text-dim);font-family:'Space Mono',monospace">%</span>
+    </div>
+    <div class="pm-item">
+      <span class="pm-label">EQ</span>
+      <span class="pm-val" id="pm-eq" style="color:var(--text)">—</span>
+    </div>
+    <div class="pm-item pm-clickable" onclick="retryApis()" title="Network — click to retry live data">
+      <span class="pm-label">NET</span>
+      <span class="pm-val pm-net-off" id="pm-net" style="font-size:11px;">○</span>
+    </div>
+  </div>
+
+  <!-- 4-tab single-row nav + Deep Analysis button -->
+  <div class="rpanel-tabs" title="1–4 = tabs · D = Deep Analysis · F = fullscreen">
+    <div class="rpanel-tab active" onclick="switchTab('now')" id="tab-now" data-key="1" data-tip="<strong>Now — Current State [key: 1]</strong>Live snapshot of all active data layers right now. Shows current readings for Kp, flares, earthquake count, tidal force, wind, SST, and more. The baseline for understanding what's happening across all Earth systems at this moment.">🌐 Now</div>
+    <div class="rpanel-tab tab-risk" onclick="switchTab('risk')" id="tab-risk" data-key="2" data-tip="<strong>Risk &amp; Forecast [key: 2]</strong>Synthesized risk assessment based on current conditions. Shows risk level for geomagnetic storms, seismic events, and space weather over the next 24–72 hours. Uses chain-of-events logic: e.g. high Kp + high tidal + recent M5+ = elevated EQ risk window.">⚠ Risk</div>
+    <div class="rpanel-tab" onclick="switchTab('explore')" id="tab-explore" data-key="3" data-tip="<strong>Explore — Correlation Clusters [key: 3]</strong>Scientific cross-system correlations backed by peer-reviewed research. Click any cluster card to see the evidence, the mechanism, and whether conditions right now are activating that correlation. Best used after turning on multiple layers.">🔗 Explore</div>
+    <div class="rpanel-tab" onclick="switchTab('hist')" id="tab-hist" data-key="4" data-tip="<strong>History &amp; Charts [key: 4]</strong>Time-series charts for all layers. Switch between 1 Month, 1 Year, 5 Year, Solar Cycle (11 yr), YoY comparison, and Grand Cycle (27 yr). Useful for spotting patterns and understanding where we are in long-term cycles.">📅 History</div>
+    <div class="rpanel-tab tab-deep" onclick="openDeepAnalysis()" id="tab-deep" data-key="D" data-tip="<strong>Deep Analysis [key: D]</strong>AI-powered synthesis of all current conditions. Runs pattern recognition across active layers and generates a narrative explanation of what is happening, what correlations are active, and what to watch for. Opens as a full-screen view.">🔍 Analyze</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       TAB 1: NOW — Current state + synthesis
+       ══════════════════════════════════════════════ -->
+  <div class="rpanel-content active" id="rpanel-now">
+
+    <!-- Physics State (always open) -->
+    <div class="ps ps-open" id="ps-physics">
+      <div class="ps-head" onclick="togglePS('ps-physics')">
+        <span class="ps-name">📊 Physics State</span>
+        <span class="ps-stat" id="ps-physics-stat">live</span>
+        <span class="ps-arr">▾</span>
+      </div>
+      <div class="ps-body">
+        <div id="data-baseline" style="padding:8px 12px 10px;">
+          <div class="baseline-grid">
+            <div class="baseline-item">
+              <div class="baseline-item-label">Geo Kp</div>
+              <div class="baseline-item-val" id="bl-kp">—</div>
+              <div class="baseline-item-sub" id="bl-kp-sub">loading…</div>
+            </div>
+            <div class="baseline-item">
+              <div class="baseline-item-label" title="Moon-Earth-Sun alignment (Syzygy)">Moon Align</div>
+              <div class="baseline-item-val" id="bl-syz">—<span style="font-size:11px;color:var(--text-dim)">%</span></div>
+              <div class="baseline-item-sub" id="bl-moon">—</div>
+            </div>
+            <div class="baseline-item">
+              <div class="baseline-item-label">EQ Score</div>
+              <div class="baseline-item-val" id="bl-eq">—</div>
+              <div class="baseline-item-sub" id="bl-eq-sub">—</div>
+              <div style="font-size:7px;text-align:center;margin-top:1px;"><button onclick="showEQCalcPanel()" style="background:none;border:none;color:rgba(0,229,255,.5);cursor:pointer;font-family:inherit;font-size:7px;padding:0;letter-spacing:.05em;">⊞ calculation</button></div>
+            </div>
+            <div class="baseline-item">
+              <div class="baseline-item-label">Solar Flux</div>
+              <div class="baseline-item-val" id="bl-sfi">—</div>
+              <div class="baseline-item-sub" id="bl-sfi-sub">F10.7 SFU</div>
+            </div>
+            <div class="baseline-item">
+              <div class="baseline-item-label">Schumann</div>
+              <div class="baseline-item-val" id="bl-sch">—</div>
+              <div class="baseline-item-sub">Hz</div>
+            </div>
+            <div class="baseline-item">
+              <div class="baseline-item-label">Seismic 24h</div>
+              <div class="baseline-item-val" id="bl-quakes">—</div>
+              <div class="baseline-item-sub">M4.5+ events</div>
+            </div>
+            <div class="baseline-item" data-tip="<strong>Gutenberg-Richter b-value</strong>Maximum-likelihood estimate of seismicity scaling parameter from the current quake catalog. b≈1.0 is normal (earthquakes worldwide). b&lt;0.8 may indicate stress buildup (fewer small quakes relative to large). b&gt;1.3 indicates high aftershock activity. Requires 5+ quakes in current filter window.">
+              <div class="baseline-item-label">G-R b-VALUE</div>
+              <div class="baseline-item-val" id="bl-bvalue" style="font-size:14px;">—</div>
+              <div class="baseline-item-sub" id="bl-bvalue-sub">Gutenberg-Richter</div>
+              <canvas id="bl-bvalue-spark" width="120" height="20"></canvas>
+              <div id="bl-bvalue-trend"></div>
+            </div>
+            <div class="baseline-item" title="Dst (Disturbance Storm Time) index — measures ring current intensity. Negative values = geomagnetic storm. < −30 nT = moderate storm, < −100 nT = intense storm. More sensitive than Kp (hourly vs 3-hourly).">
+              <div class="baseline-item-label">Dst Index</div>
+              <div class="baseline-item-val" id="bl-dst">—<span style="font-size:10px;color:var(--text-dim)"> nT</span></div>
+              <div class="baseline-item-sub" id="bl-dst-sub">ring current</div>
+            </div>
+            <div class="baseline-item" title="Real-time solar wind bulk speed from NOAA SWPC DSCOVR/ACE. Typical = 300–500 km/s. > 600 = elevated geomagnetic activity risk. > 700 = extreme.">
+              <div class="baseline-item-label">SW Speed</div>
+              <div class="baseline-item-val" id="bl-swspd">—<span style="font-size:10px;color:var(--text-dim)"> km/s</span></div>
+              <div class="baseline-item-sub" id="bl-swspd-sub">solar wind</div>
+            </div>
+            <div class="baseline-item" title="Interplanetary Magnetic Field Bz component (DSCOVR). Southward (negative) Bz reconnects with Earth's magnetosphere and drives geomagnetic storms. Bz < −10 nT = significant coupling.">
+              <div class="baseline-item-label">IMF Bz</div>
+              <div class="baseline-item-val" id="bl-bz">—<span style="font-size:10px;color:var(--text-dim)"> nT</span></div>
+              <div class="baseline-item-sub" id="bl-bz-sub">south=active</div>
+            </div>
+            <div class="baseline-item" title="GOES proton flux ≥10 MeV integral channel. Background ~0.1 pfu. ≥10 pfu = S1 radiation storm (satellite disruption possible). ≥1000 pfu = S3 (HF radio blackout, astronaut risk).">
+              <div class="baseline-item-label">Proton Flux</div>
+              <div class="baseline-item-val" id="bl-proton">—</div>
+              <div class="baseline-item-sub" id="bl-proton-sub">pfu ≥10 MeV</div>
+            </div>
+            <div class="baseline-item" title="ENSO Phase — El Niño-Southern Oscillation. Computed from SST anomaly in the Niño3.4 region (5°S–5°N, 170°W–120°W). +0.5°C or higher = El Niño tendency. −0.5°C or lower = La Niña tendency.">
+              <div class="baseline-item-label">ENSO Phase</div>
+              <div class="baseline-item-val" id="bl-enso" style="font-size:11px;">—</div>
+              <div class="baseline-item-sub" id="bl-enso-sub">Niño3.4</div>
+            </div>
+            <div class="baseline-item" data-tip="<strong>MJO Phase — Madden-Julian Oscillation</strong>The dominant mode of intraseasonal tropical climate variability (~40–50 day cycle). Phases 1–8 describe the location of enhanced tropical convection. Active MJO (amplitude &gt;1.0) influences monsoons, atmospheric rivers, and tropical cyclone genesis. Phase 3–4 (Maritime Continent) often suppresses TC activity in the Atlantic while enhancing it in the Indian Ocean. Model estimate — real CPC data planned.">
+              <div class="baseline-item-label">MJO PHASE</div>
+              <div class="baseline-item-val" id="bl-mjo" style="font-size:13px;">—</div>
+              <div class="baseline-item-sub" id="bl-mjo-sub">Madden-Julian Osc.</div>
+              <div class="baseline-item-sub" id="bl-mjo-phase" style="font-size:7px;opacity:.7;"></div>
+            </div>
+            <div class="baseline-item" data-tip="<strong>CME / Storm Forecast</strong>Next predicted geomagnetic storm window from NOAA SWPC 3-day Kp forecast. 'T-Xh' = predicted storm onset in X hours. 'Clear' = no G1+ storm predicted in next 72h. G1=Kp5, G2=Kp6, G3=Kp7, G4=Kp8, G5=Kp9. Data: NOAA SWPC planetary Kp forecast.">
+              <div class="baseline-item-label">CME STORM</div>
+              <div class="baseline-item-val" id="bl-cme" style="font-size:13px;">—</div>
+              <div class="baseline-item-sub" id="bl-cme-sub">3-day forecast</div>
+            </div>
+            <div class="baseline-item" data-tip="<strong>Length of Day (LOD)</strong>Measured deviation from the standard 86400-second day, in milliseconds/day. Positive = Earth rotating slower (longer day). Source: IERS EOP C04 series (Paris Observatory). Deceleration phases (▲) correlate with M7+ seismicity surges with ~5-year lead time (Bendick &amp; Bilham 2017). Model fallback used when IERS endpoint unreachable.">
+              <div class="baseline-item-label">LOD</div>
+              <div class="baseline-item-val eso-skeleton" id="bl-lod">—</div>
+              <div class="baseline-item-sub" id="bl-lod-sub">IERS EOP</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Insights (open) -->
+    <div class="ps ps-open" id="ps-insights">
+      <div class="ps-head" onclick="togglePS('ps-insights')">
+        <span class="ps-name">🔍 Active Insights</span>
+        <span class="ps-stat" id="ps-insights-stat"></span>
+        <span class="ps-arr">▾</span>
+      </div>
+      <div class="ps-body">
+        <div style="padding:4px 12px 10px;"><div id="synthesis-insights"></div></div>
+      </div>
+    </div>
+
+    <!-- CME / Space Weather Alerts Panel (Wave 4) -->
+    <div class="ps" id="ps-cme">
+      <div class="ps-head" onclick="togglePS('ps-cme')">
+        <span class="ps-name">☄ Space Weather Alerts</span>
+        <span class="ps-badge" id="cme-badge" style="display:none;color:var(--c-red);font-size:7px;letter-spacing:.1em;font-weight:700;">ACTIVE</span>
+        <span class="ps-arr">▾</span>
+      </div>
+      <div class="ps-body">
+        <div id="cme-indicator" style="padding:6px 10px;font-size:8px;color:var(--text-dim);">Loading NOAA alerts…</div>
+        <div style="padding:0 10px 6px;font-size:7px;color:var(--text-dim);opacity:.6;">Source: NOAA SWPC alerts · updates every 30 min</div>
+      </div>
+    </div>
+
+    <!-- Official Tsunami Warning Status (Wave 5) -->
+    <div class="ps" id="ps-tsunami-official">
+      <div class="ps-hdr" onclick="togglePS('ps-tsunami-official')">
+        <span class="ps-icon">🌊</span>
+        <span class="ps-name">Official Tsunami Warnings</span>
+        <span class="ps-toggle">▸</span>
+      </div>
+      <div class="ps-body" style="display:none;">
+        <div id="tsunami-official-status" style="padding:6px 10px;font-size:8px;color:var(--text-dim);">Loading…</div>
+        <div style="padding:0 10px 6px;font-size:7px;color:var(--text-dim);opacity:.6;">Sources: USGS tsunami flag · GDACS global alerts · 15-min updates</div>
+      </div>
+    </div>
+
+    <!-- Focal Mechanism / Stress Regime Panel (GEO-B) -->
+    <div class="ps" id="ps-focal">
+      <div class="ps-hdr" onclick="togglePS('ps-focal')" data-tip="<strong>Focal Mechanism Ratio</strong>Thrust/Strike-slip/Normal breakdown for M5.5+ events (last 30 days). A rising thrust ratio indicates compressional stress loading — one of the few defensible seismic precursor signals.<em>Source: USGS ComCat moment-tensor product</em>">
+        <span class="ps-name">⚙ Focal Mechanism Ratio</span>
+        <span class="ps-arr">▾</span>
+      </div>
+      <div class="ps-body">
+        <div id="focal-mechanism-content" style="padding:6px 10px;">Loading moment tensor data…</div>
+      </div>
+    </div>
+
+    <!-- Seismicity Rate Change / Strain Proxy Panel (GEO-C) -->
+    <div class="ps" id="ps-strain">
+      <div class="ps-hdr" onclick="togglePS('ps-strain')" data-tip="<strong>Seismicity Rate Change</strong>Compares M3+ earthquake rate last 7 days vs previous 7 days per region. A 2× or greater rate increase is a proxy for crustal strain accumulation — similar to what GNSS geodetic data would show.<em>Source: USGS FDSNWS · computed every 6 hours</em>">
+        <span class="ps-name">📡 Seismicity Rate / Strain Proxy</span>
+        <span class="ps-arr">▾</span>
+      </div>
+      <div class="ps-body">
+        <div id="strain-proxy-content" style="padding:6px 10px;font-size:8px;color:var(--text-dim);">Computing… (M3+, last 14 days)</div>
+      </div>
+    </div>
+
+    <!-- API Health Monitor -->
+    <div class="ps" id="ps-apihealth">
+      <div class="ps-head" onclick="togglePS('ps-apihealth')">
+        <span class="ps-name">🛰 API Health</span>
+        <span class="ps-stat" id="ps-apihealth-stat">—</span>
+        <span class="ps-arr">▾</span>
+      </div>
+      <div class="ps-body">
+        <div style="padding:6px 12px 10px;" id="api-health-grid">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:7.5px;">
+            <div id="ah-noaa-swpc" class="ah-item">⬤ NOAA SWPC <span class="ah-status">—</span></div>
+            <div id="ah-usgs"      class="ah-item">⬤ USGS FDSN <span class="ah-status">—</span></div>
+            <div id="ah-openmeteo" class="ah-item">⬤ Open-Meteo <span class="ah-status">—</span></div>
+            <div id="ah-goes"      class="ah-item">⬤ GOES Proton <span class="ah-status">—</span></div>
+            <div id="ah-dscovr"    class="ah-item">⬤ DSCOVR Wind <span class="ah-status">—</span></div>
+            <div id="ah-dst"       class="ah-item">⬤ Kyoto Dst <span class="ah-status">—</span></div>
+            <div id="ah-iers-lod"  class="ah-item">⬤ IERS LOD <span class="ah-status">—</span></div>
+            <div id="ah-gcmt"      class="ah-item">⬤ GCMT FocalMech <span class="ah-status">—</span></div>
+          </div>
+          <div style="margin-top:5px;font-size:7px;color:var(--text-dim);" id="ah-last-updated">Last checked: —</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- System State (open) — includes period selector -->
+    <div class="ps ps-open" id="ps-sysstate">
+      <div class="ps-head" onclick="togglePS('ps-sysstate')">
+        <span class="ps-name">⚡ System State</span>
+        <span class="ps-stat" id="ps-sysstate-stat"></span>
+        <span class="ps-arr">▾</span>
+      </div>
+      <div class="ps-body">
+        <div style="padding:6px 12px 10px;">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-bottom:6px;">
+            <div class="period-btn active" onclick="setPeriod('1m')" id="pb-1m">1-Mo (Proj)</div>
+            <div class="period-btn" onclick="setPeriod('1y')" id="pb-1y">1 Year</div>
+            <div class="period-btn" onclick="setPeriod('5y')" id="pb-5y">5 Years</div>
+            <div class="period-btn" onclick="setPeriod('11y')" id="pb-11y">Solar Cycle</div>
+            <div class="period-btn" onclick="setPeriod('yoy')" id="pb-yoy">YoY Δ</div>
+            <div class="period-btn" onclick="setPeriod('27y')" id="pb-27y">Grand Cycle</div>
+          </div>
+          <div style="font-size:7px;color:var(--text-dim);padding:1px 10px 3px;letter-spacing:.05em;opacity:.7;">ℹ Projections are model-derived, not historical measurements</div>
+          <div id="period-desc" style="font-size:8px;color:var(--c-cyan);line-height:1.7;padding:6px 10px;border:1px solid rgba(0,229,255,.15);background:rgba(0,229,255,.03);border-radius:2px;margin-bottom:6px;"></div>
+          <div id="system-state-cards"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Readings (closed by default) -->
+    <div class="ps" id="ps-readings">
+      <div class="ps-head" onclick="togglePS('ps-readings')">
+        <span class="ps-name">📡 Active Readings</span>
+        <span class="ps-stat" id="ps-readings-stat">0 layers</span>
+        <span class="ps-arr">▾</span>
+      </div>
+      <div class="ps-body">
+        <div id="data-cards">
+          <div class="no-data" style="padding:14px 14px 18px;font-size:8.5px;line-height:2;">
+            Toggle layers in the left panel <span style="color:var(--text-dim);opacity:.6">[</span> to see readings here.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cross-Layer Signals (closed by default) -->
+    <div class="ps" id="ps-crosssig">
+      <div class="ps-head" onclick="togglePS('ps-crosssig')">
+        <span class="ps-name">🔗 Cross-Layer Signals</span>
+        <span class="ps-stat"></span>
+        <span class="ps-arr">▾</span>
+      </div>
+      <div class="ps-body">
+        <div style="padding:4px 12px 10px;"><div id="cross-signals"></div></div>
+      </div>
+    </div>
+
+  </div><!-- /rpanel-now -->
+
+  <!-- ══════════════════════════════════════════════
+       TAB 3: EXPLORE — Correlation Clusters
+       ══════════════════════════════════════════════ -->
+  <div class="rpanel-content" id="rpanel-explore">
+    <div id="corr-panel" style="flex:1;overflow-y:auto;">
+  <div style="padding:9px 14px 6px;display:flex;align-items:center;justify-content:space-between;gap:6px;">
+    <div class="corr-title" style="margin-bottom:0;font-size:10px;">Pattern Clusters</div>
+    <div style="display:flex;gap:4px;align-items:center;flex-shrink:0;">
+      <div id="corr-filter" style="display:flex;gap:3px;">
+        <span onclick="filterCorr('all')" id="cf-all" style="font-size:7px;letter-spacing:.1em;padding:2px 5px;border:1px solid var(--c-cyan);color:var(--c-cyan);cursor:pointer;">ALL</span>
+        <span onclick="filterCorr('strong')" id="cf-strong" style="font-size:7px;letter-spacing:.1em;padding:2px 5px;border:1px solid var(--border);color:var(--text-dim);cursor:pointer;">STRONG</span>
+        <span onclick="filterCorr('hidden')" id="cf-hidden" style="font-size:7px;letter-spacing:.1em;padding:2px 5px;border:1px solid var(--border);color:var(--text-dim);cursor:pointer;">OBSCURE</span>
+      </div>
+    </div>
+  </div>
+  <div style="padding:0 14px 6px;font-size:7.5px;color:var(--text-dim);line-height:1.5;">
+    Click any cluster to read the science. Bar = published effect size.
+  </div>
+
+  <!-- ─── TIER 1: WELL-ESTABLISHED ─── -->
+  <div class="corr-tier-label">▸ WELL ESTABLISHED</div>
+
+  <div class="corr-card" data-tier="strong" data-layers="sst,wind,solar,ionosphere" onclick="this.classList.toggle('open')">
+    <div class="corr-card-head"><div><div class="corr-cluster" style="color:#00b4d8">Ocean–Climate–Ionosphere</div><div class="corr-layers">SST · Wind · Solar · Ionospheric TEC</div></div><span class="corr-chevron">▾</span></div>
+    <div class="corr-bar-wrap">
+      <div class="corr-bar"><div class="corr-fill" style="width:85%;background:linear-gradient(90deg,#00b4d8,#ffd600)"></div></div>
+      <div class="corr-pct" style="color:#00b4d8">85%</div>
+    </div>
+    <div class="corr-status">SST anomalies drive atmospheric circulation and modulate ionospheric TEC via upward propagating waves · Svensmark &amp; Friis-Christensen, J. Atm. Sol-Terr. Phys 1997</div>
+    <div class="corr-active-note" id="cn-ocean-climate"></div>
+  </div>
+
+  <div class="corr-card" data-tier="strong" data-layers="schumann,geomagnetic,ionosphere,solarwind" onclick="this.classList.toggle('open')">
+    <div class="corr-card-head"><div><div class="corr-cluster" style="color:#ff6d00">EM–Cavity Resonance</div><div class="corr-layers">Schumann · Kp · Ionospheric TEC · Solar Wind</div></div><span class="corr-chevron">▾</span></div>
+    <div class="corr-bar-wrap">
+      <div class="corr-bar"><div class="corr-fill" style="width:78%;background:linear-gradient(90deg,#ff6d00,#b84fff)"></div></div>
+      <div class="corr-pct" style="color:#ff6d00">78%</div>
+    </div>
+    <div class="corr-status">Earth-ionosphere cavity modes directly respond to solar wind pressure and geomagnetic disturbances · Williams, Science 1992; Nickolaenko &amp; Hayakawa 2002</div>
+    <div class="corr-active-note" id="cn-em-cavity"></div>
+  </div>
+
+  <div class="corr-card" data-tier="strong" data-layers="geotherm,gravity,magnetic,seismic,volcanic" onclick="this.classList.toggle('open')">
+    <div class="corr-card-head"><div><div class="corr-cluster" style="color:#40c8ff">Core → Lithosphere Cascade</div><div class="corr-layers">Geotherm · Gravity · Magnetic · Seismic · Volcanic</div></div><span class="corr-chevron">▾</span></div>
+    <div class="corr-bar-wrap">
+      <div class="corr-bar"><div class="corr-fill" style="width:72%;background:linear-gradient(90deg,#40c8ff,#ff6d00)"></div></div>
+      <div class="corr-pct" style="color:#40c8ff">72%</div>
+    </div>
+    <div class="corr-status">Mantle convection drives plate motion, gravity anomalies, geothermal gradients and controls spatial distribution of seismicity and volcanism · Anderson, Science 2001</div>
+    <div class="corr-active-note" id="cn-core-litho"></div>
+  </div>
+
+  <div class="corr-card" data-tier="strong" data-layers="cosmic,sst,solar" onclick="this.classList.toggle('open')">
+    <div class="corr-card-head"><div><div class="corr-cluster" style="color:#ff4fa0">Cosmic Ray → Cloud → Climate</div><div class="corr-layers">Cosmic Ray · SST · Solar Irradiance</div></div><span class="corr-chevron">▾</span></div>
+    <div class="corr-bar-wrap">
+      <div class="corr-bar"><div class="corr-fill" style="width:68%;background:linear-gradient(90deg,#ff4fa0,#00b4d8)"></div></div>
+      <div class="corr-pct" style="color:#ff4fa0">68%</div>
+    </div>
+    <div class="corr-status">3–4% variation in global cloud cover correlates with cosmic ray flux over the solar cycle via ion-nucleation of aerosols · Svensmark &amp; Friis-Christensen, J. Atm. Sol-Terr. Phys 1997; CLOUD experiment, CERN 2011</div>
+    <div class="corr-active-note" id="cn-cr-cloud"></div>
+  </div>
+
+  <!-- ─── TIER 2: MODERATE EVIDENCE ─── -->
+  <div class="corr-tier-label">▸ MODERATE EVIDENCE</div>
+
+  <div class="corr-card" data-tier="strong" data-layers="tides,seismic,volcanic" onclick="this.classList.toggle('open')">
+    <div class="corr-card-head"><div><div class="corr-cluster" style="color:#00ffc8">Tidal Stress → Seismic Triggering</div><div class="corr-layers">Tidal Force · Seismic · Volcanic</div></div><span class="corr-chevron">▾</span></div>
+    <div class="corr-bar-wrap">
+      <div class="corr-bar"><div class="corr-fill" style="width:58%;background:linear-gradient(90deg,#40c8ff,#00ff88)"></div></div>
+      <div class="corr-pct" style="color:#00ffc8">58%</div>
+    </div>
+    <div class="corr-status">Lunisolar tidal stress modulates fault slip probability — effect clearest in shallow oceanic thrust faults near syzygy · Tanaka et al., Earth Planet. Sci. Lett. 2002; Cochran et al., Science 2004</div>
+    <div class="corr-active-note" id="cn-tidal-seismic"></div>
+  </div>
+
+  <div class="corr-card" data-tier="strong" data-layers="geomagnetic,seismic,solarwind" onclick="this.classList.toggle('open')">
+    <div class="corr-card-head"><div><div class="corr-cluster" style="color:#ff3d3d">Solar Proton Density → M5+ Seismicity</div><div class="corr-layers">Solar Wind · Kp · Seismic</div></div><span class="corr-chevron">▾</span></div>
+    <div class="corr-bar-wrap">
+      <div class="corr-bar"><div class="corr-fill" style="width:53%;background:linear-gradient(90deg,#aaff00,#ff3d3d)"></div></div>
+      <div class="corr-pct" style="color:#ff3d3d">53%</div>
+    </div>
+    <div class="corr-status">Clear correlation (p &lt; 10⁻⁵) between solar proton density and M&gt;5.6 earthquakes with 1-day lag via reverse piezoelectric effect · Marchitelli et al., Nature Scientific Reports 2020</div>
+    <div class="corr-active-note" id="cn-proton-seismic"></div>
+  </div>
+
+  <div class="corr-card" data-tier="strong" data-layers="geomagnetic,seismic,cosmic" onclick="this.classList.toggle('open')">
+    <div class="corr-card-head"><div><div class="corr-cluster" style="color:#b84fff">Geomagnetic Storm → Earthquake Lag</div><div class="corr-layers">Kp · Cosmic Ray · Seismic</div></div><span class="corr-chevron">▾</span></div>
+    <div class="corr-bar-wrap">
+      <div class="corr-bar"><div class="corr-fill" style="width:48%;background:linear-gradient(90deg,#b84fff,#ff3d3d)"></div></div>
+      <div class="corr-pct" style="color:#b84fff">48%</div>
+    </div>
+    <div class="corr-status">M≥7.5 earthquakes show statistically significant increase ~27–28 days after intense geomagnetic storms via Lorentz force in fault zones · Urata et al. 2018; PMC study 1932–2016 Kp analysis</div>
+    <div class="corr-active-note" id="cn-geo-storm-eq"></div>
+  </div>
+
+  <!-- ─── TIER 3: OBSCURE / CONTESTED ─── -->
+  <div class="corr-tier-label" style="color:#ff6d00;border-color:rgba(255,109,0,.4);">▸ OBSCURE &amp; CONTESTED — Research Hypotheses</div>
+  <div style="margin:4px 14px 8px;padding:8px 12px;border:1px solid rgba(255,109,0,.4);background:rgba(255,109,0,.06);border-radius:3px;font-size:8px;line-height:1.8;color:rgba(255,200,150,.9);letter-spacing:.04em;">
+    <strong style="color:#ff6d00;letter-spacing:.1em;">⚠ NOT FOR OPERATIONAL USE</strong> — The correlations below are active areas of scientific research with contested or unconfirmed mechanisms. They appear in peer-reviewed literature but have not been validated as operational forecast tools. Do not use these to make decisions about hazard preparation, evacuation, or emergency response.
+  </div>
+
+  <div class="corr-card" data-tier="hidden" data-layers="magnetic,seismic,geomagnetic" onclick="this.classList.toggle('open')">
+    <div class="corr-card-head"><div><div class="corr-cluster" style="color:#ffd600">Geomagnetic Jerk → Seismic Swarms</div><div class="corr-layers">Magnetic · Kp · Seismic</div></div><span class="corr-chevron">▾</span></div>
+    <div class="corr-bar-wrap">
+      <div class="corr-bar"><div class="corr-fill" style="width:44%;background:linear-gradient(90deg,#ffd600,#ff3d3d)"></div></div>
+      <div class="corr-pct" style="color:#ffd600">44%</div>
+    </div>
+    <div class="corr-status">Geomagnetic jerks (abrupt secular variation slope changes from core torsional oscillations) coincide with global seismic swarm episodes · Florindo &amp; Alfonsi, Ann. Geofis. 1995; De Michelis et al. 2005 (Sumatra M9.3 possibly triggered a jerk)</div>
+    <div class="corr-active-note" id="cn-jerk-seismic"></div>
+  </div>
+
+  <div class="corr-card" data-tier="hidden" data-layers="seismic,volcanic,tides" onclick="this.classList.toggle('open')">
+    <div class="corr-card-head"><div><div class="corr-cluster" style="color:#ff6d00">Earth Rotation Slowdown → Seismicity</div><div class="corr-layers">Tidal Force · Seismic · Volcanic</div></div><span class="corr-chevron">▾</span></div>
+    <div class="corr-bar-wrap">
+      <div class="corr-bar"><div class="corr-fill" style="width:65%;background:linear-gradient(90deg,#ff6d00,#ff3d3d)"></div></div>
+      <div class="corr-pct" style="color:#ff6d00">65%</div>
+    </div>
+    <div class="corr-status">Periods of slower Earth rotation (longer days) correlate with enhanced global seismicity — &gt;65% of M7+ events occur during LOD maxima. Caribbean tectonism peaks forecast for ~2030 · Bendick &amp; Bilham, Geophys. Res. Lett. 2017; Frontiers Earth Sci. 2022</div>
+    <div class="corr-active-note" id="cn-lod-seismic"></div>
+  </div>
+
+  <div class="corr-card" data-tier="hidden" data-layers="cosmic,ionosphere,seismic" onclick="this.classList.toggle('open')">
+    <div class="corr-card-head"><div><div class="corr-cluster" style="color:#00ffc8">Lithosphere–Atm–Ionosphere (LAIC)</div><div class="corr-layers">Cosmic Ray · Ionospheric TEC · Seismic</div></div><span class="corr-chevron">▾</span></div>
+    <div class="corr-bar-wrap">
+      <div class="corr-bar"><div class="corr-fill" style="width:41%;background:linear-gradient(90deg,#00ffc8,#b84fff)"></div></div>
+      <div class="corr-pct" style="color:#00ffc8">41%</div>
+    </div>
+    <div class="corr-status">Pre-seismic radon outgassing ionises the boundary layer, altering atmospheric conductivity and producing measurable TEC anomalies 5–10 days before M&gt;6 earthquakes · LAIC model; Pulinets &amp; Ouzounov 2011; Geosciences 2024</div>
+    <div class="corr-active-note" id="cn-laic"></div>
+  </div>
+
+  <div class="corr-card" data-tier="hidden" data-layers="solar,volcanic,geomagnetic" onclick="this.classList.toggle('open')">
+    <div class="corr-card-head"><div><div class="corr-cluster" style="color:#aaff00">Solar Grand Cycle → Volcanism</div><div class="corr-layers">Solar Irradiance · Volcanic · Kp</div></div><span class="corr-chevron">▾</span></div>
+    <div class="corr-bar-wrap">
+      <div class="corr-bar"><div class="corr-fill" style="width:38%;background:linear-gradient(90deg,#aaff00,#ff6d00)"></div></div>
+      <div class="corr-pct" style="color:#aaff00">38%</div>
+    </div>
+    <div class="corr-status">Correlation r=0.84 (p=0.01) between volcanic eruption frequency 1868–1950 and solar magnetic cycles of southern polarity. 350-yr grand cycle matches both. Also matches Jupiter's ~11.86-yr orbital period · Zharkova et al., Global J. Sci. Research 2023; Frontiers Earth Sci. 2025</div>
+    <div class="corr-active-note" id="cn-solar-volc"></div>
+  </div>
+
+  <div class="corr-card" data-tier="hidden" data-layers="geomagnetic,magnetic,schumann" onclick="this.classList.toggle('open')">
+    <div class="corr-card-head"><div><div class="corr-cluster" style="color:#ff4fa0">Core Oscillation → Surface EM</div><div class="corr-layers">Kp · Magnetic · Schumann</div></div><span class="corr-chevron">▾</span></div>
+    <div class="corr-bar-wrap">
+      <div class="corr-bar"><div class="corr-fill" style="width:35%;background:linear-gradient(90deg,#ff4fa0,#ff6d00)"></div></div>
+      <div class="corr-pct" style="color:#ff4fa0">35%</div>
+    </div>
+    <div class="corr-status">6-year torsional oscillations of Earth's fluid outer core correlate with LOD variations and geomagnetic jerks, producing surface EM signatures detectable in Schumann cavity modes · Nature Comms 2020; ScienceDirect 2018 (6-yr westward rotation)</div>
+    <div class="corr-active-note" id="cn-core-em"></div>
+  </div>
+
+  <div class="corr-card" data-tier="hidden" data-layers="sst,seismic,geotherm" onclick="this.classList.toggle('open')">
+    <div class="corr-card-head"><div><div class="corr-cluster" style="color:#00b4d8">Ocean Heat → Fault Pore Pressure</div><div class="corr-layers">SST · Seismic · Geothermal</div></div><span class="corr-chevron">▾</span></div>
+    <div class="corr-bar-wrap">
+      <div class="corr-bar"><div class="corr-fill" style="width:32%;background:linear-gradient(90deg,#00b4d8,#ff3d3d)"></div></div>
+      <div class="corr-pct" style="color:#00b4d8">32%</div>
+    </div>
+    <div class="corr-status">SST anomalies alter ocean loading on submarine faults and modulate hydrothermal pore pressure gradients. Weak but detectable correlation with shallow (&lt;30km) submarine seismicity. Under active investigation · Tolstoy et al., Science 2002</div>
+    <div class="corr-active-note" id="cn-sst-fault"></div>
+  </div>
+
+  <div class="corr-card" data-tier="hidden" data-layers="cosmic,seismic,geomagnetic" onclick="this.classList.toggle('open')">
+    <div class="corr-card-head"><div><div class="corr-cluster" style="color:#ff3d3d">Muon Flux → Fault Zone Trigger</div><div class="corr-layers">Cosmic Ray · Seismic · Kp</div></div><span class="corr-chevron">▾</span></div>
+    <div class="corr-bar-wrap">
+      <div class="corr-bar"><div class="corr-fill" style="width:28%;background:linear-gradient(90deg,#ff4fa0,#ff3d3d)"></div></div>
+      <div class="corr-pct" style="color:#ff3d3d">28%</div>
+    </div>
+    <div class="corr-status">High-energy muons from cosmic rays penetrate crust to 10+ km depth. In seismogenic zones near failure threshold, muon-induced nuclear-electromagnetic cascades may provide the final trigger increment · Tsarev &amp; Chechin 1988; Science.gov review; LSTM classification 84.47% accuracy (Atmosphere 2024)</div>
+    <div class="corr-active-note" id="cn-muon-fault"></div>
+  </div>
+
+  <div class="corr-card" data-tier="hidden" data-layers="gravity,magnetic,geotherm" onclick="this.classList.toggle('open')">
+    <div class="corr-card-head"><div><div class="corr-cluster" style="color:#40c8ff">Large Low-Shear-Velocity Provinces</div><div class="corr-layers">Gravity · Magnetic · Geothermal</div></div><span class="corr-chevron">▾</span></div>
+    <div class="corr-bar-wrap">
+      <div class="corr-bar"><div class="corr-fill" style="width:55%;background:linear-gradient(90deg,#40c8ff,#ff4fa0)"></div></div>
+      <div class="corr-pct" style="color:#40c8ff">55%</div>
+    </div>
+    <div class="corr-status">Two antipodal thermochemical superplume structures at the core-mantle boundary control long-wavelength gravity, heat flow patterns and magnetic field geometry. Their edges correlate spatially with deep-focus seismicity and hotspot chains · McNamara &amp; Zhong, Nature 2005; ScienceDirect LLSVP 2018</div>
+    <div class="corr-active-note" id="cn-llsvp"></div>
+  </div>
+
+  <div style="padding:10px 18px 14px;font-size:8px;color:var(--text-dim);line-height:1.8;border-top:1px solid var(--border);margin-top:4px;">
+    <span style="color:var(--c-gold)">NOTE:</span> Correlation % reflects published effect sizes or explained variance — not certainty of causation. <strong style="color:rgba(255,200,150,.8)">Well Established clusters are backed by robust replication; Moderate Evidence clusters are directionally supported but have significant uncertainty; Obscure &amp; Contested clusters are research hypotheses only and must not be used for operational hazard assessment.</strong> For real-time official alerts see USGS earthquake.usgs.gov, NOAA tsunami.gov, and NWS weather.gov.
+  </div>
+</div>
+  </div><!-- /rpanel-explore -->
+
+  <!-- ══════════════════════════════════════════════
+       TAB 4: HISTORY — Timeline + Charts
+       ══════════════════════════════════════════════ -->
+  <div class="rpanel-content" id="rpanel-hist">
+    <div style="padding:14px 12px;display:flex;flex-direction:column;gap:10px;width:100%;box-sizing:border-box;">
+
+      <!-- Geomagnetic summary -->
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:10px 12px;">
+        <div style="font-size:8px;letter-spacing:.12em;color:var(--c-purple);text-transform:uppercase;font-weight:700;margin-bottom:8px;">🌐 Geomagnetic — 30 days</div>
+        <div style="display:flex;justify-content:space-between;gap:6px;">
+          <div style="text-align:center;flex:1;">
+            <div id="rph-kp-mean" style="font-size:13px;font-weight:700;color:var(--c-purple);">—</div>
+            <div style="font-size:7px;color:var(--text-dim);margin-top:2px;">Mean Kp</div>
+          </div>
+          <div style="text-align:center;flex:1;">
+            <div id="rph-kp-max" style="font-size:13px;font-weight:700;color:var(--c-purple);">—</div>
+            <div style="font-size:7px;color:var(--text-dim);margin-top:2px;">Peak Kp</div>
+          </div>
+          <div style="text-align:center;flex:1;">
+            <div id="rph-kp-storms" style="font-size:13px;font-weight:700;color:var(--c-cyan);">—</div>
+            <div style="font-size:7px;color:var(--text-dim);margin-top:2px;">G1+ Events</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seismicity summary -->
+      <div style="background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:10px 12px;">
+        <div style="font-size:8px;letter-spacing:.12em;color:var(--c-red);text-transform:uppercase;font-weight:700;margin-bottom:8px;">🌍 Seismicity — 30 days</div>
+        <div style="display:flex;justify-content:space-between;gap:6px;">
+          <div style="text-align:center;flex:1;">
+            <div id="rph-eq-count" style="font-size:13px;font-weight:700;color:var(--c-red);">—</div>
+            <div style="font-size:7px;color:var(--text-dim);margin-top:2px;">M4.5+ Events</div>
+          </div>
+          <div style="text-align:center;flex:1;">
+            <div id="rph-eq-largest" style="font-size:13px;font-weight:700;color:var(--c-red);">—</div>
+            <div style="font-size:7px;color:var(--text-dim);margin-top:2px;">Largest</div>
+          </div>
+          <div style="text-align:center;flex:1;">
+            <div id="rph-eq-m7" style="font-size:13px;font-weight:700;color:var(--c-yellow);">—</div>
+            <div style="font-size:7px;color:var(--text-dim);margin-top:2px;">M7+ Count</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="font-size:7px;color:var(--text-dim);opacity:.5;text-align:center;margin-top:2px;">↓ Full charts &amp; timeline in the panel below</div>
+    </div>
+  </div><!-- /rpanel-hist -->
+  <!-- ══════════════════════════════════════════════
+       TAB 2: RISK — Forecast & Calendar
+       (was rpanel-forecast)
+       ══════════════════════════════════════════════ -->
+  <div class="rpanel-content" id="rpanel-risk">
+    <div class="fc-header-bar">
+      <div class="fc-header-title">⚠ Hazard Forecast</div>
+      <button class="fc-refresh-btn" onclick="runForecastDataFetch()">↻ REFRESH</button>
+    </div>
+    <div id="fc-status-bar" style="color:var(--text-dim);border-color:var(--border)">
+      Press REFRESH to load live data
+    </div>
+    <div id="fc-dashboard" style="flex:1;overflow-y:auto;padding-bottom:20px;">
+      <div style="padding:20px 14px;text-align:center;font-size:9px;color:var(--text-dim);line-height:1.9">
+        Press <span style="color:var(--c-cyan)">↻ REFRESH</span> to fetch live data from<br>
+        USGS · NOAA SWPC · Open-Meteo · NHC<br>
+        <span style="font-size:8px;opacity:.5">Auto-refreshes every 10 minutes while tab is open</span>
+      </div>
+    </div>
+    <div style="padding:5px 14px;font-size:7px;color:rgba(255,255,255,.2);letter-spacing:.06em;border-top:1px solid var(--border);flex-shrink:0;">
+      ⓘ Research-grade · NOT an official warning system · emergencies: USGS · NHC · PTWC
+    </div>
+  </div><!-- /rpanel-risk -->
+
+  <!-- ══════════════════════════════════════════════
+       DEEP ANALYSIS OVERLAY — injected later (outside right-panel)
+       Placeholder: discover content moved to #deep-analysis-overlay below
+       ══════════════════════════════════════════════ -->
+
+  <!-- ══ BOTTOM DOCK — Timeline · Charts · 30-Day Outlook ══ -->
+  <div id="bottom-dock">
+
+    <!-- 1. TIMELINE -->
+    <div class="dock-section" id="dock-sec-timeline">
+      <div class="dock-hdr" onclick="toggleDock('timeline')">
+        <div class="dock-hdr-left">
+          <span class="dock-icon" id="dock-icon-timeline">▶</span>
+          <span class="dock-title">📅 Timeline</span>
+        </div>
+        <div style="display:flex;gap:3px;" id="hist-period-btns">
+          <button class="period-btn active" onclick="setHistoryPeriod(7);event.stopPropagation();"  id="hp-7">7D</button>
+          <button class="period-btn"        onclick="setHistoryPeriod(14);event.stopPropagation();" id="hp-14">14D</button>
+          <button class="period-btn"        onclick="setHistoryPeriod(30);event.stopPropagation();" id="hp-30">30D</button>
+        </div>
+      </div>
+      <div class="dock-body" id="dock-body-timeline">
+        <div id="history-loading" style="padding:20px 14px;text-align:center;font-size:9px;color:var(--text-dim);letter-spacing:.1em;flex-shrink:0;">Loading historical data…</div>
+        <div id="history-content" style="flex:1;overflow-y:auto;display:none;padding:0 0 20px;">
+          <div style="padding:5px 14px 6px;font-size:8px;color:var(--text-dim);line-height:1.6;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px;">
+            <span style="color:#00ff88;font-size:8px;">●</span>
+            <span>Kp and earthquake charts show <strong style="color:rgba(255,255,255,.7)">real historical data</strong> from NOAA SWPC and USGS FDSNWS (up to 30 days). Data also seeds the Deep Analysis statistical engine.</span>
+          </div>
+          <div class="chart-section">
+            <div class="chart-header">
+              <span class="chart-label">Geomagnetic Kp Index (NOAA SWPC)</span>
+              <span id="hist-kp-live" class="chart-value-live" style="color:var(--c-purple)">—</span>
+            </div>
+            <canvas id="hist-kp-canvas" style="width:100%;height:60px;display:block;background:var(--surface);border-radius:2px;"></canvas>
+            <div class="chart-stat-row">
+              <span id="hist-kp-mean">Mean: —</span><span id="hist-kp-max">Max: —</span><span id="hist-kp-storms">Storms: —</span>
+            </div>
+          </div>
+          <div class="chart-section">
+            <div class="chart-header">
+              <span class="chart-label">M4.5+ Earthquakes (USGS)</span>
+              <span id="hist-eq-count" class="chart-value-live" style="color:var(--c-red)">—</span>
+            </div>
+            <canvas id="hist-eq-canvas" style="width:100%;height:60px;display:block;background:var(--surface);border-radius:2px;"></canvas>
+            <div class="chart-stat-row">
+              <span id="hist-eq-largest">Largest: —</span><span id="hist-eq-shallow">Shallow: —</span><span id="hist-eq-m7">M7+: —</span>
+            </div>
+          </div>
+          <div class="chart-section">
+            <div class="chart-header">
+              <span class="chart-label">Solar Flares (GOES X-Ray)</span>
+              <span id="hist-flare-count" class="chart-value-live" style="color:var(--c-gold)">—</span>
+            </div>
+            <div id="hist-flare-list" style="max-height:90px;overflow-y:auto;font-size:8px;color:var(--text-dim);"></div>
+          </div>
+          <div class="chart-section" style="border-bottom:none;">
+            <div class="chart-header"><span class="chart-label">Notable Events Log</span></div>
+            <div id="hist-events-list" style="font-size:8px;color:var(--text-dim);line-height:1.8;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. CHARTS -->
+    <div class="dock-section" id="dock-sec-charts">
+      <div class="dock-hdr" onclick="toggleDock('charts')">
+        <div class="dock-hdr-left">
+          <span class="dock-icon" id="dock-icon-charts">▶</span>
+          <span class="dock-title">📈 Charts</span>
+        </div>
+      </div>
+      <div class="dock-body" id="dock-body-charts">
+        <div class="charts-sub-tabs" style="flex-shrink:0;">
+          <div class="csub-tab active" onclick="switchChartTab('series')" id="cst-series">Time Series</div>
+          <div class="csub-tab" onclick="switchChartTab('matrix')" id="cst-matrix">Corr Matrix</div>
+          <div class="csub-tab" onclick="switchChartTab('anomaly')" id="cst-anomaly">Anomalies</div>
+          <div class="csub-tab" onclick="switchChartTab('export')" id="cst-export">Export</div>
+        </div>
+        <div class="csub-panel active" id="csp-series">
+          <div style="padding:4px 12px;font-size:8px;color:var(--text-dim);line-height:1.6;border-bottom:1px solid var(--border);flex-shrink:0;">
+            <span class="eso-sim-badge">SESSION DATA</span> Charts show data collected since page load. <a href="#" onclick="event.preventDefault()" style="color:var(--c-cyan);text-decoration:none;" title="A 30-day historical engine is planned — see the roadmap.">Historical engine coming soon →</a>
+          </div>
+          <div id="sparklines-container" style="overflow-y:auto;flex:1;min-height:0;">
+            <div class="no-charts">Activate layers to see<br>live time-series plots</div>
+          </div>
+        </div>
+        <div class="csub-panel" id="csp-matrix">
+          <div id="corr-matrix-wrap" style="overflow-y:auto;flex:1;">
+            <div class="matrix-title">Layer Correlation Matrix</div>
+            <details class="chart-help"><summary>❓ What am I looking at?</summary><p>A heatmap of Pearson correlations between all active layer pairs. Each cell color shows strength (cyan=positive, red=negative). The number shows r (−1 to +1) with p-value significance. Only pairs marked ✱ or ✱✱ should be treated as potentially meaningful.</p></details>
+            <div style="font-size:8px;color:var(--text-dim);margin-bottom:8px;line-height:1.6;">Pairwise correlation. Blue=positive, Red=negative. <span class="eso-sim-badge">SESSION DATA</span></div>
+            <canvas id="corr-matrix-canvas"></canvas>
+            <div class="matrix-legend"><span>■ Strong negative</span><span>□ None</span><span>■ Strong positive</span></div>
+            <div id="matrix-key" style="margin-top:8px;font-size:8px;color:var(--text-dim);line-height:1.8;"></div>
+          </div>
+        </div>
+        <div class="csub-panel" id="csp-anomaly">
+          <div id="anomaly-feed" style="overflow-y:auto;flex:1;padding:10px 14px;">
+            <div style="font-size:8px;color:var(--text-dim);margin-bottom:8px;line-height:1.6;padding:4px 0;">Deviations from rolling mean across active layers.</div>
+            <div id="anomaly-list"><div class="no-charts">Activate layers to detect anomalies</div></div>
+          </div>
+        </div>
+        <div class="csub-panel" id="csp-export">
+          <div style="padding:12px 14px;overflow-y:auto;flex:1;">
+            <div style="font-size:8px;color:var(--text-dim);margin-bottom:10px;line-height:1.6;">Download collected session data for external analysis.</div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <button onclick="exportData('csv')" style="background:rgba(0,229,255,.12);border:1px solid rgba(0,229,255,.35);color:var(--c-cyan);padding:6px 10px;font-size:8px;letter-spacing:.1em;cursor:pointer;border-radius:3px;font-family:inherit;text-align:left;">
+                ⬇ EXPORT CSV — Time Series &amp; Baseline
+              </button>
+              <button onclick="exportData('json')" style="background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.25);color:var(--c-cyan);padding:6px 10px;font-size:8px;letter-spacing:.1em;cursor:pointer;border-radius:3px;font-family:inherit;text-align:left;">
+                ⬇ EXPORT JSON — Full Session Snapshot
+              </button>
+              <button onclick="exportData('quakes-csv')" style="background:rgba(255,61,61,.1);border:1px solid rgba(255,61,61,.3);color:#ff3d3d;padding:6px 10px;font-size:8px;letter-spacing:.1em;cursor:pointer;border-radius:3px;font-family:inherit;text-align:left;">
+                ⬇ EXPORT CSV — Earthquake Catalog
+              </button>
+              <button onclick="openSitrep()" style="background:rgba(255,214,0,.08);border:1px solid rgba(255,214,0,.3);color:var(--c-gold);padding:6px 10px;font-size:8px;letter-spacing:.1em;cursor:pointer;border-radius:3px;font-family:inherit;text-align:left;">
+                📋 GENERATE SITREP — Situation Report
+              </button>
+            </div>
+            <div style="margin-top:10px;font-size:7px;color:var(--text-dim);line-height:1.7;border-top:1px solid var(--border);padding-top:8px;">
+              CSV exports include timestamped rows for all active layer series.<br>
+              JSON snapshot includes baselines, quake catalog, solar indices, and layer states.<br>
+              SITREP generates a plain-text situation report you can copy into briefings.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. 30-DAY OUTLOOK -->
+    <div class="dock-section" id="dock-sec-outlook">
+      <div class="dock-hdr" onclick="toggleDock('outlook')">
+        <div class="dock-hdr-left">
+          <span class="dock-icon" id="dock-icon-outlook">▶</span>
+          <span class="dock-title">📅 30-Day Outlook</span>
+        </div>
+        <span id="cal-month-label" style="font-size:8px;color:var(--text-dim);"></span>
+      </div>
+      <div class="dock-body" id="dock-body-outlook">
+        <div style="padding:6px 14px 10px;">
+          <div style="font-size:8px;color:var(--text-dim);margin-bottom:6px;line-height:1.6;">
+            <span class="eso-sim-badge">MODEL PROJECTED</span> Risk levels computed from lunar cycle, solar cycle phase &amp; physics models — not real forecast data.
+          </div>
+          <div id="forecast-calendar" style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;"></div>
+          <div style="display:flex;gap:8px;margin-top:6px;font-size:7px;color:var(--text-dim);letter-spacing:.08em;">
+            <span><span style="display:inline-block;width:8px;height:8px;border-radius:1px;background:#ff3d3d;margin-right:2px;vertical-align:middle;"></span>Critical</span>
+            <span><span style="display:inline-block;width:8px;height:8px;border-radius:1px;background:#ff6d00;margin-right:2px;vertical-align:middle;"></span>Watch</span>
+            <span><span style="display:inline-block;width:8px;height:8px;border-radius:1px;background:#ffd600;margin-right:2px;vertical-align:middle;"></span>Advisory</span>
+            <span><span style="display:inline-block;width:8px;height:8px;border-radius:1px;background:var(--surface2);margin-right:2px;vertical-align:middle;"></span>Clear</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /bottom-dock -->
+
+  <!-- Persistent footer: expand + refresh -->
+  <div style="padding:7px 14px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-shrink:0;">
+    <span style="font-size:7px;color:var(--text-dim);letter-spacing:.12em">ESO PANEL</span>
+    <div style="display:flex;gap:6px;align-items:center;">
+      <button class="ov-expand-btn" onclick="togglePanelFS()" title="Expand panel to fullscreen (F)">⤢ full</button>
+      <button class="refresh-btn" onclick="refreshAllData()">↻ REFRESH</button>
+    </div>
+  </div>
+  <!-- Drag-to-resize handle -->
+  <div id="panel-resize-handle" title="Drag to resize panel"></div>
+</div><!-- /right-panel -->
+
+<!-- ══════════════════════════════════════════════════════════
+     DEEP ANALYSIS OVERLAY (fullscreen, outside right-panel)
+     Contains all Discover engine sub-tools
+     ══════════════════════════════════════════════════════════ -->
+<div id="deep-analysis-overlay">
+  <div class="da-head">
+    <div class="da-title">🔍 Deep Analysis Engine</div>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <span style="font-size:8px;color:var(--text-dim);letter-spacing:.1em;font-family:'Space Mono',monospace;" data-tip="<strong>Deep Analysis Engine</strong>Nine analytical tools that examine Earth system data from different mathematical perspectives. Each tab applies a different technique — from simple stress scoring to spectral decomposition and mutual information theory. Hover any tab name for an explanation of what it does.">? Hover tabs for help</span>
+      <span style="font-size:8px;color:var(--text-dim);letter-spacing:.1em;font-family:'Space Mono',monospace;">D or ESC to close</span>
+      <div class="da-close" onclick="closeDeepAnalysis()">⊠ CLOSE</div>
+    </div>
+  </div>
+  <!-- Sub-tab navigation -->
+  <div class="disc-sub-tabs-wrap" style="flex-shrink:0;">
+    <div class="disc-sub-tabs">
+      <div class="disc-tab active" onclick="switchDiscTab('stress')" id="dst-stress" data-tip="<strong>Stress Index</strong>A composite score (0–100) showing how far all active Earth system layers deviate from their normal baseline right now. Each layer contributes a weighted Z-score. &gt;50 = elevated. &gt;70 = rare compound event window. Think of it as a combined 'alert level' across all systems simultaneously.">Stress Index</div>
+      <div class="disc-tab" onclick="switchDiscTab('lag')" id="dst-lag" data-tip="<strong>Lag Explorer</strong>Cross-correlation analysis between two layers over time. Helps identify cause-and-effect relationships with a time delay — e.g. does a solar wind spike lead to elevated seismicity 1–3 days later? Select Layer A and Layer B, then read the peak lag in hours/days.">Lag Explorer</div>
+      <div class="disc-tab" onclick="switchDiscTab('fft')" id="dst-fft" data-tip="<strong>Spectral Analysis (FFT)</strong>Decomposes a data layer into its frequency components using Fast Fourier Transform. Reveals hidden periodic cycles — e.g. 27-day solar rotation, 11-year solar cycle, 14-day tidal cycle. Peak bars show which periods dominate the signal.">Spectral</div>
+      <div class="disc-tab" onclick="switchDiscTab('phase')" id="dst-phase" data-tip="<strong>Phase-Space Attractor</strong>Plots one layer against another to reveal the geometry of their relationship. Circular trajectory = oscillation between states. Spiral = converging toward equilibrium. Scattered = chaotic / no clear relationship. Useful for finding hidden coupling between systems.">Phase Space</div>
+      <div class="disc-tab" onclick="switchDiscTab('mi')" id="dst-mi" data-tip="<strong>Mutual Information Matrix</strong>Measures non-linear statistical dependency between all layer pairs — captures relationships that standard Pearson correlation misses (e.g. quadratic, threshold, or time-lagged effects). Higher value = stronger dependency. Blue = positive, red = negative correlation direction.">Mutual Info</div>
+      <div class="disc-tab" onclick="switchDiscTab('planets')" id="dst-planets" data-tip="<strong>Planetary Gravitational Forcing</strong>Computes the current tidal gravitational influence on Earth from every solar system body (Moon, Sun, Venus, Mars, Jupiter, etc.). Some researchers propose that planetary alignments modulate solar activity and seismicity through gravitational and electromagnetic coupling. Shown as a research-level indicator.">Planets</div>
+      <div class="disc-tab" onclick="switchDiscTab('indices')" id="dst-indices" data-tip="<strong>Novel Synthetic Indices</strong>Custom composite indices derived by combining multiple layers using weighted formulas. These include experimental indicators not found in standard monitoring — e.g. a Compound Seismic Trigger Index that blends Kp, solar wind, tidal force, and recent M5+ count into a single risk signal.">Novel Indices</div>
+      <div class="disc-tab" onclick="switchDiscTab('chain')" id="dst-chain" style="color:#ffd600" data-tip="<strong>Chain of Events</strong>Tracks known physical cascade sequences across Earth systems. When one monitored variable crosses a threshold, it may trigger a chain: e.g. X-class flare → ionospheric disturbance → elevated Kp → geomagnetic storm → increased seismic stress window. Chains 9–11 are contested research-level indicators, not operational forecasts.">⛓ Chains</div>
+      <div class="disc-tab" onclick="switchDiscTab('log')" id="dst-log" style="color:#ff4fa0" data-tip="<strong>Auto-Discovery Log</strong>Runs automated pattern detection every 30 seconds across all active layer combinations. Flags statistically unusual co-occurrences — e.g. simultaneous elevation in TEC, Kp, and seismicity above their respective baselines. Results are logged here chronologically for review.">Discovery Log</div>
+      <div class="disc-tab" onclick="switchDiscTab('wavelet')" id="dst-wavelet" data-tip="<strong>Wavelet Coherence</strong>Time-frequency analysis showing how two Earth system layers co-vary across different timescales simultaneously. Unlike simple cross-correlation, wavelet coherence reveals whether the relationship between two layers is stable or shifts with time — e.g. solar wind and seismicity may couple only during active periods. Warm colors (yellow) = high coherence.">Wavelet</div>
+      <div class="disc-tab" onclick="switchDiscTab('hindcast')" id="dst-hindcast" data-tip="<strong>Hindcast Validation</strong>Stores ESO stress predictions every 6 hours and validates them against the USGS M5.5+ earthquake catalog 48 hours later. Tracks binary accuracy: did elevated stress scores precede elevated seismicity? Builds an empirical track record of the system's predictive signal over time.">Hindcast</div>
+      <div class="disc-tab" onclick="switchDiscTab('hyp')" id="dst-hyp" style="color:#a78bfa" data-tip="<strong>Hypothesis Board</strong>Save your most interesting Discovery Log findings as formal research hypotheses. The system auto-checks each hypothesis every 30 minutes against live data — flagging when current conditions match or contradict the proposed relationship. Build a structured record of what you are investigating.">🔬 Hypotheses</div>
+      <div class="disc-tab" onclick="switchDiscTab('thesis')" id="dst-thesis" style="color:#ff9100" data-tip="<strong>Research Thesis</strong>Deep, focused research lens. Select a pre-defined thesis (e.g. Solar Wind → Subduction Seismicity) and the entire dashboard reconfigures to test that specific hypothesis. Includes historical backfill, Poisson rate testing, evidence accumulation, and pre-registered falsification criteria. This is where monitoring becomes science.">🔬 Thesis</div>
+    </div>
+  </div>
+  <!-- Sub-panel content area -->
+  <div class="da-body">
+    <div class="disc-panel active" id="dsp-stress">
+      <div class="disc-section-label" data-tip="<strong>Earth Systems Stress Index</strong>Composite weighted Z-score across all active layers. Each layer's current value is compared to its historical mean and standard deviation. The scores are weighted and summed. &gt;70 = conditions rarely seen — historically associated with compound geophysical events.">Earth Systems Stress Index</div>
+      <details class="chart-help"><summary>❓ What am I looking at?</summary><p>A composite 0–100 score measuring how many Earth systems are simultaneously elevated above background levels. Higher scores indicate multiple systems (seismic, solar, geomagnetic, tidal) are active at once. Score &gt;65 triggers an auto-discovery entry.</p></details>
+      <div class="stress-orb-wrap">
+        <div class="stress-orb" id="stress-orb">
+          <div class="stress-orb-val" id="stress-val">—</div>
+          <div class="stress-orb-label" id="stress-label">COMPUTING</div>
+        </div>
+      </div>
+      <div class="stress-components" id="stress-components"></div>
+      <div style="font-size:9px;color:var(--text-dim);line-height:1.7;margin-top:14px;padding:10px 14px;border:1px dashed rgba(255,255,255,.08);border-radius:2px;max-width:640px;">
+        Composite weighted Z-score across all active layers. Score 0–100 reflects how far current Earth system state deviates from baseline. &gt;70 = rare compound event window.
+      </div>
+    </div>
+
+    <div class="disc-panel" id="dsp-lag">
+      <div class="disc-section-label" data-tip="<strong>Cross-Correlation Lag Explorer</strong>Select two layers. The chart shows how correlated they are at different time offsets (lags). A peak at lag +2 days means Layer A predicts Layer B 2 days later. Negative lags mean B leads A. Use to test whether solar wind precedes Kp changes, or whether Kp precedes seismicity.">Cross-Correlation Lag Explorer</div>
+      <details class="chart-help"><summary>❓ What am I looking at?</summary><p>Tests whether one layer predicts another with a time delay (0–90 days). The bar chart shows correlation strength at each lag. A tall bar at lag=27 days between Kp and seismicity, for example, suggests a ~27-day geomagnetic–earthquake relationship.</p></details>
+      <div class="lag-pair-select">
+        <select id="lag-layer-a" class="lag-select" onchange="renderLagExplorer()"><option value="">Layer A</option></select>
+        <span style="color:var(--text-dim);font-size:9px">→</span>
+        <select id="lag-layer-b" class="lag-select" onchange="renderLagExplorer()"><option value="">Layer B</option></select>
+      </div>
+      <canvas class="lag-canvas" id="lag-canvas"></canvas>
+      <div class="lag-result" id="lag-result">Select two layers to explore time-delayed relationships</div>
+    </div>
+
+    <div class="disc-panel" id="dsp-fft">
+      <div class="disc-section-label" data-tip="<strong>Spectral Period Analysis (FFT)</strong>Fast Fourier Transform decomposes a time-series signal into its constituent periodic cycles. The X-axis shows period length (days), Y-axis shows amplitude. Tall peaks = dominant cycles. Known Earth cycles to watch for: 14 days (tidal), 27 days (solar rotation), 11 years (solar cycle).">Spectral Period Analysis</div>
+      <details class="chart-help"><summary>❓ What am I looking at?</summary><p>A frequency decomposition (FFT) of the selected layer's time series. Peaks in the chart indicate recurring cycles. Known natural cycles: ~27 days (solar rotation), ~29.5 days (lunar month), ~365 days (annual). With limited data these are illustrative — longer history improves accuracy.</p></details>
+      <select id="fft-layer-select" class="lag-select" onchange="renderFFT()" style="margin-bottom:8px;width:100%"><option value="">Select layer</option></select>
+      <canvas class="fft-canvas" id="fft-canvas"></canvas>
+      <div class="fft-peaks" id="fft-peaks">Select a layer to decompose into frequency components</div>
+    </div>
+
+    <div class="disc-panel" id="dsp-phase">
+      <div class="disc-section-label" data-tip="<strong>Phase-Space Attractor</strong>Maps the trajectory of two layers against each other in 2D space. Circle = periodic oscillation. Filled cluster = stable equilibrium. Spiral inward = damping/convergence. Random scatter = no coupling. A 'strange attractor' (fractal shape) indicates chaotic but bounded dynamics — hallmark of nonlinear Earth systems.">Phase-Space Attractor</div>
+      <details class="chart-help"><summary>❓ What am I looking at?</summary><p>Plots each data point as (current value, value 1 step ago). A stable system traces a closed loop; an unpredictable system fills the space randomly. Tight spiral = strong autocorrelation. Scattered cloud = noisy/random signal.</p></details>
+      <div class="lag-pair-select">
+        <select id="phase-layer-a" class="lag-select" onchange="renderPhaseSpace()"><option value="">X axis</option></select>
+        <select id="phase-layer-b" class="lag-select" onchange="renderPhaseSpace()"><option value="">Y axis</option></select>
+      </div>
+      <canvas class="phase-canvas" id="phase-canvas"></canvas>
+      <div class="lag-result" id="phase-result">Phase-space embedding reveals attractor geometry — circular = oscillation, spiral = convergence, scattered = chaos</div>
+    </div>
+
+    <div class="disc-panel" id="dsp-mi">
+      <div class="disc-section-label" data-tip="<strong>Mutual Information Matrix</strong>Information-theoretic measure of statistical dependency between all layer pairs. Unlike Pearson correlation (which only detects linear relationships), mutual information captures ANY statistical dependency — quadratic, threshold, inverse, and time-lagged. Higher value = more shared information between layers. 0 = statistically independent.">Mutual Information Matrix</div>
+      <details class="chart-help"><summary>❓ What am I looking at?</summary><p>Mutual Information (MI) measures statistical dependency between two layers — including non-linear relationships that Pearson correlation misses. Higher MI = more shared information. Pink bars flag pairs where MI substantially exceeds what Pearson alone predicts, revealing hidden non-linear coupling.</p></details>
+      <div style="font-size:9px;color:var(--text-dim);margin-bottom:10px;line-height:1.6;">Non-linear dependency — captures correlations that Pearson misses (e.g. quadratic, threshold relationships)</div>
+      <div id="mi-table"></div>
+    </div>
+
+    <div class="disc-panel" id="dsp-planets">
+      <div class="disc-section-label" data-tip="<strong>Planetary Gravitational Forcing</strong>Computes the tidal gravitational acceleration on Earth from each solar system body at this moment. The Moon and Sun dominate. Some researchers (Zharkova, Abreu et al.) propose that planetary alignment modulates the solar magnetic cycle and, through it, terrestrial seismicity and volcanism. Shown as a research-level exploratory tool — correlations are contested.">Planetary Gravitational Forcing</div>
+      <div style="font-size:9px;color:var(--text-dim);margin-bottom:10px;line-height:1.6;">Computed gravitational tidal influence on Earth from each solar system body. Alignment events may correlate with solar activity and seismicity.</div>
+      <div id="planet-table"></div>
+      <canvas id="planet-canvas" style="width:100%;max-width:600px;height:120px;display:block;background:var(--surface);border-radius:2px;margin-top:10px;"></canvas>
+      <div id="planet-alignment" style="font-size:9px;color:var(--text-dim);margin-top:8px;line-height:1.7;"></div>
+    </div>
+
+    <div class="disc-panel" id="dsp-indices">
+      <div class="disc-section-label" data-tip="<strong>Novel Synthetic Indices</strong>Custom composite indicators built by combining multiple raw layers with domain-specific weightings. Examples: Compound Seismic Trigger Index (blends Kp + solar wind + tidal + seismicity), Solar-Geomagnetic Coupling Index, EM Environment Index. These do not exist in standard monitoring systems — they are experimental ESO-specific signals.">Novel Synthetic Indices</div>
+      <div id="novel-indices-container"></div>
+    </div>
+
+    <div class="disc-panel" id="dsp-chain">
+      <div class="chain-container">
+        <div class="chain-now-header">
+          <div class="chain-now-title" data-tip="<strong>Chain of Events</strong>Physical cascade sequences where one Earth system event triggers another. When a chain trigger condition is met (e.g. Kp≥5), the chain lights up showing what it may lead to over the following hours/days. Chain probability = historical frequency of the downstream event occurring after the trigger. Not a deterministic prediction.">Chain of Events</div>
+          <button class="chain-scan-btn" onclick="runChainScan()" data-tip="<strong>Scan Now</strong>Re-evaluates all chain trigger conditions against current live data. Automatically runs on page load and after major data updates. Use this to manually force a re-check after conditions change.">↻ SCAN NOW</button>
+        </div>
+        <div class="chain-disclaimer">
+          <b>Scientific status:</b> These chains represent known and contested physical linkages from peer-reviewed literature. Chains 9–11 are <b>research-level indicators</b> — not operational forecast systems. Probabilities are observational frequencies, not deterministic predictions.
+        </div>
+        <div style="font-size:9px;color:var(--text-dim);line-height:1.7;margin-bottom:10px;">
+          When a monitored signal crosses a critical threshold, it can trigger a cascade of effects across other Earth systems.
+        </div>
+        <div id="chain-summary-box"></div>
+        <div id="chain-triggers-list"></div>
+      </div>
+    </div>
+
+    <div class="disc-panel" id="dsp-log">
+      <div class="disc-section-label" style="display:flex;justify-content:space-between;">
+        <span data-tip="<strong>Auto-Discovery Log</strong>Automated statistical pattern detector running every 30 seconds. Scans all active layer combinations for simultaneous anomalies — e.g. both TEC and Kp elevated above 1.5σ at the same time. Each discovery entry shows the layers involved, the anomaly magnitude, and a timestamp. Useful for spotting unusual multi-system co-excitation.">Auto-Discovery Log</span>
+        <span id="discovery-count" style="color:#ff4fa0;font-size:9px;">0 found</span>
+      </div>
+      <div style="font-size:9px;color:var(--text-dim);margin-bottom:10px;line-height:1.6;">Automated pattern detection runs every 30 seconds across all active layer combinations.</div>
+      <div style="padding:3px 10px 5px;border-bottom:1px solid var(--border);">
+        <details style="font-size:7.5px;color:var(--text-dim);line-height:1.6;">
+          <summary style="cursor:pointer;letter-spacing:.07em;color:var(--c-cyan);outline:none;">📐 Detection methodology</summary>
+          <div style="padding:4px 0 2px;opacity:.85;">
+            <b>Thresholds:</b> Score &gt;65/100 (anomaly), |r|&gt;0.5 with lag≠0 (lag correlation), spectral peak &gt;60% power (FFT), MI bonus &gt;0.15 (non-linear), planet alignment &lt;15° (gravitational). <b>Tests per cycle:</b> ~8–12 simultaneous (all active layer combinations). <b>Multiple comparisons:</b> No Bonferroni correction applied — treat discoveries as hypothesis leads, not confirmed findings. <b>Refresh:</b> every 30 s.
+          </div>
+        </details>
+      </div>
+      <div id="discovery-log-list"><div style="color:var(--text-dim);font-size:9px;text-align:center;padding:30px 0;opacity:.5;">Collecting data — discoveries will appear here</div></div>
+    </div>
+
+    <div class="disc-panel" id="dsp-wavelet">
+      <div class="disc-section-label" data-tip="<strong>Wavelet Coherence</strong>Shows time-frequency coherence between two layers using Morlet wavelet transform. High coherence (warm colors) at a given period means both layers oscillate in sync at that timescale. Useful for detecting intermittent coupling that standard cross-correlation would average out.">Wavelet Coherence</div>
+      <div style="font-size:9px;color:var(--text-dim);margin-bottom:10px;line-height:1.6;">Select two layers to visualize their time-frequency coherence. Warm = high coherence, cool = low.</div>
+      <div style="display:flex;gap:12px;margin-bottom:10px;flex-wrap:wrap;">
+        <div>
+          <label style="font-size:8px;color:var(--text-dim);display:block;margin-bottom:3px;">Layer A</label>
+          <select id="wco-layer-a" onchange="renderWaveletCoherence()" style="background:var(--bg3);color:var(--text-main);border:1px solid var(--border);font-size:8px;padding:3px 6px;border-radius:3px;">
+            <option value="kp">Kp Index</option>
+            <option value="eq">Seismic Score</option>
+            <option value="sfi">Solar Flux (SFI)</option>
+            <option value="dst">Dst Index</option>
+            <option value="swspd">Solar Wind Speed</option>
+            <option value="bz">Bz (IMF)</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:8px;color:var(--text-dim);display:block;margin-bottom:3px;">Layer B</label>
+          <select id="wco-layer-b" onchange="renderWaveletCoherence()" style="background:var(--bg3);color:var(--text-main);border:1px solid var(--border);font-size:8px;padding:3px 6px;border-radius:3px;">
+            <option value="eq">Seismic Score</option>
+            <option value="kp">Kp Index</option>
+            <option value="sfi">Solar Flux (SFI)</option>
+            <option value="dst">Dst Index</option>
+            <option value="swspd">Solar Wind Speed</option>
+            <option value="bz">Bz (IMF)</option>
+          </select>
+        </div>
+      </div>
+      <canvas id="wco-canvas" width="560" height="200" style="width:100%;border:1px solid var(--border);border-radius:4px;"></canvas>
+      <div id="wco-legend" style="display:flex;justify-content:space-between;font-size:7.5px;color:var(--text-dim);margin-top:4px;">
+        <span>Low coherence</span><span>Period →</span><span>High coherence</span>
+      </div>
+      <div id="wco-status" style="font-size:8px;color:var(--text-dim);margin-top:6px;text-align:center;">Waiting for data…</div>
+    </div>
+
+    <div class="disc-panel" id="dsp-hindcast">
+      <div class="disc-section-label" data-tip="<strong>Hindcast Validation</strong>Snapshots of ESO stress predictions are stored every 6 hours and validated 48 hours later against actual USGS M5.5+ activity. This builds a real empirical track record for the observatory's predictive signal.">Hindcast Validation</div>
+      <div style="font-size:9px;color:var(--text-dim);margin-bottom:10px;line-height:1.6;">Prediction snapshots are saved every 6 hours and verified after 48 hours against USGS catalog activity.</div>
+      <div id="hindcast-panel-content" style="font-size:8.5px;">
+        <div style="color:var(--text-dim);text-align:center;padding:20px 0;opacity:.5;">Loading hindcast record…</div>
+      </div>
+    </div>
+
+    <div class="disc-panel" id="dsp-hyp">
+      <div class="disc-section-label" style="display:flex;justify-content:space-between;" data-tip="<strong>Hypothesis Board</strong>Save Discovery Log findings as formal hypotheses. Each hypothesis is auto-checked every 30 minutes against live data and marked as Supported, Contradicted, or Inconclusive based on current conditions.">
+        <span>🔬 Hypothesis Board</span>
+        <span id="hyp-count" style="color:#a78bfa;font-size:9px;">0 hypotheses</span>
+      </div>
+      <div style="font-size:9px;color:var(--text-dim);margin-bottom:10px;line-height:1.6;">Click <strong>⊕ Save as Hypothesis</strong> on any Discovery Log entry to track it here. Auto-verified every 30 minutes.</div>
+      <div id="hypothesis-board-content">
+        <div style="color:var(--text-dim);text-align:center;padding:20px 0;opacity:.5;">No hypotheses saved yet — check the Discovery Log to save one.</div>
+      </div>
+    </div>
+
+    <div class="disc-panel" id="dsp-thesis">
+      <div class="disc-section-label" style="display:flex;justify-content:space-between;align-items:center;" data-tip="<strong>Research Thesis</strong>Select a thesis to activate focused research mode. The dashboard becomes a research lens — dimming irrelevant metrics and tracking evidence for your specific hypothesis over time.">
+        <span>🔬 Research Thesis</span>
+        <button id="thesis-deactivate-btn" onclick="ThesisFramework.deactivate()" style="display:none;">✕ Deactivate</button>
+      </div>
+      <div style="margin-bottom:10px;">
+        <select id="thesis-selector" onchange="ThesisFramework.onSelectorChange(this)">
+          <option value="">— select a thesis —</option>
+        </select>
+      </div>
+      <div id="thesis-panel-content">
+        <div style="color:var(--text-dim);text-align:center;padding:20px 10px;font-size:9px;">Select a thesis above to enter focused research mode.</div>
+      </div>
+    </div>
+
+  </div><!-- /da-body -->
+</div><!-- /deep-analysis-overlay -->
+
+<!-- BOTTOM BAR -->
+<div id="bottom-bar">
+  <div id="bb-layer-info">CLICK MAP FOR LOCAL VALUES · [ ] TO TOGGLE PANELS</div>
+  <div id="coords-display">LAT — / LON —</div>
+  <div id="zoom-display">ZOOM 2</div>
+  <div>PHASE 4</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="eso-stats.js"></script>
+<script src="eso-core.js"></script>
+<script src="eso-data.js"></script>
+<script src="eso-ui.js"></script>
+<script src="eso-thesis.js"></script>
+<script src="thesis-a-solar-seismic.js"></script>
+<script src="thesis-b-tidal-seismic.js"></script>
+
+<!-- ══ SITREP MODAL (Tier 3.11) ══ -->
+<div id="sitrep-modal">
+  <div id="sitrep-box">
+    <div id="sitrep-header">
+      <span>📋 Situation Report — Earth Systems Observatory</span>
+      <button onclick="closeSitrep()" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:16px;line-height:1;">×</button>
+    </div>
+    <div id="sitrep-body"></div>
+    <div id="sitrep-actions">
+      <button class="sitrep-btn primary" onclick="copySitrep()">Copy to Clipboard</button>
+      <button class="sitrep-btn" onclick="exportSitrepTxt()">Download .txt</button>
+      <button class="sitrep-btn" onclick="closeSitrep()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TOUR ELEMENTS (Tier 4.1) ══ -->
+<div id="eso-tour-backdrop"></div>
+<div class="tour-highlight-ring" id="eso-tour-ring" style="display:none;"></div>
+<div id="eso-tour-popup" role="dialog" aria-modal="true" aria-label="ESO Guided Tour">
+  <div class="tour-step-label">ESO TOUR — <span id="tour-step-num">1</span> / <span id="tour-step-total">6</span></div>
+  <div class="tour-step-title" id="tour-title">Welcome</div>
+  <div class="tour-step-body"  id="tour-body">Loading…</div>
+  <div class="tour-nav">
+    <button class="tour-nav-btn" onclick="tourPrev()" id="tour-prev-btn" style="visibility:hidden;">← Back</button>
+    <div class="tour-dots" id="tour-dots"></div>
+    <button class="tour-nav-btn primary" onclick="tourNext()" id="tour-next-btn">Next →</button>
+  </div>
+</div>
+
+<!-- ══ EMBED MODE ELEMENTS (Tier 4.11) ══ -->
+<div id="embed-legend">
+  <div style="font-family:'Syne',sans-serif;font-size:9px;color:var(--c-cyan);margin-bottom:4px;letter-spacing:.15em;">ESO</div>
+  <div id="embed-active-layers" style="color:var(--text-dim);line-height:1.8;"></div>
+</div>
+<button id="embed-exit-btn" onclick="exitEmbedMode()" aria-label="Exit embed mode">✕ Exit Embed</button>
+
+<!-- ══ ESO CHAT FLOATING DRAWER ══ -->
+<div id="eso-chat-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1800;" onclick="closeESOChat()"></div>
+<div id="eso-chat-drawer" style="
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%) translateY(100%);
+  width:min(600px,98vw);z-index:1900;
+  background:linear-gradient(135deg,rgba(2,8,16,.99),rgba(7,21,32,.99));
+  border:1px solid var(--border);border-bottom:none;border-radius:4px 4px 0 0;
+  display:flex;flex-direction:column;max-height:55vh;
+  transition:transform .3s cubic-bezier(.22,.61,.36,1);
+  box-shadow:0 -8px 40px rgba(0,0,0,.6);
+">
+  <div style="padding:10px 16px 8px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-shrink:0;">
+    <span style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;color:#fff;letter-spacing:.1em;">💬 ASK ESO — Earth Systems Intelligence</span>
+    <span onclick="closeESOChat()" style="cursor:pointer;color:var(--text-dim);font-size:14px;padding:0 4px;"  >✕</span>
+  </div>
+  <div id="eso-float-messages" style="flex:1;overflow-y:auto;padding:10px 16px;scrollbar-width:thin;scrollbar-color:var(--surface2) transparent;min-height:80px;"></div>
+  <div style="padding:8px 16px 12px;border-top:1px solid var(--border);flex-shrink:0;">
+    <div style="display:flex;gap:8px;align-items:flex-end;">
+      <textarea id="eso-float-input" placeholder="Ask about current conditions, regions, correlations, forecasts…"
+        style="flex:1;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'Space Mono',monospace;font-size:9px;padding:7px 10px;border-radius:2px;resize:none;height:52px;outline:none;line-height:1.5;"
+        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendESOFloat();}"
+      ></textarea>
+      <button onclick="sendESOFloat()" style="background:var(--c-purple);border:none;color:#fff;font-family:'Space Mono',monospace;font-size:8px;padding:7px 14px;cursor:pointer;border-radius:2px;letter-spacing:.1em;height:52px;">SEND</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     STYLED TOOLTIP
+════════════════════════════════════════════════════════ -->
+<div id="eso-tooltip"></div>
+
+<!-- ═══════════════════════════════════════════════════════
+     FIRST-VISIT HINT CARD
+════════════════════════════════════════════════════════ -->
+<div id="eso-hint" style="display:none;">
+  <div id="eso-hint-text">
+    <strong>Welcome to Earth Systems Observatory</strong>
+    Start by toggling layers on the left panel → then explore cross-system correlations in the 🔗 Explore tab → hover any element for explanations.
+  </div>
+  <button id="eso-hint-open" onclick="toggleFieldGuide();document.getElementById('eso-hint').style.display='none';">Open Guide</button>
+  <span id="eso-hint-close" onclick="document.getElementById('eso-hint').style.display='none';localStorage.setItem('eso-hint-seen','1')">✕</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     FIELD GUIDE PANEL
+════════════════════════════════════════════════════════ -->
+<div id="field-guide">
+  <div id="fg-header">
+    <h2>Field Guide</h2>
+    <button id="fg-close" onclick="toggleFieldGuide()">✕</button>
+  </div>
+  <div class="fg-tabs">
+    <div class="fg-tab active" onclick="fgTab('overview')">Overview</div>
+    <div class="fg-tab" onclick="fgTab('layers')">Layers</div>
+    <div class="fg-tab" onclick="fgTab('reading')">Reading</div>
+    <div class="fg-tab" onclick="fgTab('tips')">Tips</div>
+  </div>
+  <div class="fg-body">
+
+    <!-- ── PAGE: OVERVIEW ── -->
+    <div class="fg-page active" id="fg-overview">
+      <div class="fg-section">
+        <div class="fg-section-title">What is ESO?</div>
+        <div class="fg-p">Earth Systems Observatory is a real-time dashboard that combines data from space weather, seismic, atmospheric, and ocean monitoring networks into a single view. Its core idea: Earth's systems don't operate in isolation — solar activity influences seismicity, tidal forces stress fault zones, and ionospheric changes can precede earthquakes.</div>
+        <div class="fg-tip-box">This is a research and situational-awareness tool, not a prediction engine. Correlations shown are backed by peer-reviewed science, but are probabilistic, not deterministic.</div>
+      </div>
+      <div class="fg-section">
+        <div class="fg-section-title">How to use it</div>
+        <div class="fg-row">
+          <div class="fg-row-icon">1️⃣</div>
+          <div class="fg-row-body"><div class="fg-row-name">Turn on layers</div><div class="fg-row-desc">Use the left panel to toggle data layers. Start with Seismic + Geomagnetic Kp + Tidal Force for the most informative trio.</div></div>
+        </div>
+        <div class="fg-row">
+          <div class="fg-row-icon">2️⃣</div>
+          <div class="fg-row-body"><div class="fg-row-name">Check the status strip</div><div class="fg-row-desc">The bar across the top shows key real-time indicators: Kp index, earthquake risk, syzygy alignment, solar flares, and network status. Hover each metric for an explanation.</div></div>
+        </div>
+        <div class="fg-row">
+          <div class="fg-row-icon">3️⃣</div>
+          <div class="fg-row-body"><div class="fg-row-name">Explore correlations</div><div class="fg-row-desc">Open the 🔗 Explore tab to see which cross-system relationships are scientifically validated. Click any card to expand the evidence and see if conditions today match the pattern.</div></div>
+        </div>
+        <div class="fg-row">
+          <div class="fg-row-icon">4️⃣</div>
+          <div class="fg-row-body"><div class="fg-row-name">Check Risk &amp; Forecast</div><div class="fg-row-desc">The ⚠ Risk tab synthesizes all active signals into a composite risk assessment for the next 24–72 hours.</div></div>
+        </div>
+        <div class="fg-row">
+          <div class="fg-row-icon">5️⃣</div>
+          <div class="fg-row-body"><div class="fg-row-name">Deep Analysis</div><div class="fg-row-desc">Click 🔍 Analyze (or press D) for an AI narrative that explains everything happening right now across all active layers.</div></div>
+        </div>
+      </div>
+      <div class="fg-section">
+        <div class="fg-section-title">Panel layout</div>
+        <div class="fg-row">
+          <div class="fg-row-icon">◀</div>
+          <div class="fg-row-body"><div class="fg-row-name">Left panel</div><div class="fg-row-desc">Layer controls — turn data layers on/off by domain. Press ☰ or the left edge to collapse.</div></div>
+        </div>
+        <div class="fg-row">
+          <div class="fg-row-icon">🗺</div>
+          <div class="fg-row-body"><div class="fg-row-name">Center map</div><div class="fg-row-desc">Interactive Leaflet map. Zoom with scroll, drag to pan. Click any area to query it with "Ask ESO".</div></div>
+        </div>
+        <div class="fg-row">
+          <div class="fg-row-icon">▶</div>
+          <div class="fg-row-body"><div class="fg-row-name">Right panel</div><div class="fg-row-desc">Data tabs — Now, Risk, Explore, History, Analyze. Drag the left edge to resize. Press F for fullscreen.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PAGE: LAYERS ── -->
+    <div class="fg-page" id="fg-layers">
+      <div class="fg-section">
+        <div class="fg-section-title">☀️ Space Weather</div>
+        <div class="fg-row">
+          <div class="fg-row-icon">🟡</div>
+          <div class="fg-row-body"><div class="fg-row-name">Solar Irradiance</div><div class="fg-row-desc">Total solar energy reaching Earth. Drives the ~11-year solar cycle and long-term climate. Currently Solar Cycle 25, approaching maximum.</div></div>
+        </div>
+        <div class="fg-row">
+          <div class="fg-row-icon">🟣</div>
+          <div class="fg-row-body"><div class="fg-row-name">Geomagnetic Kp</div><div class="fg-row-desc">Key indicator of space weather activity. Scale 0–9. Kp ≥ 5 = geomagnetic storm. Auroras visible at lower latitudes. GPS may drift. Radio disruption possible.</div></div>
+        </div>
+        <div class="fg-row">
+          <div class="fg-row-icon">🩷</div>
+          <div class="fg-row-body"><div class="fg-row-name">Cosmic Ray Flux</div><div class="fg-row-desc">High-energy particles from deep space. Rises when solar activity is low (less magnetic shielding). Possible role in cloud nucleation and climate variability.</div></div>
+        </div>
+        <div class="fg-row">
+          <div class="fg-row-icon">🟢</div>
+          <div class="fg-row-body"><div class="fg-row-name">Solar Wind Pressure</div><div class="fg-row-desc">Stream of particles from the Sun. Elevated pressure → compressed magnetosphere → higher Kp → geomagnetic storm risk.</div></div>
+        </div>
+        <div class="fg-row">
+          <div class="fg-row-icon">🟠</div>
+          <div class="fg-row-body"><div class="fg-row-name">X-Ray / Solar Flares</div><div class="fg-row-desc">Solar X-ray output. C → M → X class. X-class flares can disrupt HF radio within minutes and cause satellite drag. NOAA GOES real-time.</div></div>
+        </div>
+      </div>
+      <div class="fg-section">
+        <div class="fg-section-title">🌋 Core &amp; Crust</div>
+        <div class="fg-row">
+          <div class="fg-row-icon">🔴</div>
+          <div class="fg-row-body"><div class="fg-row-name">Seismic Activity</div><div class="fg-row-desc">M4.5+ earthquakes past 24–48 h from USGS. Dot size = magnitude. Color = depth (red = shallow, blue = deep). Shallow coastal quakes carry tsunami risk.</div></div>
+        </div>
+        <div class="fg-row">
+          <div class="fg-row-icon">🔵</div>
+          <div class="fg-row-body"><div class="fg-row-name">Magnetic Field</div><div class="fg-row-desc">Earth's dipole field strength. The South Atlantic Anomaly is a large weak-field region. Poles are drifting ~50 km/year. Affects satellite radiation exposure.</div></div>
+        </div>
+        <div class="fg-row">
+          <div class="fg-row-icon">🟠</div>
+          <div class="fg-row-body"><div class="fg-row-name">Volcanic Activity</div><div class="fg-row-desc">Active volcanoes from Smithsonian GVP. Color = alert level. Concentrated along the Pacific Ring of Fire and mid-ocean ridges.</div></div>
+        </div>
+        <div class="fg-row">
+          <div class="fg-row-icon">🩵</div>
+          <div class="fg-row-body"><div class="fg-row-name">Gravity Anomaly</div><div class="fg-row-desc">Subtle gravitational variations from density differences in the crust. Mountains = positive, trenches = negative. From NASA GRACE satellite.</div></div>
+        </div>
+        <div class="fg-row">
+          <div class="fg-row-icon">🔴</div>
+          <div class="fg-row-body"><div class="fg-row-name">Geothermal Heat</div><div class="fg-row-desc">Heat escaping from Earth's interior (mW/m²). High values at mid-ocean ridges, hotspots, and volcanic arcs. Drives plate tectonics.</div></div>
+        </div>
+      </div>
+      <div class="fg-section">
+        <div class="fg-section-title">🌤️ Atmosphere</div>
+        <div class="fg-row">
+          <div class="fg-row-icon">🟢</div>
+          <div class="fg-row-body"><div class="fg-row-name">Wind Speed</div><div class="fg-row-desc">Surface winds at 10m altitude. Shows atmospheric circulation, storm systems, jet stream. Real-time from Open-Meteo global grid.</div></div>
+        </div>
+        <div class="fg-row">
+          <div class="fg-row-icon">🟠</div>
+          <div class="fg-row-body"><div class="fg-row-name">Schumann Resonance</div><div class="fg-row-desc">EM standing waves in the Earth-ionosphere cavity (~7.83 Hz base). Driven by global lightning. Changes with solar and ionospheric disturbances.</div></div>
+        </div>
+        <div class="fg-row">
+          <div class="fg-row-icon">🩵</div>
+          <div class="fg-row-body"><div class="fg-row-name">Ionospheric TEC</div><div class="fg-row-desc">Free electron density in the ionosphere. Affects GPS accuracy. Elevated by solar flares, disturbed by storms. Can show anomalies before large earthquakes (LAIC effect).</div></div>
+        </div>
+        <div class="fg-row">
+          <div class="fg-row-icon">🔵</div>
+          <div class="fg-row-body"><div class="fg-row-name">Atmospheric Pressure</div><div class="fg-row-desc">Sea-level air pressure showing weather systems. High pressure = fair weather, low pressure = storms. Contour spacing shows wind intensity.</div></div>
+        </div>
+      </div>
+      <div class="fg-section">
+        <div class="fg-section-title">🌊 Oceans</div>
+        <div class="fg-row">
+          <div class="fg-row-icon">🔵</div>
+          <div class="fg-row-body"><div class="fg-row-name">Sea Surface Temp</div><div class="fg-row-desc">Ocean surface temperature. Anomalies influence hurricane intensity, fisheries, and global climate patterns. El Niño visible as warm central Pacific patch.</div></div>
+        </div>
+        <div class="fg-row">
+          <div class="fg-row-icon">🩵</div>
+          <div class="fg-row-body"><div class="fg-row-name">Tidal Force</div><div class="fg-row-desc">Gravitational pull of Moon + Sun. Peaks at new/full moon (syzygy). Research shows elevated fault-slip probability during tidal maxima near subduction zones.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PAGE: READING THE DATA ── -->
+    <div class="fg-page" id="fg-reading">
+      <div class="fg-section">
+        <div class="fg-section-title">Data source badges</div>
+        <div class="fg-p">Each layer in the left panel shows a badge indicating its data source type:</div>
+        <div class="fg-row">
+          <div class="fg-row-body"><span class="fg-badge fg-badge-live">LIVE</span><span class="fg-row-desc">Real-time data fetched from external APIs (USGS, NOAA, Open-Meteo). Updated every few minutes. If the NET indicator shows ○ MODELS, APIs are temporarily unavailable and the system falls back to physics models.</span></div>
+        </div>
+        <div class="fg-row">
+          <div class="fg-row-body"><span class="fg-badge fg-badge-model">MODEL</span><span class="fg-row-desc">Derived from established physics models (e.g. World Magnetic Model, GRACE gravity). These are slow-changing datasets updated annually — not real-time but highly accurate.</span></div>
+        </div>
+        <div class="fg-row">
+          <div class="fg-row-body"><span class="fg-badge fg-badge-calc">CALC</span><span class="fg-row-desc">Calculated in real-time from other data sources or deterministic formulas. E.g. tidal force is calculated from precise lunar/solar orbital mechanics with no external API needed.</span></div>
+        </div>
+      </div>
+      <div class="fg-section">
+        <div class="fg-section-title">Understanding Kp</div>
+        <div class="fg-p">The Kp index is the most important space weather indicator in ESO. Here's how to read it:</div>
+        <div class="fg-scale-row"><div class="fg-scale-dot" style="background:#00ff88"></div><span style="color:#00ff88;font-size:9px;font-weight:700;width:28px">0–2</span><span class="fg-row-desc">Quiet — typical quiet Sun conditions. No significant effects.</span></div>
+        <div class="fg-scale-row"><div class="fg-scale-dot" style="background:#ffd600"></div><span style="color:#ffd600;font-size:9px;font-weight:700;width:28px">3–4</span><span class="fg-row-desc">Unsettled/Active — minor aurora at high latitudes. Slight GPS degradation.</span></div>
+        <div class="fg-scale-row"><div class="fg-scale-dot" style="background:#ff6d00"></div><span style="color:#ff6d00;font-size:9px;font-weight:700;width:28px">5–6</span><span class="fg-row-desc">G1–G2 Storm — auroras visible to 50° latitude. Power grid fluctuations possible.</span></div>
+        <div class="fg-scale-row"><div class="fg-scale-dot" style="background:#ff3d3d"></div><span style="color:#ff3d3d;font-size:9px;font-weight:700;width:28px">7–9</span><span class="fg-row-desc">G3–G5 Storm — widespread aurora, satellite drag, HF radio blackout. Rare events (Carrington-class at Kp=9).</span></div>
+      </div>
+      <div class="fg-section">
+        <div class="fg-section-title">Correlation clusters</div>
+        <div class="fg-p">The 🔗 Explore tab shows scientifically documented relationships between Earth systems. Each card includes:</div>
+        <div class="fg-row">
+          <div class="fg-row-icon">🔗</div>
+          <div class="fg-row-body"><div class="fg-row-name">Cluster name + layers involved</div><div class="fg-row-desc">Which data layers participate in this correlation. Turn those layers on to see them highlighted on the map.</div></div>
+        </div>
+        <div class="fg-row">
+          <div class="fg-row-icon">📖</div>
+          <div class="fg-row-body"><div class="fg-row-name">Evidence + mechanism</div><div class="fg-row-desc">Click a card to expand it and see the peer-reviewed paper supporting the correlation and the physical mechanism proposed.</div></div>
+        </div>
+        <div class="fg-row">
+          <div class="fg-row-icon">⚡</div>
+          <div class="fg-row-body"><div class="fg-row-name">Active condition note</div><div class="fg-row-desc">If current conditions match the trigger state for a correlation, a note appears below the evidence text highlighting the live match.</div></div>
+        </div>
+      </div>
+      <div class="fg-section">
+        <div class="fg-section-title">History tab — time periods</div>
+        <div class="fg-row"><div class="fg-row-body"><div class="fg-row-name">1 Month / 1 Year / 5 Years</div><div class="fg-row-desc">Short to medium-term trends. Good for spotting seasonal patterns and recent anomalies.</div></div></div>
+        <div class="fg-row"><div class="fg-row-body"><div class="fg-row-name">Solar Cycle (11 yr)</div><div class="fg-row-desc">One complete solar cycle. Shows the rise and fall of solar activity and its effects on seismicity, cosmic rays, and climate.</div></div></div>
+        <div class="fg-row"><div class="fg-row-body"><div class="fg-row-name">YoY Δ</div><div class="fg-row-desc">Year-over-year change. Highlights which systems are trending up or down compared to the same period last year.</div></div></div>
+        <div class="fg-row"><div class="fg-row-body"><div class="fg-row-name">Grand Cycle (27 yr)</div><div class="fg-row-desc">Multi-decadal view spanning ~2.5 solar cycles. Reveals long-period oscillations in Earth's coupled systems.</div></div></div>
+      </div>
+    </div>
+
+    <!-- ── PAGE: TIPS ── -->
+    <div class="fg-page" id="fg-tips">
+      <div class="fg-section">
+        <div class="fg-section-title">Keyboard shortcuts</div>
+        <div class="fg-row"><div class="fg-row-body"><div class="fg-row-name"><span class="fg-kbd">1</span> <span class="fg-kbd">2</span> <span class="fg-kbd">3</span> <span class="fg-kbd">4</span></div><div class="fg-row-desc">Switch between Now, Risk, Explore, History tabs</div></div></div>
+        <div class="fg-row"><div class="fg-row-body"><div class="fg-row-name"><span class="fg-kbd">D</span></div><div class="fg-row-desc">Open Deep Analysis (🔍 Analyze)</div></div></div>
+        <div class="fg-row"><div class="fg-row-body"><div class="fg-row-name"><span class="fg-kbd">F</span></div><div class="fg-row-desc">Toggle fullscreen panel mode (hides map)</div></div></div>
+        <div class="fg-row"><div class="fg-row-body"><div class="fg-row-name"><span class="fg-kbd">?</span></div><div class="fg-row-desc">Open / close this Field Guide</div></div></div>
+        <div class="fg-row"><div class="fg-row-body"><div class="fg-row-name"><span class="fg-kbd">Esc</span></div><div class="fg-row-desc">Exit fullscreen / close overlays</div></div></div>
+      </div>
+      <div class="fg-section">
+        <div class="fg-section-title">Best practices</div>
+        <div class="fg-tip-box">Start simple: enable just Seismic + Kp + Tidal layers. Watch how they interact over a few days — this is the core Earth-Sun-Moon triangle.</div>
+        <div class="fg-tip-box">When Kp is elevated (≥5), open Explore → look for "Solar Proton Density → Seismicity" and "Geomagnetic Storm → Earthquake Lag" clusters to see if conditions match.</div>
+        <div class="fg-tip-box">After a major earthquake, check Syzygy % in the status bar. High alignment (≥80%) + shallow subduction zone = elevated tsunami consideration window.</div>
+        <div class="fg-tip-box">Use the Ask ESO button (💬) to query specific regions or ask natural-language questions about current conditions — e.g. "Why is the Kp high today?" or "What is happening in the Pacific Ring of Fire?"</div>
+        <div class="fg-tip-box">Click the 🔔 bell to open the Alerts drawer. Use the filter buttons (Critical, Watch, Advisory) to focus on what matters most right now.</div>
+        <div class="fg-tip-box">If NET shows ○ MODELS, the dashboard is running on built-in physics models (no external internet needed). Data is still meaningful but is estimated rather than measured. Click NET to retry live connections.</div>
+      </div>
+      <div class="fg-section">
+        <div class="fg-section-title">Understanding uncertainty</div>
+        <div class="fg-p">ESO aggregates data from scientific sources and applies established correlation research. However:</div>
+        <div class="fg-row"><div class="fg-row-icon">⚠</div><div class="fg-row-body"><div class="fg-row-desc">Correlations are statistical, not causal. A high-risk window means conditions historically associated with elevated activity — not a prediction of a specific event.</div></div></div>
+        <div class="fg-row"><div class="fg-row-icon">🔬</div><div class="fg-row-body"><div class="fg-row-desc">Some correlations shown (e.g. LAIC, Solar-Seismic) are active research areas with legitimate scientific debate. ESO cites the papers — read the evidence yourself.</div></div></div>
+        <div class="fg-row"><div class="fg-row-icon">📡</div><div class="fg-row-body"><div class="fg-row-desc">Some layers (Schumann, Ionospheric TEC, Cosmic Ray) are physics model estimates, not direct sensor readings. They reflect expected conditions based on known drivers.</div></div></div>
+      </div>
+    </div>
+
+  </div><!-- /.fg-body -->
+</div><!-- /#field-guide -->
+
+
+</body>
+</html>

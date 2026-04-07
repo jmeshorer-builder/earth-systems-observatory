@@ -1,0 +1,12 @@
+# Temporary files
+*.tmp
+
+# LibreOffice / Office lock files
+.~lock.*
+
+# macOS metadata
+.DS_Store
+
+# Python cache
+__pycache__/
+*.pyc

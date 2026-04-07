@@ -1,0 +1,4661 @@
+{
+  "thesisId": "thesis-a-solar-seismic",
+  "generated": "2026-04-01T21:13:13.716467+00:00",
+  "version": "2.0-post-audit",
+  "bestMag": 7.0,
+  "params": {
+    "swSpeedThresh": 600,
+    "bzThresh": -10,
+    "sustainHours": 3,
+    "lagMinH": 24,
+    "lagMaxH": 96,
+    "quakeMinMag": 7.0,
+    "backfillYears": 15,
+    "minTriggerGapH": 240,
+    "declustered": true
+  },
+  "stats": {
+    "pValue": 0.663374,
+    "rateRatio": 0.925,
+    "effectSize": 0.0191,
+    "observedRate": 0.0545,
+    "baselineRate": 0.059,
+    "hits": 12,
+    "n": 220,
+    "subdQuakeCount": 111,
+    "expectedPerWindow": 0.06
+  },
+  "triggers": [
+    {
+      "ts": 1301781600000,
+      "windowEnd": 1302127200000,
+      "values": {
+        "swspd": 648.0,
+        "bz": -6.4
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1304136000000,
+      "windowEnd": 1304481600000,
+      "values": {
+        "swspd": 667.0,
+        "bz": -3.2
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1306627200000,
+      "windowEnd": 1306972800000,
+      "values": {
+        "swspd": 683.0,
+        "bz": -1.4
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1308790800000,
+      "windowEnd": 1309136400000,
+      "values": {
+        "swspd": 651.0,
+        "bz": -4.6
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": true,
+        "count": 1,
+        "maxMag": 7.3,
+        "quakes": [
+          {
+            "ts": 1308884979470,
+            "lat": 52.05,
+            "lon": -171.836,
+            "mag": 7.3,
+            "zone": "Alaska-Aleutian Trench",
+            "place": "Fox Islands, Aleutian Islands, Alaska"
+          }
+        ]
+      }
+    },
+    {
+      "ts": 1310414400000,
+      "windowEnd": 1310760000000,
+      "values": {
+        "swspd": 631.0,
+        "bz": 0.8
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1311278400000,
+      "windowEnd": 1311624000000,
+      "values": {
+        "swspd": 680.0,
+        "bz": -0.3
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1312142400000,
+      "windowEnd": 1312488000000,
+      "values": {
+        "swspd": 655.0,
+        "bz": -4.3
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1315627200000,
+      "windowEnd": 1315972800000,
+      "values": {
+        "swspd": 505.0,
+        "bz": -12.7
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1317063600000,
+      "windowEnd": 1317409200000,
+      "values": {
+        "swspd": 686.0,
+        "bz": -6.2
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1327233600000,
+      "windowEnd": 1327579200000,
+      "values": {
+        "swspd": 420.0,
+        "bz": -15.3
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1331204400000,
+      "windowEnd": 1331550000000,
+      "values": {
+        "swspd": 705.0,
+        "bz": -6.8
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1334307600000,
+      "windowEnd": 1334653200000,
+      "values": {
+        "swspd": 643.0,
+        "bz": -3.4
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1335355200000,
+      "windowEnd": 1335700800000,
+      "values": {
+        "swspd": 610.0,
+        "bz": -3.5
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1336521600000,
+      "windowEnd": 1336867200000,
+      "values": {
+        "swspd": 460.0,
+        "bz": -13.2
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1337666400000,
+      "windowEnd": 1338012000000,
+      "values": {
+        "swspd": 357.0,
+        "bz": -11.1
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1338854400000,
+      "windowEnd": 1339200000000,
+      "values": {
+        "swspd": 672.0,
+        "bz": -3.9
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1341054000000,
+      "windowEnd": 1341399600000,
+      "values": {
+        "swspd": 607.0,
+        "bz": -6.8
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1342306800000,
+      "windowEnd": 1342652400000,
+      "values": {
+        "swspd": 665.0,
+        "bz": -2.6
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1346007600000,
+      "windowEnd": 1346353200000,
+      "values": {
+        "swspd": 654.0,
+        "bz": -5.2
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1347490800000,
+      "windowEnd": 1347836400000,
+      "values": {
+        "swspd": 385.0,
+        "bz": -12.4
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1349769600000,
+      "windowEnd": 1350115200000,
+      "values": {
+        "swspd": 466.0,
+        "bz": -13.4
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1353762000000,
+      "windowEnd": 1354107600000,
+      "values": {
+        "swspd": 406.0,
+        "bz": -12.0
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1358456400000,
+      "windowEnd": 1358802000000,
+      "values": {
+        "swspd": 378.0,
+        "bz": -11.3
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1362160800000,
+      "windowEnd": 1362506400000,
+      "values": {
+        "swspd": 627.0,
+        "bz": -5.2
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1363503600000,
+      "windowEnd": 1363849200000,
+      "values": {
+        "swspd": 680.0,
+        "bz": -10.9
+      },
+      "reason": "SW\u2265600km/s + Bz\u2264-10nT",
+      "triggerType": "both",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1366786800000,
+      "windowEnd": 1367132400000,
+      "values": {
+        "swspd": 332.0,
+        "bz": -14.4
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1369504800000,
+      "windowEnd": 1369850400000,
+      "values": {
+        "swspd": 626.0,
+        "bz": -4.8
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1371898800000,
+      "windowEnd": 1372244400000,
+      "values": {
+        "swspd": 633.0,
+        "bz": -3.6
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1373724000000,
+      "windowEnd": 1374069600000,
+      "values": {
+        "swspd": 433.0,
+        "bz": -14.4
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1376618400000,
+      "windowEnd": 1376964000000,
+      "values": {
+        "swspd": 663.0,
+        "bz": -4.2
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1380686400000,
+      "windowEnd": 1381032000000,
+      "values": {
+        "swspd": 625.0,
+        "bz": -18.3
+      },
+      "reason": "SW\u2265600km/s + Bz\u2264-10nT",
+      "triggerType": "both",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1384012800000,
+      "windowEnd": 1384358400000,
+      "values": {
+        "swspd": 612.0,
+        "bz": 2.2
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1386489600000,
+      "windowEnd": 1386835200000,
+      "values": {
+        "swspd": 632.0,
+        "bz": 0.6
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1388692800000,
+      "windowEnd": 1389038400000,
+      "values": {
+        "swspd": 626.0,
+        "bz": 1.0
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1389556800000,
+      "windowEnd": 1389902400000,
+      "values": {
+        "swspd": 703.0,
+        "bz": -2.4
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1392541200000,
+      "windowEnd": 1392886800000,
+      "values": {
+        "swspd": 387.0,
+        "bz": -15.1
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1397307600000,
+      "windowEnd": 1397653200000,
+      "values": {
+        "swspd": 336.0,
+        "bz": -11.2
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1402261200000,
+      "windowEnd": 1402606800000,
+      "values": {
+        "swspd": 618.0,
+        "bz": 0.4
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1405368000000,
+      "windowEnd": 1405713600000,
+      "values": {
+        "swspd": 359.0,
+        "bz": -13.7
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1408474800000,
+      "windowEnd": 1408820400000,
+      "values": {
+        "swspd": 417.0,
+        "bz": -14.6
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1410541200000,
+      "windowEnd": 1410886800000,
+      "values": {
+        "swspd": 651.0,
+        "bz": 9.4
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1412449200000,
+      "windowEnd": 1412794800000,
+      "values": {
+        "swspd": 379.0,
+        "bz": -11.5
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1413885600000,
+      "windowEnd": 1414231200000,
+      "values": {
+        "swspd": 653.0,
+        "bz": 3.5
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1416096000000,
+      "windowEnd": 1416441600000,
+      "values": {
+        "swspd": 635.0,
+        "bz": 2.2
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1417849200000,
+      "windowEnd": 1418194800000,
+      "values": {
+        "swspd": 467.0,
+        "bz": -14.8
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1419332400000,
+      "windowEnd": 1419678000000,
+      "values": {
+        "swspd": 508.0,
+        "bz": -18.6
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1421838000000,
+      "windowEnd": 1422183600000,
+      "values": {
+        "swspd": 432.0,
+        "bz": -15.5
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1422813600000,
+      "windowEnd": 1423159200000,
+      "values": {
+        "swspd": 667.0,
+        "bz": -3.5
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1424152800000,
+      "windowEnd": 1424498400000,
+      "values": {
+        "swspd": 376.0,
+        "bz": -12.1
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1425290400000,
+      "windowEnd": 1425636000000,
+      "values": {
+        "swspd": 634.0,
+        "bz": -5.5
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1426582800000,
+      "windowEnd": 1426928400000,
+      "values": {
+        "swspd": 614.0,
+        "bz": -14.7
+      },
+      "reason": "SW\u2265600km/s + Bz\u2264-10nT",
+      "triggerType": "both",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1427565600000,
+      "windowEnd": 1427911200000,
+      "values": {
+        "swspd": 424.0,
+        "bz": -13.9
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": true,
+        "count": 1,
+        "maxMag": 7.5,
+        "quakes": [
+          {
+            "ts": 1427672911010,
+            "lat": -4.7294,
+            "lon": 152.5623,
+            "mag": 7.5,
+            "zone": "Solomon Islands Trench",
+            "place": "53 km SE of Kokopo, Papua New Guinea"
+          }
+        ]
+      }
+    },
+    {
+      "ts": 1428627600000,
+      "windowEnd": 1428973200000,
+      "values": {
+        "swspd": 449.0,
+        "bz": -15.7
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1430892000000,
+      "windowEnd": 1431237600000,
+      "values": {
+        "swspd": 479.0,
+        "bz": -15.6
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": true,
+        "count": 1,
+        "maxMag": 7.1,
+        "quakes": [
+          {
+            "ts": 1430982619590,
+            "lat": -7.2175,
+            "lon": 154.5567,
+            "mag": 7.1,
+            "zone": "Solomon Islands Trench",
+            "place": "143 km SW of Panguna, Papua New Guinea"
+          }
+        ]
+      }
+    },
+    {
+      "ts": 1433728800000,
+      "windowEnd": 1434074400000,
+      "values": {
+        "swspd": 466.0,
+        "bz": -12.6
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1434999600000,
+      "windowEnd": 1435345200000,
+      "values": {
+        "swspd": 673.0,
+        "bz": 0.7
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1436029200000,
+      "windowEnd": 1436374800000,
+      "values": {
+        "swspd": 448.0,
+        "bz": -19.0
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1438513200000,
+      "windowEnd": 1438858800000,
+      "values": {
+        "swspd": 608.0,
+        "bz": -3.4
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1440716400000,
+      "windowEnd": 1441062000000,
+      "values": {
+        "swspd": 357.0,
+        "bz": -13.2
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1441677600000,
+      "windowEnd": 1442023200000,
+      "values": {
+        "swspd": 555.0,
+        "bz": -12.0
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1442894400000,
+      "windowEnd": 1443240000000,
+      "values": {
+        "swspd": 622.0,
+        "bz": -5.1
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1444233600000,
+      "windowEnd": 1444579200000,
+      "values": {
+        "swspd": 649.0,
+        "bz": 7.7
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1446552000000,
+      "windowEnd": 1446897600000,
+      "values": {
+        "swspd": 668.0,
+        "bz": 0.7
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1448686800000,
+      "windowEnd": 1449032400000,
+      "values": {
+        "swspd": 315.0,
+        "bz": -11.3
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1449756000000,
+      "windowEnd": 1450101600000,
+      "values": {
+        "swspd": 619.0,
+        "bz": 4.7
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1450684800000,
+      "windowEnd": 1451030400000,
+      "values": {
+        "swspd": 400.0,
+        "bz": -15.4
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1452056400000,
+      "windowEnd": 1452402000000,
+      "values": {
+        "swspd": 614.0,
+        "bz": 0.8
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1453334400000,
+      "windowEnd": 1453680000000,
+      "values": {
+        "swspd": 381.0,
+        "bz": -11.6
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": true,
+        "count": 1,
+        "maxMag": 7.1,
+        "quakes": [
+          {
+            "ts": 1453631429557,
+            "lat": 59.6204,
+            "lon": -153.3392,
+            "mag": 7.1,
+            "zone": "Alaska-Aleutian Trench",
+            "place": "47 km ESE of Pedro Bay, Alaska"
+          }
+        ]
+      }
+    },
+    {
+      "ts": 1455012000000,
+      "windowEnd": 1455357600000,
+      "values": {
+        "swspd": 422.0,
+        "bz": -10.5
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1457262000000,
+      "windowEnd": 1457607600000,
+      "values": {
+        "swspd": 379.0,
+        "bz": -16.9
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1460527200000,
+      "windowEnd": 1460872800000,
+      "values": {
+        "swspd": 617.0,
+        "bz": -4.1
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": true,
+        "count": 1,
+        "maxMag": 7.8,
+        "quakes": [
+          {
+            "ts": 1460851116980,
+            "lat": 0.3819,
+            "lon": -79.9218,
+            "mag": 7.8,
+            "zone": "Chile-Peru Trench",
+            "place": "27 km SSE of Muisne, Ecuador"
+          }
+        ]
+      }
+    },
+    {
+      "ts": 1462726800000,
+      "windowEnd": 1463072400000,
+      "values": {
+        "swspd": 641.0,
+        "bz": -5.0
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1463893200000,
+      "windowEnd": 1464238800000,
+      "values": {
+        "swspd": 623.0,
+        "bz": 0.1
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1465182000000,
+      "windowEnd": 1465527600000,
+      "values": {
+        "swspd": 625.0,
+        "bz": -3.3
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1466262000000,
+      "windowEnd": 1466607600000,
+      "values": {
+        "swspd": 606.0,
+        "bz": 2.0
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1468011600000,
+      "windowEnd": 1468357200000,
+      "values": {
+        "swspd": 631.0,
+        "bz": -3.7
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1468976400000,
+      "windowEnd": 1469322000000,
+      "values": {
+        "swspd": 489.0,
+        "bz": -21.8
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1470380400000,
+      "windowEnd": 1470726000000,
+      "values": {
+        "swspd": 626.0,
+        "bz": 2.1
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1472785200000,
+      "windowEnd": 1473130800000,
+      "values": {
+        "swspd": 619.0,
+        "bz": -0.2
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1474336800000,
+      "windowEnd": 1474682400000,
+      "values": {
+        "swspd": 651.0,
+        "bz": -6.6
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1475200800000,
+      "windowEnd": 1475546400000,
+      "values": {
+        "swspd": 692.0,
+        "bz": 1.8
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1476345600000,
+      "windowEnd": 1476691200000,
+      "values": {
+        "swspd": 439.0,
+        "bz": -12.1
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1477400400000,
+      "windowEnd": 1477746000000,
+      "values": {
+        "swspd": 695.0,
+        "bz": 1.5
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1478934000000,
+      "windowEnd": 1479279600000,
+      "values": {
+        "swspd": 621.0,
+        "bz": -2.2
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1480046400000,
+      "windowEnd": 1480392000000,
+      "values": {
+        "swspd": 629.0,
+        "bz": 3.0
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1481216400000,
+      "windowEnd": 1481562000000,
+      "values": {
+        "swspd": 661.0,
+        "bz": -3.4
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1482321600000,
+      "windowEnd": 1482667200000,
+      "values": {
+        "swspd": 658.0,
+        "bz": 3.5
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1483617600000,
+      "windowEnd": 1483963200000,
+      "values": {
+        "swspd": 688.0,
+        "bz": -4.0
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1484816400000,
+      "windowEnd": 1485162000000,
+      "values": {
+        "swspd": 611.0,
+        "bz": 2.3
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": true,
+        "count": 1,
+        "maxMag": 7.9,
+        "quakes": [
+          {
+            "ts": 1485059422960,
+            "lat": -6.2464,
+            "lon": 155.1718,
+            "mag": 7.9,
+            "zone": "Solomon Islands Trench",
+            "place": "35 km WNW of Panguna, Papua New Guinea"
+          }
+        ]
+      }
+    },
+    {
+      "ts": 1485849600000,
+      "windowEnd": 1486195200000,
+      "values": {
+        "swspd": 644.0,
+        "bz": -3.8
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1487912400000,
+      "windowEnd": 1488258000000,
+      "values": {
+        "swspd": 630.0,
+        "bz": -0.8
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1488776400000,
+      "windowEnd": 1489122000000,
+      "values": {
+        "swspd": 612.0,
+        "bz": -1.3
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1490126400000,
+      "windowEnd": 1490472000000,
+      "values": {
+        "swspd": 626.0,
+        "bz": 3.9
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1490990400000,
+      "windowEnd": 1491336000000,
+      "values": {
+        "swspd": 657.0,
+        "bz": -1.0
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1492801200000,
+      "windowEnd": 1493146800000,
+      "values": {
+        "swspd": 638.0,
+        "bz": -5.4
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1495270800000,
+      "windowEnd": 1495616400000,
+      "values": {
+        "swspd": 733.0,
+        "bz": -3.7
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1497636000000,
+      "windowEnd": 1497981600000,
+      "values": {
+        "swspd": 623.0,
+        "bz": -4.7
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1499673600000,
+      "windowEnd": 1500019200000,
+      "values": {
+        "swspd": 612.0,
+        "bz": -0.7
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1500616800000,
+      "windowEnd": 1500962400000,
+      "values": {
+        "swspd": 628.0,
+        "bz": 2.9
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1501790400000,
+      "windowEnd": 1502136000000,
+      "values": {
+        "swspd": 423.0,
+        "bz": -14.2
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1503115200000,
+      "windowEnd": 1503460800000,
+      "values": {
+        "swspd": 624.0,
+        "bz": 2.7
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1504173600000,
+      "windowEnd": 1504519200000,
+      "values": {
+        "swspd": 636.0,
+        "bz": -3.2
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1505088000000,
+      "windowEnd": 1505433600000,
+      "values": {
+        "swspd": 632.0,
+        "bz": -0.8
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1506535200000,
+      "windowEnd": 1506880800000,
+      "values": {
+        "swspd": 639.0,
+        "bz": 4.0
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1507903200000,
+      "windowEnd": 1508248800000,
+      "values": {
+        "swspd": 631.0,
+        "bz": -0.8
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1508925600000,
+      "windowEnd": 1509271200000,
+      "values": {
+        "swspd": 614.0,
+        "bz": -1.2
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1510084800000,
+      "windowEnd": 1510430400000,
+      "values": {
+        "swspd": 624.0,
+        "bz": 2.7
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1513515600000,
+      "windowEnd": 1513861200000,
+      "values": {
+        "swspd": 637.0,
+        "bz": 3.9
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1518994800000,
+      "windowEnd": 1519340400000,
+      "values": {
+        "swspd": 607.0,
+        "bz": -1.1
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1520686800000,
+      "windowEnd": 1521032400000,
+      "values": {
+        "swspd": 394.0,
+        "bz": -13.3
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1524265200000,
+      "windowEnd": 1524610800000,
+      "values": {
+        "swspd": 629.0,
+        "bz": -2.2
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1525572000000,
+      "windowEnd": 1525917600000,
+      "values": {
+        "swspd": 643.0,
+        "bz": -2.4
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1527843600000,
+      "windowEnd": 1528189200000,
+      "values": {
+        "swspd": 609.0,
+        "bz": -5.0
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1530050400000,
+      "windowEnd": 1530396000000,
+      "values": {
+        "swspd": 626.0,
+        "bz": -0.9
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1534755600000,
+      "windowEnd": 1535101200000,
+      "values": {
+        "swspd": 635.0,
+        "bz": -3.1
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": true,
+        "count": 1,
+        "maxMag": 7.3,
+        "quakes": [
+          {
+            "ts": 1534887107600,
+            "lat": 10.7731,
+            "lon": -62.9019,
+            "mag": 7.3,
+            "zone": "Lesser Antilles Subduction",
+            "place": "40 km ENE of Car\u00fapano, Venezuela"
+          }
+        ]
+      }
+    },
+    {
+      "ts": 1536955200000,
+      "windowEnd": 1537300800000,
+      "values": {
+        "swspd": 671.0,
+        "bz": -1.6
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1539061200000,
+      "windowEnd": 1539406800000,
+      "values": {
+        "swspd": 602.0,
+        "bz": -0.4
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": true,
+        "count": 1,
+        "maxMag": 7,
+        "quakes": [
+          {
+            "ts": 1539204500100,
+            "lat": -5.7012,
+            "lon": 151.2046,
+            "mag": 7,
+            "zone": "Solomon Islands Trench",
+            "place": "119 km E of Kimbe, Papua New Guinea"
+          }
+        ]
+      }
+    },
+    {
+      "ts": 1541980800000,
+      "windowEnd": 1542326400000,
+      "values": {
+        "swspd": 609.0,
+        "bz": -2.6
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1544360400000,
+      "windowEnd": 1544706000000,
+      "values": {
+        "swspd": 628.0,
+        "bz": -0.7
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1545278400000,
+      "windowEnd": 1545624000000,
+      "values": {
+        "swspd": 629.0,
+        "bz": -2.5
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1548324000000,
+      "windowEnd": 1548669600000,
+      "values": {
+        "swspd": 621.0,
+        "bz": -1.4
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1558947600000,
+      "windowEnd": 1559293200000,
+      "values": {
+        "swspd": 370.0,
+        "bz": -11.7
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1562709600000,
+      "windowEnd": 1563055200000,
+      "values": {
+        "swspd": 620.0,
+        "bz": -0.6
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1565002800000,
+      "windowEnd": 1565348400000,
+      "values": {
+        "swspd": 667.0,
+        "bz": 3.1
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1567227600000,
+      "windowEnd": 1567573200000,
+      "values": {
+        "swspd": 657.0,
+        "bz": 4.7
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1569610800000,
+      "windowEnd": 1569956400000,
+      "values": {
+        "swspd": 666.0,
+        "bz": 0.3
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1571983200000,
+      "windowEnd": 1572328800000,
+      "values": {
+        "swspd": 612.0,
+        "bz": -1.2
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1573488000000,
+      "windowEnd": 1573833600000,
+      "values": {
+        "swspd": 368.0,
+        "bz": -11.0
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1581040800000,
+      "windowEnd": 1581386400000,
+      "values": {
+        "swspd": 639.0,
+        "bz": -0.3
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1596448800000,
+      "windowEnd": 1596794400000,
+      "values": {
+        "swspd": 626.0,
+        "bz": -1.2
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1598932800000,
+      "windowEnd": 1599278400000,
+      "values": {
+        "swspd": 623.0,
+        "bz": 1.9
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1601236800000,
+      "windowEnd": 1601582400000,
+      "values": {
+        "swspd": 635.0,
+        "bz": -1.9
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1606035600000,
+      "windowEnd": 1606381200000,
+      "values": {
+        "swspd": 623.0,
+        "bz": 2.9
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1608703200000,
+      "windowEnd": 1609048800000,
+      "values": {
+        "swspd": 612.0,
+        "bz": 1.4
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1611626400000,
+      "windowEnd": 1611972000000,
+      "values": {
+        "swspd": 624.0,
+        "bz": -3.9
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1614708000000,
+      "windowEnd": 1615053600000,
+      "values": {
+        "swspd": 639.0,
+        "bz": -2.6
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": true,
+        "count": 2,
+        "maxMag": 8.1,
+        "quakes": [
+          {
+            "ts": 1614879683370,
+            "lat": -29.6768,
+            "lon": -177.8398,
+            "mag": 7.4,
+            "zone": "Tonga-Kermadec Trench",
+            "place": "Kermadec Islands, New Zealand"
+          },
+          {
+            "ts": 1614886113178,
+            "lat": -29.7228,
+            "lon": -177.2794,
+            "mag": 8.1,
+            "zone": "Tonga-Kermadec Trench",
+            "place": "2021 Kermadec Islands, New Zealand Earthquake"
+          }
+        ]
+      }
+    },
+    {
+      "ts": 1616241600000,
+      "windowEnd": 1616587200000,
+      "values": {
+        "swspd": 636.0,
+        "bz": 0
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1618668000000,
+      "windowEnd": 1619013600000,
+      "values": {
+        "swspd": 608.0,
+        "bz": -3.8
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1623852000000,
+      "windowEnd": 1624197600000,
+      "values": {
+        "swspd": 614.0,
+        "bz": -2.8
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1635850800000,
+      "windowEnd": 1636196400000,
+      "values": {
+        "swspd": 622.0,
+        "bz": -0.0
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1637060400000,
+      "windowEnd": 1637406000000,
+      "values": {
+        "swspd": 612.0,
+        "bz": -3.0
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1638054000000,
+      "windowEnd": 1638399600000,
+      "values": {
+        "swspd": 379.0,
+        "bz": -13.0
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1639944000000,
+      "windowEnd": 1640289600000,
+      "values": {
+        "swspd": 447.0,
+        "bz": -13.7
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1641690000000,
+      "windowEnd": 1642035600000,
+      "values": {
+        "swspd": 443.0,
+        "bz": -13.3
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1642554000000,
+      "windowEnd": 1642899600000,
+      "values": {
+        "swspd": 661.0,
+        "bz": -1.6
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1644602400000,
+      "windowEnd": 1644948000000,
+      "values": {
+        "swspd": 477.0,
+        "bz": -13.2
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1647180000000,
+      "windowEnd": 1647525600000,
+      "values": {
+        "swspd": 471.0,
+        "bz": -15.5
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": true,
+        "count": 1,
+        "maxMag": 7.3,
+        "quakes": [
+          {
+            "ts": 1647441390997,
+            "lat": 37.7132,
+            "lon": 141.5793,
+            "mag": 7.3,
+            "zone": "Japan Trench",
+            "place": "57 km ENE of Namie, Japan"
+          }
+        ]
+      }
+    },
+    {
+      "ts": 1648731600000,
+      "windowEnd": 1649077200000,
+      "values": {
+        "swspd": 541.0,
+        "bz": -15.7
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1650042000000,
+      "windowEnd": 1650387600000,
+      "values": {
+        "swspd": 617.0,
+        "bz": 4.8
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1652785200000,
+      "windowEnd": 1653130800000,
+      "values": {
+        "swspd": 606.0,
+        "bz": 2.6
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1653825600000,
+      "windowEnd": 1654171200000,
+      "values": {
+        "swspd": 627.0,
+        "bz": -4.2
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1655290800000,
+      "windowEnd": 1655636400000,
+      "values": {
+        "swspd": 617.0,
+        "bz": 1.3
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1656241200000,
+      "windowEnd": 1656586800000,
+      "values": {
+        "swspd": 664.0,
+        "bz": -5.3
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1657231200000,
+      "windowEnd": 1657576800000,
+      "values": {
+        "swspd": 378.0,
+        "bz": -16.0
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1658419200000,
+      "windowEnd": 1658764800000,
+      "values": {
+        "swspd": 435.0,
+        "bz": -14.8
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1659988800000,
+      "windowEnd": 1660334400000,
+      "values": {
+        "swspd": 611.0,
+        "bz": 4.1
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1660932000000,
+      "windowEnd": 1661277600000,
+      "values": {
+        "swspd": 705.0,
+        "bz": -5.1
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1662256800000,
+      "windowEnd": 1662602400000,
+      "values": {
+        "swspd": 670.0,
+        "bz": 1.5
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1664258400000,
+      "windowEnd": 1664604000000,
+      "values": {
+        "swspd": 411.0,
+        "bz": -15.2
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1665338400000,
+      "windowEnd": 1665684000000,
+      "values": {
+        "swspd": 625.0,
+        "bz": -0.5
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1667509200000,
+      "windowEnd": 1667854800000,
+      "values": {
+        "swspd": 633.0,
+        "bz": 4.2
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1669478400000,
+      "windowEnd": 1669824000000,
+      "values": {
+        "swspd": 616.0,
+        "bz": 2.0
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1671490800000,
+      "windowEnd": 1671836400000,
+      "values": {
+        "swspd": 336.0,
+        "bz": -11.4
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1672513200000,
+      "windowEnd": 1672858800000,
+      "values": {
+        "swspd": 612.0,
+        "bz": -0.6
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1677448800000,
+      "windowEnd": 1677794400000,
+      "values": {
+        "swspd": 660.0,
+        "bz": -5.9
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1682283600000,
+      "windowEnd": 1682629200000,
+      "values": {
+        "swspd": 711.0,
+        "bz": -22.8
+      },
+      "reason": "SW\u2265600km/s + Bz\u2264-10nT",
+      "triggerType": "both",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1683702000000,
+      "windowEnd": 1684047600000,
+      "values": {
+        "swspd": 635.0,
+        "bz": -4.5
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1684778400000,
+      "windowEnd": 1685124000000,
+      "values": {
+        "swspd": 620.0,
+        "bz": -6.3
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1686841200000,
+      "windowEnd": 1687186800000,
+      "values": {
+        "swspd": 425.0,
+        "bz": -10.8
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1689372000000,
+      "windowEnd": 1689717600000,
+      "values": {
+        "swspd": 417.0,
+        "bz": -13.2
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": true,
+        "count": 1,
+        "maxMag": 7.2,
+        "quakes": [
+          {
+            "ts": 1689490101158,
+            "lat": 54.3926,
+            "lon": -160.762,
+            "mag": 7.2,
+            "zone": "Alaska-Aleutian Trench",
+            "place": "2023 Sand Point, Alaska Earthquake"
+          }
+        ]
+      }
+    },
+    {
+      "ts": 1692518400000,
+      "windowEnd": 1692864000000,
+      "values": {
+        "swspd": 624.0,
+        "bz": -4.2
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1693630800000,
+      "windowEnd": 1693976400000,
+      "values": {
+        "swspd": 712.0,
+        "bz": -4.1
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1695042000000,
+      "windowEnd": 1695387600000,
+      "values": {
+        "swspd": 561.0,
+        "bz": -20.2
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1697194800000,
+      "windowEnd": 1697540400000,
+      "values": {
+        "swspd": 375.0,
+        "bz": -22.3
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1698562800000,
+      "windowEnd": 1698908400000,
+      "values": {
+        "swspd": 640.0,
+        "bz": 0.4
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1699426800000,
+      "windowEnd": 1699772400000,
+      "values": {
+        "swspd": 702.0,
+        "bz": -2.2
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1701464400000,
+      "windowEnd": 1701810000000,
+      "values": {
+        "swspd": 521.0,
+        "bz": -15.3
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1702940400000,
+      "windowEnd": 1703286000000,
+      "values": {
+        "swspd": 646.0,
+        "bz": 2.9
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1707631200000,
+      "windowEnd": 1707976800000,
+      "values": {
+        "swspd": 732.0,
+        "bz": -1.2
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1711288800000,
+      "windowEnd": 1711634400000,
+      "values": {
+        "swspd": 794.0,
+        "bz": -10.7
+      },
+      "reason": "SW\u2265600km/s + Bz\u2264-10nT",
+      "triggerType": "both",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1714676400000,
+      "windowEnd": 1715022000000,
+      "values": {
+        "swspd": 436.0,
+        "bz": -16.8
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1715540400000,
+      "windowEnd": 1715886000000,
+      "values": {
+        "swspd": 872.0,
+        "bz": 5.9
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1721106000000,
+      "windowEnd": 1721451600000,
+      "values": {
+        "swspd": 377.0,
+        "bz": -15.6
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1722452400000,
+      "windowEnd": 1722798000000,
+      "values": {
+        "swspd": 484.0,
+        "bz": -12.9
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1723334400000,
+      "windowEnd": 1723680000000,
+      "values": {
+        "swspd": 472.0,
+        "bz": -14.0
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1724832000000,
+      "windowEnd": 1725177600000,
+      "values": {
+        "swspd": 321.0,
+        "bz": -16.1
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1728576000000,
+      "windowEnd": 1728921600000,
+      "values": {
+        "swspd": 740.0,
+        "bz": -16.0
+      },
+      "reason": "SW\u2265600km/s + Bz\u2264-10nT",
+      "triggerType": "both",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1729958400000,
+      "windowEnd": 1730304000000,
+      "values": {
+        "swspd": 477.0,
+        "bz": -17.5
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1731074400000,
+      "windowEnd": 1731420000000,
+      "values": {
+        "swspd": 391.0,
+        "bz": -16.2
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1734415200000,
+      "windowEnd": 1734760800000,
+      "values": {
+        "swspd": 605.0,
+        "bz": -19.8
+      },
+      "reason": "SW\u2265600km/s + Bz\u2264-10nT",
+      "triggerType": "both",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1735754400000,
+      "windowEnd": 1736100000000,
+      "values": {
+        "swspd": 531.0,
+        "bz": -14.7
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1736748000000,
+      "windowEnd": 1737093600000,
+      "values": {
+        "swspd": 413.0,
+        "bz": -11.5
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1738418400000,
+      "windowEnd": 1738764000000,
+      "values": {
+        "swspd": 633.0,
+        "bz": 8.7
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1739642400000,
+      "windowEnd": 1739988000000,
+      "values": {
+        "swspd": 654.0,
+        "bz": -3.5
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1740722400000,
+      "windowEnd": 1741068000000,
+      "values": {
+        "swspd": 626.0,
+        "bz": 3.6
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1742580000000,
+      "windowEnd": 1742925600000,
+      "values": {
+        "swspd": 462.0,
+        "bz": -31.1
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1743724800000,
+      "windowEnd": 1744070400000,
+      "values": {
+        "swspd": 474.0,
+        "bz": -12.3
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1744930800000,
+      "windowEnd": 1745276400000,
+      "values": {
+        "swspd": 432.0,
+        "bz": -11.6
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1746226800000,
+      "windowEnd": 1746572400000,
+      "values": {
+        "swspd": 632.0,
+        "bz": -6.2
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1747123200000,
+      "windowEnd": 1747468800000,
+      "values": {
+        "swspd": 412.0,
+        "bz": -10.8
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1748491200000,
+      "windowEnd": 1748836800000,
+      "values": {
+        "swspd": 671.0,
+        "bz": -8.3
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1749787200000,
+      "windowEnd": 1750132800000,
+      "values": {
+        "swspd": 416.0,
+        "bz": -12.3
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1750903200000,
+      "windowEnd": 1751248800000,
+      "values": {
+        "swspd": 672.0,
+        "bz": -8.7
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1752379200000,
+      "windowEnd": 1752724800000,
+      "values": {
+        "swspd": 647.0,
+        "bz": 3.1
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": true,
+        "count": 1,
+        "maxMag": 7.3,
+        "quakes": [
+          {
+            "ts": 1752698261667,
+            "lat": 54.5652,
+            "lon": -160.4689,
+            "mag": 7.3,
+            "zone": "Alaska-Aleutian Trench",
+            "place": "2025 Sand Point, Alaska Earthquake"
+          }
+        ]
+      }
+    },
+    {
+      "ts": 1753250400000,
+      "windowEnd": 1753596000000,
+      "values": {
+        "swspd": 641.0,
+        "bz": -10.6
+      },
+      "reason": "SW\u2265600km/s + Bz\u2264-10nT",
+      "triggerType": "both",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1755025200000,
+      "windowEnd": 1755370800000,
+      "values": {
+        "swspd": 606.0,
+        "bz": 0.5
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1756760400000,
+      "windowEnd": 1757106000000,
+      "values": {
+        "swspd": 619.0,
+        "bz": -20.4
+      },
+      "reason": "SW\u2265600km/s + Bz\u2264-10nT",
+      "triggerType": "both",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1757894400000,
+      "windowEnd": 1758240000000,
+      "values": {
+        "swspd": 657.0,
+        "bz": -7.1
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1759093200000,
+      "windowEnd": 1759438800000,
+      "values": {
+        "swspd": 408.0,
+        "bz": -12.0
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1760180400000,
+      "windowEnd": 1760526000000,
+      "values": {
+        "swspd": 419.0,
+        "bz": -12.1
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1761861600000,
+      "windowEnd": 1762207200000,
+      "values": {
+        "swspd": 665.0,
+        "bz": 5.3
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1762909200000,
+      "windowEnd": 1763254800000,
+      "values": {
+        "swspd": 816.0,
+        "bz": -1.4
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1763985600000,
+      "windowEnd": 1764331200000,
+      "values": {
+        "swspd": 691.0,
+        "bz": 2.5
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1764849600000,
+      "windowEnd": 1765195200000,
+      "values": {
+        "swspd": 695.0,
+        "bz": -3.2
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1765890000000,
+      "windowEnd": 1766235600000,
+      "values": {
+        "swspd": 658.0,
+        "bz": -7.1
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1767369600000,
+      "windowEnd": 1767715200000,
+      "values": {
+        "swspd": 636.0,
+        "bz": -4.3
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1768467600000,
+      "windowEnd": 1768813200000,
+      "values": {
+        "swspd": 628.0,
+        "bz": -3.0
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1769637600000,
+      "windowEnd": 1769983200000,
+      "values": {
+        "swspd": 627.0,
+        "bz": 0.3
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1771146000000,
+      "windowEnd": 1771491600000,
+      "values": {
+        "swspd": 636.0,
+        "bz": -0.1
+      },
+      "reason": "SW\u2265600km/s",
+      "triggerType": "speed",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    },
+    {
+      "ts": 1772881200000,
+      "windowEnd": 1773226800000,
+      "values": {
+        "swspd": 465.0,
+        "bz": -11.1
+      },
+      "reason": "Bz\u2264-10nT",
+      "triggerType": "bz",
+      "sustained": "3h",
+      "backfill": true,
+      "resolved": true,
+      "outcome": {
+        "hit": false,
+        "count": 0,
+        "maxMag": 0,
+        "quakes": []
+      }
+    }
+  ],
+  "sweep": [
+    {
+      "mag": 5.5,
+      "quakeCount": 4798,
+      "triggers": 220,
+      "hits": 144,
+      "observedRate": 0.6545,
+      "baselineRate": 0.7234,
+      "pValue": 0.990816,
+      "rateRatio": 0.9048,
+      "effectSize": 0.1489
+    },
+    {
+      "mag": 6.0,
+      "quakeCount": 1559,
+      "triggers": 220,
+      "hits": 76,
+      "observedRate": 0.3455,
+      "baselineRate": 0.3631,
+      "pValue": 0.73086,
+      "rateRatio": 0.9513,
+      "effectSize": 0.037
+    },
+    {
+      "mag": 6.5,
+      "quakeCount": 522,
+      "triggers": 220,
+      "hits": 26,
+      "observedRate": 0.1182,
+      "baselineRate": 0.1436,
+      "pValue": 0.878871,
+      "rateRatio": 0.8233,
+      "effectSize": 0.0753
+    },
+    {
+      "mag": 7.0,
+      "quakeCount": 194,
+      "triggers": 220,
+      "hits": 12,
+      "observedRate": 0.0545,
+      "baselineRate": 0.059,
+      "pValue": 0.663374,
+      "rateRatio": 0.925,
+      "effectSize": 0.0191
+    }
+  ],
+  "meta": {
+    "omniRecords": 131496,
+    "totalQuakesRaw": 6922,
+    "totalQuakesDeclustered": 4798,
+    "aftershocksRemoved": 2124,
+    "dateRange": {
+      "start": "2011-03-13T00:00:00+00:00",
+      "end": "2026-03-12T23:00:00+00:00"
+    }
+  },
+  "triggerTypeBreakdown": {
+    "speed": {
+      "n": 142,
+      "hits": 7,
+      "observedRate": 0.0493,
+      "baselineRate": 0.059,
+      "pValue": 0.747772,
+      "rateRatio": 0.8359
+    },
+    "bz": {
+      "n": 69,
+      "hits": 5,
+      "observedRate": 0.0725,
+      "baselineRate": 0.059,
+      "pValue": 0.412821,
+      "rateRatio": 1.2288
+    },
+    "both": {
+      "n": 9,
+      "hits": 0,
+      "observedRate": 0.0,
+      "baselineRate": 0.059,
+      "pValue": 1.0,
+      "rateRatio": null
+    },
+    "all": {
+      "n": 220,
+      "hits": 12,
+      "observedRate": 0.0545,
+      "baselineRate": 0.059,
+      "pValue": 0.663374,
+      "rateRatio": 0.925
+    }
+  },
+  "lagWindowSplit": {
+    "24\u201348h_bz": {
+      "window": "24\u201348h",
+      "triggerType": "bz",
+      "n": 69,
+      "hits": 3,
+      "observedRate": 0.0435,
+      "baselineRate": 0.0201,
+      "pValue": 0.168923
+    },
+    "24\u201348h_all": {
+      "window": "24\u201348h",
+      "triggerType": "all",
+      "n": 220,
+      "hits": 7,
+      "observedRate": 0.0318,
+      "baselineRate": 0.0201,
+      "pValue": 0.157699
+    },
+    "48\u201372h_bz": {
+      "window": "48\u201372h",
+      "triggerType": "bz",
+      "n": 69,
+      "hits": 0,
+      "observedRate": 0.0,
+      "baselineRate": 0.0201,
+      "pValue": 0.947139
+    },
+    "48\u201372h_all": {
+      "window": "48\u201372h",
+      "triggerType": "all",
+      "n": 220,
+      "hits": 2,
+      "observedRate": 0.0091,
+      "baselineRate": 0.0201,
+      "pValue": 0.919331
+    },
+    "72\u201396h_bz": {
+      "window": "72\u201396h",
+      "triggerType": "bz",
+      "n": 69,
+      "hits": 2,
+      "observedRate": 0.029,
+      "baselineRate": 0.0201,
+      "pValue": 0.460286
+    },
+    "72\u201396h_all": {
+      "window": "72\u201396h",
+      "triggerType": "all",
+      "n": 220,
+      "hits": 4,
+      "observedRate": 0.0182,
+      "baselineRate": 0.0201,
+      "pValue": 0.669585
+    },
+    "24\u201396h_bz": {
+      "window": "24\u201396h",
+      "triggerType": "bz",
+      "n": 69,
+      "hits": 5,
+      "observedRate": 0.0725,
+      "baselineRate": 0.059,
+      "pValue": 0.412821
+    },
+    "24\u201396h_all": {
+      "window": "24\u201396h",
+      "triggerType": "all",
+      "n": 220,
+      "hits": 12,
+      "observedRate": 0.0545,
+      "baselineRate": 0.059,
+      "pValue": 0.663374
+    }
+  },
+  "zoneBreakdown": [
+    {
+      "zone": "Solomon Islands Trench",
+      "hits": 2,
+      "pctOfTriggers": 2.9
+    },
+    {
+      "zone": "Alaska-Aleutian Trench",
+      "hits": 2,
+      "pctOfTriggers": 2.9
+    },
+    {
+      "zone": "Japan Trench",
+      "hits": 1,
+      "pctOfTriggers": 1.4
+    }
+  ],
+  "bzSensitivity": [
+    {
+      "bzThresh": -8,
+      "totalTriggers": 256,
+      "bzOnlyN": 126,
+      "hits": 8,
+      "observedRate": 0.0635,
+      "baselineRate": 0.059,
+      "pValue": 0.489474,
+      "rateRatio": 1.0767
+    },
+    {
+      "bzThresh": -10,
+      "totalTriggers": 220,
+      "bzOnlyN": 69,
+      "hits": 5,
+      "observedRate": 0.0725,
+      "baselineRate": 0.059,
+      "pValue": 0.412821,
+      "rateRatio": 1.2288
+    },
+    {
+      "bzThresh": -12,
+      "totalTriggers": 204,
+      "bzOnlyN": 33,
+      "hits": 7,
+      "observedRate": 0.2121,
+      "baselineRate": 0.059,
+      "pValue": 0.002716,
+      "rateRatio": 3.5971
+    }
+  ],
+  "severeBzDeepDive": {
+    "bzThresh": -12,
+    "totalTriggers": 33,
+    "hits": 7,
+    "pValue": 0.0027,
+    "rateRatio": 3.597,
+    "hitEvents": [
+      {
+        "stormDate": "2015-03-28T19:00:00+00:00",
+        "peakBz": -13.9,
+        "quakeDate": "2015-03-29T23:48:31.010000+00:00",
+        "lagHours": 28.8,
+        "magnitude": 7.5,
+        "zone": "Solomon Islands Trench"
+      },
+      {
+        "stormDate": "2015-05-06T07:00:00+00:00",
+        "peakBz": -15.6,
+        "quakeDate": "2015-05-07T07:10:19.590000+00:00",
+        "lagHours": 24.2,
+        "magnitude": 7.1,
+        "zone": "Solomon Islands Trench"
+      },
+      {
+        "stormDate": "2016-01-21T05:00:00+00:00",
+        "peakBz": -15.4,
+        "quakeDate": "2016-01-24T10:30:29.557000+00:00",
+        "lagHours": 77.5,
+        "magnitude": 7.1,
+        "zone": "Alaska-Aleutian Trench"
+      },
+      {
+        "stormDate": "2022-03-13T14:00:00+00:00",
+        "peakBz": -15.5,
+        "quakeDate": "2022-03-16T14:36:30.997000+00:00",
+        "lagHours": 72.6,
+        "magnitude": 7.3,
+        "zone": "Japan Trench"
+      },
+      {
+        "stormDate": "2023-01-05T02:00:00+00:00",
+        "peakBz": -15.5,
+        "quakeDate": "2023-01-08T12:32:42.372000+00:00",
+        "lagHours": 82.5,
+        "magnitude": 7,
+        "zone": "New Hebrides Trench"
+      },
+      {
+        "stormDate": "2023-07-14T22:00:00+00:00",
+        "peakBz": -13.2,
+        "quakeDate": "2023-07-16T06:48:21.158000+00:00",
+        "lagHours": 32.8,
+        "magnitude": 7.2,
+        "zone": "Alaska-Aleutian Trench"
+      },
+      {
+        "stormDate": "2024-08-04T21:00:00+00:00",
+        "peakBz": -16.7,
+        "quakeDate": "2024-08-08T07:42:55.206000+00:00",
+        "lagHours": 82.7,
+        "magnitude": 7.1,
+        "zone": "Ryukyu Trench"
+      }
+    ],
+    "lagSplit": {
+      "24\u201348h": {
+        "n": 33,
+        "hits": 3,
+        "observedRate": 0.0909,
+        "baselineRate": 0.0201,
+        "pValue": 0.028131
+      },
+      "48\u201372h": {
+        "n": 33,
+        "hits": 0,
+        "observedRate": 0.0,
+        "baselineRate": 0.0201,
+        "pValue": 1.0
+      },
+      "72\u201396h": {
+        "n": 33,
+        "hits": 4,
+        "observedRate": 0.1212,
+        "baselineRate": 0.0201,
+        "pValue": 0.004161
+      },
+      "24\u201396h": {
+        "n": 33,
+        "hits": 7,
+        "observedRate": 0.2121,
+        "baselineRate": 0.059,
+        "pValue": 0.002716
+      }
+    },
+    "zoneBreakdown": [
+      {
+        "zone": "Solomon Islands Trench",
+        "hits": 2,
+        "pctOfTriggers": 6.1
+      },
+      {
+        "zone": "Alaska-Aleutian Trench",
+        "hits": 2,
+        "pctOfTriggers": 6.1
+      },
+      {
+        "zone": "Japan Trench",
+        "hits": 1,
+        "pctOfTriggers": 3.0
+      },
+      {
+        "zone": "New Hebrides Trench",
+        "hits": 1,
+        "pctOfTriggers": 3.0
+      },
+      {
+        "zone": "Ryukyu Trench",
+        "hits": 1,
+        "pctOfTriggers": 3.0
+      }
+    ]
+  }
+}
