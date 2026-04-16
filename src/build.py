@@ -2,37 +2,37 @@
 """
 ESO Build Script — combines modular source files into single-file HTML.
 
-Usage:
-  python3 build.py          → readable build  (earth-observatory-p3.html)
-  python3 build.py --min    → minified build  (earth-observatory-p3.min.html)
-  python3 build.py --both   → both outputs
+Run from anywhere:
+  python3 src/build.py          → readable build  → earth-observatory-p3.html (project root)
+  python3 src/build.py --min    → minified build  → earth-observatory-p3.min.html (project root)
+  python3 src/build.py --both   → both outputs
+
+Source files live in src/.
+Built outputs are written to the project root (one level up from src/),
+which is where GitHub Pages serves them from.
 
 Minification removes // single-line comments, /* */ block comments, and
 collapses excess blank lines. Source files are never modified.
 """
 import os, re, sys
 
-BASE = os.path.dirname(os.path.abspath(__file__)) or "."
+SRC_DIR  = os.path.dirname(os.path.abspath(__file__))          # .../src/
+ROOT_DIR = os.path.dirname(SRC_DIR)                            # project root
 
 def read(fn):
-    with open(os.path.join(BASE, fn), encoding="utf-8") as f:
+    with open(os.path.join(SRC_DIR, fn), encoding="utf-8") as f:
         return f.read()
 
 def minify_js(src):
     """Strip // comments (not inside strings), block comments, and blank lines."""
-    # Remove /* ... */ block comments first
     src = re.sub(r'/\*[\s\S]*?\*/', '', src)
-    # Remove // line comments — but NOT URLs (http://) and NOT commented-out code we want to skip
-    # Safe approach: only strip lines where // is the first non-whitespace content
     lines = src.split('\n')
     out = []
     prev_blank = False
     for line in lines:
         stripped = line.lstrip()
-        # Drop pure comment lines
         if stripped.startswith('//'):
             continue
-        # Drop blank lines but collapse runs to single blank
         if stripped == '':
             if not prev_blank:
                 out.append('')
@@ -49,15 +49,16 @@ def minify_css(src):
     return '\n'.join(lines)
 
 def build(minify=False, suffix=''):
-    css    = read("eso-style.css")
-    stats  = read("eso-stats.js")
-    core   = read("eso-core.js")
-    data   = read("eso-data.js")
-    ui     = read("eso-ui.js")
-    thesis = read("eso-thesis.js")
-    ta     = read("thesis-a-solar-seismic.js")
-    tb     = read("thesis-b-tidal-seismic.js")
-    html   = read("earth-observatory-modular.html")
+    css     = read("eso-style.css")
+    stats   = read("eso-stats.js")
+    core    = read("eso-core.js")
+    data    = read("eso-data.js")
+    ui      = read("eso-ui.js")
+    thesis  = read("eso-thesis.js")
+    ta      = read("thesis-a-solar-seismic.js")
+    tb      = read("thesis-b-tidal-seismic.js")
+    elnino  = read("eso-elnino.js")
+    html    = read("earth-observatory-modular.html")
 
     if minify:
         css    = minify_css(css)
@@ -68,6 +69,7 @@ def build(minify=False, suffix=''):
         thesis = minify_js(thesis)
         ta     = minify_js(ta)
         tb     = minify_js(tb)
+        elnino = minify_js(elnino)
 
     html = html.replace('<link rel="stylesheet" href="eso-style.css">',
                         f"<style>\n{css}\n</style>")
@@ -79,16 +81,18 @@ def build(minify=False, suffix=''):
         ('<script src="eso-thesis.js"></script>',             thesis),
         ('<script src="thesis-a-solar-seismic.js"></script>', ta),
         ('<script src="thesis-b-tidal-seismic.js"></script>', tb),
+        ('<script src="eso-elnino.js"></script>',             elnino),
     ]:
         html = html.replace(tag, f"<script>\n{src}\n</script>")
 
-    out = os.path.join(BASE, f"earth-observatory-p3{suffix}.html")
+    out = os.path.join(ROOT_DIR, f"earth-observatory-p3{suffix}.html")
     with open(out, "w", encoding="utf-8") as f:
         f.write(html)
     kb = os.path.getsize(out) // 1024
     lines = html.count('\n') + 1
     label = "minified" if minify else "readable"
-    print(f"Built [{label}] {os.path.basename(out)}  —  {lines:,} lines  /  {kb} KB")
+    print(f"Built [{label}] {os.path.basename(out)}  →  {lines:,} lines  /  {kb} KB")
+    print(f"       Written to: {out}")
 
 args = sys.argv[1:]
 do_min  = '--min'  in args or '--both' in args

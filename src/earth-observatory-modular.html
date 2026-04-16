@@ -154,6 +154,16 @@ window.addEventListener('unhandledrejection', function(e) {
 <!-- MAP TIMESTAMP WATERMARK -->
 <div id="map-timestamp">UTC <span id="map-ts-text">--:--:--</span> · <span id="map-ts-date">---</span></div>
 
+<!-- v4.1: MAP BASE LAYER CONTROLS -->
+<div id="map-layer-controls">
+  <button id="map-base-toggle" class="map-ctrl-btn" onclick="setBaseLayer(_mapBaseLayerCurrent==='dark'?'satellite':'dark')" title="Switch to NASA satellite view">🗺 MAP</button>
+  <button id="map-gibs-sst-btn" class="map-ctrl-btn" onclick="toggleGibsSST()" title="Toggle NASA GHRSST Sea Surface Temperature overlay (science-grade, daily)">🌊 SST</button>
+</div>
+<!-- v4.1: NASA GIBS Attribution (shown only in satellite mode) -->
+<div id="map-gibs-attr" style="display:none;">
+  Imagery: <a href="https://earthdata.nasa.gov/eosdis/science-system-description/eosdis-components/gibs" target="_blank" rel="noopener">NASA GIBS</a> · MODIS/VIIRS/GHRSST
+</div>
+
 <!-- LEFT PANEL -->
 <div id="layer-panel">
   <div id="panel-title">
@@ -310,11 +320,25 @@ window.addEventListener('unhandledrejection', function(e) {
         <div class="layer-info"><div class="layer-name">Tidal Force</div><div class="layer-source">JPL lunar model</div></div>
         <div class="layer-status s-calc">CALC</div><div class="layer-toggle"></div>
       </div>
+      <div class="layer-item" data-layer="enso" onclick="toggleLayer('enso')" data-tip="<strong>ENSO / El Niño Index</strong>El Niño-Southern Oscillation state from NOAA Oceanic Niño Index (ONI) and IRI/CPC model consensus. El Niño (ONI &gt; +0.5°C) warms the central Pacific, shifts rainfall belts, amplifies droughts in SE Asia and Australia, and intensifies wildfire seasons globally. El Niño Risk Score (0–100) combines ONI magnitude and IRI forecast probability.<em>NOAA ONI · IRI/CPC consensus forecast</em>">
+        <div class="layer-dot" style="background:#ff6d00;box-shadow:0 0 6px #ff6d00"></div>
+        <div class="layer-info"><div class="layer-name">ENSO / El Niño</div><div class="layer-source">NOAA ONI · IRI/CPC</div></div>
+        <div class="layer-status s-live">LIVE</div><div class="layer-toggle"></div>
+      </div>
+    </div>
+
+    <div class="domain-group">
+      <div class="domain-label">🔥 Fire<button class="domain-all-btn" onclick="toggleDomain(['fire'])">ALL</button></div>
+      <div class="layer-item" data-layer="fire" onclick="toggleLayer('fire')" data-tip="<strong>Active Fires — NASA FIRMS</strong>Global wildfire detections from NASA's MODIS Terra/Aqua satellite in the past 24 hours. Dot size = cluster size; color = intensity (yellow = low, red = high fire radiative power in MW). Fires are clustered at 2° grid cells for clarity. El Niño years show markedly elevated fire counts in SE Asia, Australia, and Amazonia due to drought intensification.<em>Live data · NASA FIRMS MODIS C6.1 · 24h NRT</em>">
+        <div class="layer-dot" style="background:#ff6600;box-shadow:0 0 6px #ff6600"></div>
+        <div class="layer-info"><div class="layer-name">Active Fires</div><div class="layer-source">NASA FIRMS MODIS</div></div>
+        <div class="layer-status s-live">LIVE</div><div class="layer-toggle"></div>
+      </div>
     </div>
 
   </div>
   <div id="left-panel-footer" style="padding:8px 14px;border-top:1px solid var(--border);font-size:8px;color:var(--text-dim);line-height:1.6;flex-shrink:0;display:flex;justify-content:space-between;align-items:center;gap:8px;">
-    <span>💡 15 layers · 4 domains · <span style="color:var(--c-cyan)">Phase 4</span></span>
+    <span>💡 17 layers · 5 domains · <span style="color:var(--c-cyan)">Phase 4 · v4.9.1</span></span>
     <span style="cursor:pointer;color:var(--text-dim);font-size:10px;" onclick="this.parentElement.style.display='none'" title="Dismiss">✕</span>
   </div>
 </div>
@@ -431,6 +455,12 @@ window.addEventListener('unhandledrejection', function(e) {
               <div class="baseline-item-label">ENSO Phase</div>
               <div class="baseline-item-val" id="bl-enso" style="font-size:11px;">—</div>
               <div class="baseline-item-sub" id="bl-enso-sub">Niño3.4</div>
+            </div>
+            <!-- v4.3: Degree Heating Weeks baseline metric -->
+            <div class="baseline-item" title="Degree Heating Weeks (DHW) — accumulated thermal stress above the climatological maximum monthly mean. The primary coral bleaching metric. DHW &gt; 4 = bleaching likely. DHW &gt; 8 = mass mortality risk. Source: Copernicus Marine / NOAA CRW.">
+              <div class="baseline-item-label">DHW</div>
+              <div class="baseline-item-val" id="bl-dhw" style="font-size:13px;">—</div>
+              <div class="baseline-item-sub" id="bl-dhw-sub">Coral stress</div>
             </div>
             <div class="baseline-item" data-tip="<strong>MJO Phase — Madden-Julian Oscillation</strong>The dominant mode of intraseasonal tropical climate variability (~40–50 day cycle). Phases 1–8 describe the location of enhanced tropical convection. Active MJO (amplitude &gt;1.0) influences monsoons, atmospheric rivers, and tropical cyclone genesis. Phase 3–4 (Maritime Continent) often suppresses TC activity in the Atlantic while enhancing it in the Indian Ocean. Model estimate — real CPC data planned.">
               <div class="baseline-item-label">MJO PHASE</div>
@@ -589,6 +619,8 @@ window.addEventListener('unhandledrejection', function(e) {
       </div>
     </div>
 
+    <!-- v4.5: Deep Analysis CTA -->
+    <div class="rpanel-deep-cta" onclick="openDeepAnalysis()">🔍 Deep Analysis <span class="rpanel-cta-hint">Stress · Lag · Spectral · Chaos · Cause</span></div>
   </div><!-- /rpanel-now -->
 
   <!-- ══════════════════════════════════════════════
@@ -775,6 +807,8 @@ window.addEventListener('unhandledrejection', function(e) {
   <div style="padding:10px 18px 14px;font-size:8px;color:var(--text-dim);line-height:1.8;border-top:1px solid var(--border);margin-top:4px;">
     <span style="color:var(--c-gold)">NOTE:</span> Correlation % reflects published effect sizes or explained variance — not certainty of causation. <strong style="color:rgba(255,200,150,.8)">Well Established clusters are backed by robust replication; Moderate Evidence clusters are directionally supported but have significant uncertainty; Obscure &amp; Contested clusters are research hypotheses only and must not be used for operational hazard assessment.</strong> For real-time official alerts see USGS earthquake.usgs.gov, NOAA tsunami.gov, and NWS weather.gov.
   </div>
+    <!-- v4.5: Deep Analysis CTA -->
+    <div class="rpanel-deep-cta" onclick="openDeepAnalysis();switchDiscTab('lag')">🔍 Explore Lag &amp; Spectral →</div>
 </div>
   </div><!-- /rpanel-explore -->
 
@@ -824,6 +858,8 @@ window.addEventListener('unhandledrejection', function(e) {
 
       <div style="font-size:7px;color:var(--text-dim);opacity:.5;text-align:center;margin-top:2px;">↓ Full charts &amp; timeline in the panel below</div>
     </div>
+    <!-- v4.5: Deep Analysis CTA -->
+    <div class="rpanel-deep-cta" onclick="openDeepAnalysis();switchDiscTab('spectral')">〰 Spectral &amp; Wavelet Analysis →</div>
   </div><!-- /rpanel-hist -->
   <!-- ══════════════════════════════════════════════
        TAB 2: RISK — Forecast & Calendar
@@ -837,6 +873,48 @@ window.addEventListener('unhandledrejection', function(e) {
     <div id="fc-status-bar" style="color:var(--text-dim);border-color:var(--border)">
       Press REFRESH to load live data
     </div>
+
+    <!-- v4.3: Coral Bleaching Risk Card — populated by renderCoralPanel() + scoreCoralBleachingRisk() -->
+    <div id="coral-risk-card" class="coral-risk-card">
+      <div class="coral-card-header">
+        <span class="coral-card-title">🪸 CORAL BLEACHING RISK</span>
+        <span class="coral-card-source" id="coral-card-source">LOADING…</span>
+      </div>
+      <div id="coral-alert-list" class="coral-alert-list">
+        <div style="font-size:8px;color:var(--text-dim);padding:6px 0;">Fetching DHW data…</div>
+      </div>
+      <div class="coral-card-footer">DHW: Copernicus Marine · NOAA Coral Reef Watch</div>
+    </div>
+
+    <!-- v4.2: El Niño 2026 Risk Card — populated by renderENSORiskCard() -->
+    <div id="enso-risk-card" class="enso-risk-card">
+      <div class="enso-card-header">
+        <span class="enso-card-title">🌊 EL NIÑO 2026</span>
+        <span class="enso-card-source">LOADING…</span>
+      </div>
+      <div class="enso-card-phase" style="color:var(--text-dim)">—</div>
+      <div class="enso-card-prob-row">
+        <span class="enso-card-prob-label">El Niño prob (H2 2026)</span>
+        <span class="enso-card-prob-val">—</span>
+      </div>
+      <div class="enso-card-gauge-track">
+        <div class="enso-card-gauge-fill" style="width:0%"></div>
+      </div>
+      <div class="enso-card-footer">Source: NOAA/IRI consensus · fetching…</div>
+    </div>
+
+    <!-- v4.6/v4.7: El Niño Thesis Cascade Card (dual C+D) -->
+    <div id="elnino-thesis-card" style="margin:8px 10px;padding:10px;background:rgba(255,109,0,.05);border:1px solid rgba(255,109,0,.2);border-radius:3px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <span style="font-size:8px;letter-spacing:.1em;color:#ff9900;">🔬 EL NIÑO CASCADE</span>
+        <div style="display:flex;gap:4px;">
+          <button id="thesis-cd-btn-c" onclick="switchElNinoThesis('C')" style="font-size:7px;padding:2px 7px;border-radius:2px;font-family:inherit;cursor:pointer;background:rgba(255,109,0,.3);border:1px solid #ff6d00;color:#ff9900;">🌊 Marine</button>
+          <button id="thesis-cd-btn-d" onclick="switchElNinoThesis('D')" style="font-size:7px;padding:2px 7px;border-radius:2px;font-family:inherit;cursor:pointer;background:none;border:1px solid rgba(255,255,255,.2);color:var(--text-dim);">🔥 Wildfire</button>
+        </div>
+      </div>
+      <div id="elnino-cascade-content" style="font-size:8px;color:var(--text-dim);">Loading cascade data…</div>
+    </div>
+
     <div id="fc-dashboard" style="flex:1;overflow-y:auto;padding-bottom:20px;">
       <div style="padding:20px 14px;text-align:center;font-size:9px;color:var(--text-dim);line-height:1.9">
         Press <span style="color:var(--c-cyan)">↻ REFRESH</span> to fetch live data from<br>
@@ -847,6 +925,8 @@ window.addEventListener('unhandledrejection', function(e) {
     <div style="padding:5px 14px;font-size:7px;color:rgba(255,255,255,.2);letter-spacing:.06em;border-top:1px solid var(--border);flex-shrink:0;">
       ⓘ Research-grade · NOT an official warning system · emergencies: USGS · NHC · PTWC
     </div>
+    <!-- v4.5: Deep Analysis CTA -->
+    <div class="rpanel-deep-cta" onclick="openDeepAnalysis();switchDiscTab('cause')">⛓ Chain &amp; Cause Analysis →</div>
   </div><!-- /rpanel-risk -->
 
   <!-- ══════════════════════════════════════════════
@@ -1030,25 +1110,28 @@ window.addEventListener('unhandledrejection', function(e) {
       <div class="da-close" onclick="closeDeepAnalysis()">⊠ CLOSE</div>
     </div>
   </div>
-  <!-- Sub-tab navigation -->
+  <!-- v4.5: Universal context header — live metrics + breadcrumb -->
+  <div class="da-context-header" id="da-context-bar">
+    <div class="da-ctx-metric" title="Geomagnetic Kp Index">Kp <span id="dac-kp" class="da-ctx-val">—</span></div>
+    <div class="da-ctx-metric" title="EQ Risk Score">EQ <span id="dac-eq" class="da-ctx-val">—</span></div>
+    <div class="da-ctx-metric" title="ENSO / El Niño Phase">ENSO <span id="dac-enso" class="da-ctx-val" style="color:#ff6d00">—</span></div>
+    <div class="da-ctx-metric" title="Active Fires (NASA FIRMS 24h)">🔥 <span id="dac-fire" class="da-ctx-val">—</span></div>
+    <div class="da-ctx-sep"></div>
+    <div class="da-ctx-breadcrumb" id="dac-breadcrumb">Deep Analysis → <span id="dac-tab-name">Stress Index</span></div>
+  </div>
+  <!-- Sub-tab navigation — v4.5: 12 → 5 tabs -->
   <div class="disc-sub-tabs-wrap" style="flex-shrink:0;">
     <div class="disc-sub-tabs">
-      <div class="disc-tab active" onclick="switchDiscTab('stress')" id="dst-stress" data-tip="<strong>Stress Index</strong>A composite score (0–100) showing how far all active Earth system layers deviate from their normal baseline right now. Each layer contributes a weighted Z-score. &gt;50 = elevated. &gt;70 = rare compound event window. Think of it as a combined 'alert level' across all systems simultaneously.">Stress Index</div>
-      <div class="disc-tab" onclick="switchDiscTab('lag')" id="dst-lag" data-tip="<strong>Lag Explorer</strong>Cross-correlation analysis between two layers over time. Helps identify cause-and-effect relationships with a time delay — e.g. does a solar wind spike lead to elevated seismicity 1–3 days later? Select Layer A and Layer B, then read the peak lag in hours/days.">Lag Explorer</div>
-      <div class="disc-tab" onclick="switchDiscTab('fft')" id="dst-fft" data-tip="<strong>Spectral Analysis (FFT)</strong>Decomposes a data layer into its frequency components using Fast Fourier Transform. Reveals hidden periodic cycles — e.g. 27-day solar rotation, 11-year solar cycle, 14-day tidal cycle. Peak bars show which periods dominate the signal.">Spectral</div>
-      <div class="disc-tab" onclick="switchDiscTab('phase')" id="dst-phase" data-tip="<strong>Phase-Space Attractor</strong>Plots one layer against another to reveal the geometry of their relationship. Circular trajectory = oscillation between states. Spiral = converging toward equilibrium. Scattered = chaotic / no clear relationship. Useful for finding hidden coupling between systems.">Phase Space</div>
-      <div class="disc-tab" onclick="switchDiscTab('mi')" id="dst-mi" data-tip="<strong>Mutual Information Matrix</strong>Measures non-linear statistical dependency between all layer pairs — captures relationships that standard Pearson correlation misses (e.g. quadratic, threshold, or time-lagged effects). Higher value = stronger dependency. Blue = positive, red = negative correlation direction.">Mutual Info</div>
-      <div class="disc-tab" onclick="switchDiscTab('planets')" id="dst-planets" data-tip="<strong>Planetary Gravitational Forcing</strong>Computes the current tidal gravitational influence on Earth from every solar system body (Moon, Sun, Venus, Mars, Jupiter, etc.). Some researchers propose that planetary alignments modulate solar activity and seismicity through gravitational and electromagnetic coupling. Shown as a research-level indicator.">Planets</div>
-      <div class="disc-tab" onclick="switchDiscTab('indices')" id="dst-indices" data-tip="<strong>Novel Synthetic Indices</strong>Custom composite indices derived by combining multiple layers using weighted formulas. These include experimental indicators not found in standard monitoring — e.g. a Compound Seismic Trigger Index that blends Kp, solar wind, tidal force, and recent M5+ count into a single risk signal.">Novel Indices</div>
-      <div class="disc-tab" onclick="switchDiscTab('chain')" id="dst-chain" style="color:#ffd600" data-tip="<strong>Chain of Events</strong>Tracks known physical cascade sequences across Earth systems. When one monitored variable crosses a threshold, it may trigger a chain: e.g. X-class flare → ionospheric disturbance → elevated Kp → geomagnetic storm → increased seismic stress window. Chains 9–11 are contested research-level indicators, not operational forecasts.">⛓ Chains</div>
-      <div class="disc-tab" onclick="switchDiscTab('log')" id="dst-log" style="color:#ff4fa0" data-tip="<strong>Auto-Discovery Log</strong>Runs automated pattern detection every 30 seconds across all active layer combinations. Flags statistically unusual co-occurrences — e.g. simultaneous elevation in TEC, Kp, and seismicity above their respective baselines. Results are logged here chronologically for review.">Discovery Log</div>
-      <div class="disc-tab" onclick="switchDiscTab('wavelet')" id="dst-wavelet" data-tip="<strong>Wavelet Coherence</strong>Time-frequency analysis showing how two Earth system layers co-vary across different timescales simultaneously. Unlike simple cross-correlation, wavelet coherence reveals whether the relationship between two layers is stable or shifts with time — e.g. solar wind and seismicity may couple only during active periods. Warm colors (yellow) = high coherence.">Wavelet</div>
-      <div class="disc-tab" onclick="switchDiscTab('hindcast')" id="dst-hindcast" data-tip="<strong>Hindcast Validation</strong>Stores ESO stress predictions every 6 hours and validates them against the USGS M5.5+ earthquake catalog 48 hours later. Tracks binary accuracy: did elevated stress scores precede elevated seismicity? Builds an empirical track record of the system's predictive signal over time.">Hindcast</div>
-      <div class="disc-tab" onclick="switchDiscTab('hyp')" id="dst-hyp" style="color:#a78bfa" data-tip="<strong>Hypothesis Board</strong>Save your most interesting Discovery Log findings as formal research hypotheses. The system auto-checks each hypothesis every 30 minutes against live data — flagging when current conditions match or contradict the proposed relationship. Build a structured record of what you are investigating.">🔬 Hypotheses</div>
-      <div class="disc-tab" onclick="switchDiscTab('thesis')" id="dst-thesis" style="color:#ff9100" data-tip="<strong>Research Thesis</strong>Deep, focused research lens. Select a pre-defined thesis (e.g. Solar Wind → Subduction Seismicity) and the entire dashboard reconfigures to test that specific hypothesis. Includes historical backfill, Poisson rate testing, evidence accumulation, and pre-registered falsification criteria. This is where monitoring becomes science.">🔬 Thesis</div>
+      <div class="disc-tab active" onclick="switchDiscTab('stress')" id="dst-stress" data-tip="<strong>Stress Index</strong>Composite Z-score (0–100) across all active layers. &gt;50 = elevated. &gt;70 = rare compound event window.">🔴 Stress</div>
+      <div class="disc-tab" onclick="switchDiscTab('lag')" id="dst-lag" data-tip="<strong>Lag Explorer</strong>Cross-correlation with time delay. Does a solar wind spike predict seismicity 1–3 days later?">↔ Lag</div>
+      <div class="disc-tab" onclick="switchDiscTab('spectral')" id="dst-spectral" data-tip="<strong>Spectral + Wavelet</strong>FFT period decomposition + time-frequency wavelet coherence between two layers. Reveals hidden cycles and intermittent coupling.">〰 Spectral</div>
+      <div class="disc-tab" onclick="switchDiscTab('chaos')" id="dst-chaos" data-tip="<strong>Chaos — Phase Space + Mutual Info</strong>Phase-space attractor geometry and non-linear mutual information matrix. Captures coupling that Pearson correlation misses.">🌀 Chaos</div>
+      <div class="disc-tab" onclick="switchDiscTab('cause')" id="dst-cause" style="color:#ffd600" data-tip="<strong>Cause — Chains · Planets · Novel Indices · Discovery Log · Hindcast · Hypotheses · Thesis</strong>All causal analysis tools in one panel. Chain of events cascades, planetary forcing, synthetic indices, auto-discovery log, hindcast validation, hypothesis board, and research thesis selector.">⛓ Cause</div>
     </div>
   </div>
-  <!-- Sub-panel content area -->
+  <!-- Legacy tab ID aliases (kept for backward-compat with switchDiscTab calls from JS) -->
+  <!-- fft→spectral, phase→chaos, mi→chaos, planets/indices/chain/log/wavelet/hindcast/hyp/thesis→cause -->
+  <!-- Sub-panel content area — v4.5: 5 consolidated panels -->
   <div class="da-body">
     <div class="disc-panel active" id="dsp-stress">
       <div class="disc-section-label" data-tip="<strong>Earth Systems Stress Index</strong>Composite weighted Z-score across all active layers. Each layer's current value is compared to its historical mean and standard deviation. The scores are weighted and summed. &gt;70 = conditions rarely seen — historically associated with compound geophysical events.">Earth Systems Stress Index</div>
@@ -1077,145 +1160,114 @@ window.addEventListener('unhandledrejection', function(e) {
       <div class="lag-result" id="lag-result">Select two layers to explore time-delayed relationships</div>
     </div>
 
-    <div class="disc-panel" id="dsp-fft">
-      <div class="disc-section-label" data-tip="<strong>Spectral Period Analysis (FFT)</strong>Fast Fourier Transform decomposes a time-series signal into its constituent periodic cycles. The X-axis shows period length (days), Y-axis shows amplitude. Tall peaks = dominant cycles. Known Earth cycles to watch for: 14 days (tidal), 27 days (solar rotation), 11 years (solar cycle).">Spectral Period Analysis</div>
-      <details class="chart-help"><summary>❓ What am I looking at?</summary><p>A frequency decomposition (FFT) of the selected layer's time series. Peaks in the chart indicate recurring cycles. Known natural cycles: ~27 days (solar rotation), ~29.5 days (lunar month), ~365 days (annual). With limited data these are illustrative — longer history improves accuracy.</p></details>
+    <!-- v4.5: SPECTRAL panel = FFT + Wavelet Coherence -->
+    <div class="disc-panel" id="dsp-spectral">
+      <div class="disc-section-label">〰 Spectral Analysis</div>
+      <!-- FFT section -->
+      <div class="da-section-head">FFT — Period Decomposition</div>
+      <details class="chart-help"><summary>❓ What am I looking at?</summary><p>FFT decomposes a layer's time series into periodic cycles. Peaks = dominant periods. Known Earth cycles: ~14 days (tidal), ~27 days (solar rotation), ~29.5 days (lunar month).</p></details>
       <select id="fft-layer-select" class="lag-select" onchange="renderFFT()" style="margin-bottom:8px;width:100%"><option value="">Select layer</option></select>
       <canvas class="fft-canvas" id="fft-canvas"></canvas>
       <div class="fft-peaks" id="fft-peaks">Select a layer to decompose into frequency components</div>
+      <!-- Wavelet section -->
+      <div class="da-section-head" style="margin-top:16px;">Wavelet Coherence — Time-Frequency</div>
+      <div style="font-size:9px;color:var(--text-dim);margin-bottom:8px;line-height:1.5;">Warm colors = two layers oscillating in sync at that period and time. Detects intermittent coupling that FFT averages out.</div>
+      <div style="display:flex;gap:12px;margin-bottom:10px;flex-wrap:wrap;">
+        <div><label style="font-size:8px;color:var(--text-dim);display:block;margin-bottom:3px;">Layer A</label>
+          <select id="wco-layer-a" onchange="renderWaveletCoherence()" style="background:var(--bg3);color:var(--text-main);border:1px solid var(--border);font-size:8px;padding:3px 6px;border-radius:3px;">
+            <option value="kp">Kp Index</option><option value="eq">Seismic Score</option><option value="sfi">Solar Flux</option><option value="dst">Dst Index</option><option value="swspd">Solar Wind</option><option value="bz">Bz (IMF)</option>
+          </select></div>
+        <div><label style="font-size:8px;color:var(--text-dim);display:block;margin-bottom:3px;">Layer B</label>
+          <select id="wco-layer-b" onchange="renderWaveletCoherence()" style="background:var(--bg3);color:var(--text-main);border:1px solid var(--border);font-size:8px;padding:3px 6px;border-radius:3px;">
+            <option value="eq">Seismic Score</option><option value="kp">Kp Index</option><option value="sfi">Solar Flux</option><option value="dst">Dst Index</option><option value="swspd">Solar Wind</option><option value="bz">Bz (IMF)</option>
+          </select></div>
+      </div>
+      <canvas id="wco-canvas" width="560" height="180" style="width:100%;border:1px solid var(--border);border-radius:4px;"></canvas>
+      <div id="wco-legend" style="display:flex;justify-content:space-between;font-size:7.5px;color:var(--text-dim);margin-top:4px;"><span>Low coherence</span><span>Period →</span><span>High coherence</span></div>
+      <div id="wco-status" style="font-size:8px;color:var(--text-dim);margin-top:6px;text-align:center;">Waiting for data…</div>
     </div>
 
-    <div class="disc-panel" id="dsp-phase">
-      <div class="disc-section-label" data-tip="<strong>Phase-Space Attractor</strong>Maps the trajectory of two layers against each other in 2D space. Circle = periodic oscillation. Filled cluster = stable equilibrium. Spiral inward = damping/convergence. Random scatter = no coupling. A 'strange attractor' (fractal shape) indicates chaotic but bounded dynamics — hallmark of nonlinear Earth systems.">Phase-Space Attractor</div>
-      <details class="chart-help"><summary>❓ What am I looking at?</summary><p>Plots each data point as (current value, value 1 step ago). A stable system traces a closed loop; an unpredictable system fills the space randomly. Tight spiral = strong autocorrelation. Scattered cloud = noisy/random signal.</p></details>
+    <!-- v4.5: CHAOS panel = Phase Space + Mutual Information -->
+    <div class="disc-panel" id="dsp-chaos">
+      <div class="disc-section-label">🌀 Chaos — Non-linear Analysis</div>
+      <!-- Phase Space -->
+      <div class="da-section-head">Phase-Space Attractor</div>
+      <details class="chart-help"><summary>❓ What am I looking at?</summary><p>Plots each point as (current value, value 1 step ago). Closed loop = periodic oscillation. Scattered cloud = noisy/chaotic signal. Strange attractor = bounded chaos.</p></details>
       <div class="lag-pair-select">
         <select id="phase-layer-a" class="lag-select" onchange="renderPhaseSpace()"><option value="">X axis</option></select>
         <select id="phase-layer-b" class="lag-select" onchange="renderPhaseSpace()"><option value="">Y axis</option></select>
       </div>
       <canvas class="phase-canvas" id="phase-canvas"></canvas>
-      <div class="lag-result" id="phase-result">Phase-space embedding reveals attractor geometry — circular = oscillation, spiral = convergence, scattered = chaos</div>
-    </div>
-
-    <div class="disc-panel" id="dsp-mi">
-      <div class="disc-section-label" data-tip="<strong>Mutual Information Matrix</strong>Information-theoretic measure of statistical dependency between all layer pairs. Unlike Pearson correlation (which only detects linear relationships), mutual information captures ANY statistical dependency — quadratic, threshold, inverse, and time-lagged. Higher value = more shared information between layers. 0 = statistically independent.">Mutual Information Matrix</div>
-      <details class="chart-help"><summary>❓ What am I looking at?</summary><p>Mutual Information (MI) measures statistical dependency between two layers — including non-linear relationships that Pearson correlation misses. Higher MI = more shared information. Pink bars flag pairs where MI substantially exceeds what Pearson alone predicts, revealing hidden non-linear coupling.</p></details>
-      <div style="font-size:9px;color:var(--text-dim);margin-bottom:10px;line-height:1.6;">Non-linear dependency — captures correlations that Pearson misses (e.g. quadratic, threshold relationships)</div>
+      <div class="lag-result" id="phase-result">Phase-space embedding — circular = oscillation, spiral = convergence, scattered = chaos</div>
+      <!-- Mutual Information -->
+      <div class="da-section-head" style="margin-top:16px;">Mutual Information Matrix</div>
+      <details class="chart-help"><summary>❓ What am I looking at?</summary><p>MI captures non-linear dependencies — quadratic, threshold, and time-lagged effects — that Pearson correlation misses. Higher = more shared information between layers.</p></details>
+      <div style="font-size:9px;color:var(--text-dim);margin-bottom:10px;line-height:1.6;">Non-linear dependency across all layer pairs. Pink bars = MI substantially exceeds Pearson prediction.</div>
       <div id="mi-table"></div>
     </div>
 
-    <div class="disc-panel" id="dsp-planets">
-      <div class="disc-section-label" data-tip="<strong>Planetary Gravitational Forcing</strong>Computes the tidal gravitational acceleration on Earth from each solar system body at this moment. The Moon and Sun dominate. Some researchers (Zharkova, Abreu et al.) propose that planetary alignment modulates the solar magnetic cycle and, through it, terrestrial seismicity and volcanism. Shown as a research-level exploratory tool — correlations are contested.">Planetary Gravitational Forcing</div>
-      <div style="font-size:9px;color:var(--text-dim);margin-bottom:10px;line-height:1.6;">Computed gravitational tidal influence on Earth from each solar system body. Alignment events may correlate with solar activity and seismicity.</div>
-      <div id="planet-table"></div>
-      <canvas id="planet-canvas" style="width:100%;max-width:600px;height:120px;display:block;background:var(--surface);border-radius:2px;margin-top:10px;"></canvas>
-      <div id="planet-alignment" style="font-size:9px;color:var(--text-dim);margin-top:8px;line-height:1.7;"></div>
-    </div>
+    <!-- v4.5: CAUSE panel = Chains + Planets + Novel Indices + Discovery Log + Hindcast + Hypotheses + Thesis -->
+    <div class="disc-panel" id="dsp-cause">
+      <div class="disc-section-label">⛓ Cause — Cascade &amp; Discovery</div>
 
-    <div class="disc-panel" id="dsp-indices">
-      <div class="disc-section-label" data-tip="<strong>Novel Synthetic Indices</strong>Custom composite indicators built by combining multiple raw layers with domain-specific weightings. Examples: Compound Seismic Trigger Index (blends Kp + solar wind + tidal + seismicity), Solar-Geomagnetic Coupling Index, EM Environment Index. These do not exist in standard monitoring systems — they are experimental ESO-specific signals.">Novel Synthetic Indices</div>
-      <div id="novel-indices-container"></div>
-    </div>
+      <!-- Chains -->
+      <details class="da-cause-section" open>
+        <summary class="da-cause-head">⛓ Chain of Events <button class="chain-scan-btn" onclick="runChainScan();event.stopPropagation()" style="margin-left:8px;">↻ SCAN</button></summary>
+        <div class="chain-container" style="padding:0;">
+          <div class="chain-disclaimer" style="margin-top:8px;"><b>Scientific status:</b> Known and contested physical linkages. Chains 9–11 are research-level — not operational forecasts.</div>
+          <div id="chain-summary-box"></div>
+          <div id="chain-triggers-list"></div>
+        </div>
+      </details>
 
-    <div class="disc-panel" id="dsp-chain">
-      <div class="chain-container">
-        <div class="chain-now-header">
-          <div class="chain-now-title" data-tip="<strong>Chain of Events</strong>Physical cascade sequences where one Earth system event triggers another. When a chain trigger condition is met (e.g. Kp≥5), the chain lights up showing what it may lead to over the following hours/days. Chain probability = historical frequency of the downstream event occurring after the trigger. Not a deterministic prediction.">Chain of Events</div>
-          <button class="chain-scan-btn" onclick="runChainScan()" data-tip="<strong>Scan Now</strong>Re-evaluates all chain trigger conditions against current live data. Automatically runs on page load and after major data updates. Use this to manually force a re-check after conditions change.">↻ SCAN NOW</button>
-        </div>
-        <div class="chain-disclaimer">
-          <b>Scientific status:</b> These chains represent known and contested physical linkages from peer-reviewed literature. Chains 9–11 are <b>research-level indicators</b> — not operational forecast systems. Probabilities are observational frequencies, not deterministic predictions.
-        </div>
-        <div style="font-size:9px;color:var(--text-dim);line-height:1.7;margin-bottom:10px;">
-          When a monitored signal crosses a critical threshold, it can trigger a cascade of effects across other Earth systems.
-        </div>
-        <div id="chain-summary-box"></div>
-        <div id="chain-triggers-list"></div>
-      </div>
-    </div>
+      <!-- Planets -->
+      <details class="da-cause-section">
+        <summary class="da-cause-head">🪐 Planetary Gravitational Forcing</summary>
+        <div style="font-size:9px;color:var(--text-dim);margin:6px 0 8px;line-height:1.6;">Tidal gravitational acceleration on Earth from each solar system body. Alignment events may correlate with solar activity and seismicity (research-level).</div>
+        <div id="planet-table"></div>
+        <canvas id="planet-canvas" style="width:100%;max-width:600px;height:100px;display:block;background:var(--surface);border-radius:2px;margin-top:8px;"></canvas>
+        <div id="planet-alignment" style="font-size:9px;color:var(--text-dim);margin-top:6px;line-height:1.7;"></div>
+      </details>
 
-    <div class="disc-panel" id="dsp-log">
-      <div class="disc-section-label" style="display:flex;justify-content:space-between;">
-        <span data-tip="<strong>Auto-Discovery Log</strong>Automated statistical pattern detector running every 30 seconds. Scans all active layer combinations for simultaneous anomalies — e.g. both TEC and Kp elevated above 1.5σ at the same time. Each discovery entry shows the layers involved, the anomaly magnitude, and a timestamp. Useful for spotting unusual multi-system co-excitation.">Auto-Discovery Log</span>
-        <span id="discovery-count" style="color:#ff4fa0;font-size:9px;">0 found</span>
-      </div>
-      <div style="font-size:9px;color:var(--text-dim);margin-bottom:10px;line-height:1.6;">Automated pattern detection runs every 30 seconds across all active layer combinations.</div>
-      <div style="padding:3px 10px 5px;border-bottom:1px solid var(--border);">
-        <details style="font-size:7.5px;color:var(--text-dim);line-height:1.6;">
-          <summary style="cursor:pointer;letter-spacing:.07em;color:var(--c-cyan);outline:none;">📐 Detection methodology</summary>
-          <div style="padding:4px 0 2px;opacity:.85;">
-            <b>Thresholds:</b> Score &gt;65/100 (anomaly), |r|&gt;0.5 with lag≠0 (lag correlation), spectral peak &gt;60% power (FFT), MI bonus &gt;0.15 (non-linear), planet alignment &lt;15° (gravitational). <b>Tests per cycle:</b> ~8–12 simultaneous (all active layer combinations). <b>Multiple comparisons:</b> No Bonferroni correction applied — treat discoveries as hypothesis leads, not confirmed findings. <b>Refresh:</b> every 30 s.
-          </div>
+      <!-- Novel Indices -->
+      <details class="da-cause-section">
+        <summary class="da-cause-head">🔢 Novel Synthetic Indices</summary>
+        <div id="novel-indices-container"></div>
+      </details>
+
+      <!-- Discovery Log -->
+      <details class="da-cause-section" open>
+        <summary class="da-cause-head">🔍 Auto-Discovery Log <span id="discovery-count" style="color:#ff4fa0;font-size:8px;margin-left:6px;font-weight:400;">0 found</span></summary>
+        <div style="font-size:9px;color:var(--text-dim);margin:6px 0 8px;line-height:1.5;">Pattern detection runs every 30 s across all active layer combinations.</div>
+        <details style="font-size:7.5px;color:var(--text-dim);line-height:1.6;margin-bottom:6px;">
+          <summary style="cursor:pointer;color:var(--c-cyan);">📐 Detection methodology</summary>
+          <div style="padding:4px 0 2px;opacity:.85;"><b>Thresholds:</b> Score &gt;65/100, |r|&gt;0.5, spectral peak &gt;60%, MI bonus &gt;0.15, planet alignment &lt;15°. No Bonferroni correction — treat as hypothesis leads.</div>
         </details>
-      </div>
-      <div id="discovery-log-list"><div style="color:var(--text-dim);font-size:9px;text-align:center;padding:30px 0;opacity:.5;">Collecting data — discoveries will appear here</div></div>
-    </div>
+        <div id="discovery-log-list"><div style="color:var(--text-dim);font-size:9px;text-align:center;padding:20px 0;opacity:.5;">Collecting data — discoveries will appear here</div></div>
+      </details>
 
-    <div class="disc-panel" id="dsp-wavelet">
-      <div class="disc-section-label" data-tip="<strong>Wavelet Coherence</strong>Shows time-frequency coherence between two layers using Morlet wavelet transform. High coherence (warm colors) at a given period means both layers oscillate in sync at that timescale. Useful for detecting intermittent coupling that standard cross-correlation would average out.">Wavelet Coherence</div>
-      <div style="font-size:9px;color:var(--text-dim);margin-bottom:10px;line-height:1.6;">Select two layers to visualize their time-frequency coherence. Warm = high coherence, cool = low.</div>
-      <div style="display:flex;gap:12px;margin-bottom:10px;flex-wrap:wrap;">
-        <div>
-          <label style="font-size:8px;color:var(--text-dim);display:block;margin-bottom:3px;">Layer A</label>
-          <select id="wco-layer-a" onchange="renderWaveletCoherence()" style="background:var(--bg3);color:var(--text-main);border:1px solid var(--border);font-size:8px;padding:3px 6px;border-radius:3px;">
-            <option value="kp">Kp Index</option>
-            <option value="eq">Seismic Score</option>
-            <option value="sfi">Solar Flux (SFI)</option>
-            <option value="dst">Dst Index</option>
-            <option value="swspd">Solar Wind Speed</option>
-            <option value="bz">Bz (IMF)</option>
-          </select>
+      <!-- Hindcast -->
+      <details class="da-cause-section">
+        <summary class="da-cause-head">📈 Hindcast Validation</summary>
+        <div style="font-size:9px;color:var(--text-dim);margin:6px 0 8px;line-height:1.5;">Prediction snapshots saved every 6 hours, verified 48 hours later against USGS M5.5+ catalog.</div>
+        <div id="hindcast-panel-content" style="font-size:8.5px;"><div style="color:var(--text-dim);text-align:center;padding:16px 0;opacity:.5;">Loading hindcast record…</div></div>
+      </details>
+
+      <!-- Hypotheses -->
+      <details class="da-cause-section">
+        <summary class="da-cause-head">🔬 Hypothesis Board <span id="hyp-count" style="color:#a78bfa;font-size:8px;margin-left:6px;font-weight:400;">0 hypotheses</span></summary>
+        <div style="font-size:9px;color:var(--text-dim);margin:6px 0 8px;line-height:1.5;">Save Discovery Log entries as hypotheses. Auto-checked every 30 min against live data.</div>
+        <div id="hypothesis-board-content"><div style="color:var(--text-dim);text-align:center;padding:16px 0;opacity:.5;">No hypotheses yet — check Discovery Log to save one.</div></div>
+      </details>
+
+      <!-- Thesis -->
+      <details class="da-cause-section">
+        <summary class="da-cause-head">📋 Research Thesis <button id="thesis-deactivate-btn" onclick="ThesisFramework.deactivate();event.stopPropagation()" style="display:none;margin-left:8px;">✕ Deactivate</button></summary>
+        <div style="margin:8px 0 6px;">
+          <select id="thesis-selector" onchange="ThesisFramework.onSelectorChange(this)" style="width:100%"><option value="">— select a thesis —</option></select>
         </div>
-        <div>
-          <label style="font-size:8px;color:var(--text-dim);display:block;margin-bottom:3px;">Layer B</label>
-          <select id="wco-layer-b" onchange="renderWaveletCoherence()" style="background:var(--bg3);color:var(--text-main);border:1px solid var(--border);font-size:8px;padding:3px 6px;border-radius:3px;">
-            <option value="eq">Seismic Score</option>
-            <option value="kp">Kp Index</option>
-            <option value="sfi">Solar Flux (SFI)</option>
-            <option value="dst">Dst Index</option>
-            <option value="swspd">Solar Wind Speed</option>
-            <option value="bz">Bz (IMF)</option>
-          </select>
-        </div>
-      </div>
-      <canvas id="wco-canvas" width="560" height="200" style="width:100%;border:1px solid var(--border);border-radius:4px;"></canvas>
-      <div id="wco-legend" style="display:flex;justify-content:space-between;font-size:7.5px;color:var(--text-dim);margin-top:4px;">
-        <span>Low coherence</span><span>Period →</span><span>High coherence</span>
-      </div>
-      <div id="wco-status" style="font-size:8px;color:var(--text-dim);margin-top:6px;text-align:center;">Waiting for data…</div>
-    </div>
-
-    <div class="disc-panel" id="dsp-hindcast">
-      <div class="disc-section-label" data-tip="<strong>Hindcast Validation</strong>Snapshots of ESO stress predictions are stored every 6 hours and validated 48 hours later against actual USGS M5.5+ activity. This builds a real empirical track record for the observatory's predictive signal.">Hindcast Validation</div>
-      <div style="font-size:9px;color:var(--text-dim);margin-bottom:10px;line-height:1.6;">Prediction snapshots are saved every 6 hours and verified after 48 hours against USGS catalog activity.</div>
-      <div id="hindcast-panel-content" style="font-size:8.5px;">
-        <div style="color:var(--text-dim);text-align:center;padding:20px 0;opacity:.5;">Loading hindcast record…</div>
-      </div>
-    </div>
-
-    <div class="disc-panel" id="dsp-hyp">
-      <div class="disc-section-label" style="display:flex;justify-content:space-between;" data-tip="<strong>Hypothesis Board</strong>Save Discovery Log findings as formal hypotheses. Each hypothesis is auto-checked every 30 minutes against live data and marked as Supported, Contradicted, or Inconclusive based on current conditions.">
-        <span>🔬 Hypothesis Board</span>
-        <span id="hyp-count" style="color:#a78bfa;font-size:9px;">0 hypotheses</span>
-      </div>
-      <div style="font-size:9px;color:var(--text-dim);margin-bottom:10px;line-height:1.6;">Click <strong>⊕ Save as Hypothesis</strong> on any Discovery Log entry to track it here. Auto-verified every 30 minutes.</div>
-      <div id="hypothesis-board-content">
-        <div style="color:var(--text-dim);text-align:center;padding:20px 0;opacity:.5;">No hypotheses saved yet — check the Discovery Log to save one.</div>
-      </div>
-    </div>
-
-    <div class="disc-panel" id="dsp-thesis">
-      <div class="disc-section-label" style="display:flex;justify-content:space-between;align-items:center;" data-tip="<strong>Research Thesis</strong>Select a thesis to activate focused research mode. The dashboard becomes a research lens — dimming irrelevant metrics and tracking evidence for your specific hypothesis over time.">
-        <span>🔬 Research Thesis</span>
-        <button id="thesis-deactivate-btn" onclick="ThesisFramework.deactivate()" style="display:none;">✕ Deactivate</button>
-      </div>
-      <div style="margin-bottom:10px;">
-        <select id="thesis-selector" onchange="ThesisFramework.onSelectorChange(this)">
-          <option value="">— select a thesis —</option>
-        </select>
-      </div>
-      <div id="thesis-panel-content">
-        <div style="color:var(--text-dim);text-align:center;padding:20px 10px;font-size:9px;">Select a thesis above to enter focused research mode.</div>
-      </div>
+        <div id="thesis-panel-content"><div style="color:var(--text-dim);text-align:center;padding:16px 10px;font-size:9px;">Select a thesis above to enter focused research mode.</div></div>
+      </details>
     </div>
 
   </div><!-- /da-body -->
@@ -1226,7 +1278,7 @@ window.addEventListener('unhandledrejection', function(e) {
   <div id="bb-layer-info">CLICK MAP FOR LOCAL VALUES · [ ] TO TOGGLE PANELS</div>
   <div id="coords-display">LAT — / LON —</div>
   <div id="zoom-display">ZOOM 2</div>
-  <div>PHASE 4</div>
+  <div>PHASE 4 · v4.9</div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -1237,6 +1289,7 @@ window.addEventListener('unhandledrejection', function(e) {
 <script src="eso-thesis.js"></script>
 <script src="thesis-a-solar-seismic.js"></script>
 <script src="thesis-b-tidal-seismic.js"></script>
+<script src="eso-elnino.js"></script>
 
 <!-- ══ SITREP MODAL (Tier 3.11) ══ -->
 <div id="sitrep-modal">

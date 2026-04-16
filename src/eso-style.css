@@ -405,6 +405,209 @@ details.chart-help p { margin:4px 0 0; line-height:1.6; }
   padding:3px 8px;border-radius:2px;pointer-events:none;border:1px solid rgba(255,255,255,.1);
 }
 
+/* v4.1: Map base layer controls (bottom-left of map) */
+#map-layer-controls {
+  position: absolute;
+  bottom: 28px;
+  left: 10px;
+  z-index: 500;
+  display: flex;
+  gap: 4px;
+}
+.map-ctrl-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  letter-spacing: .08em;
+  padding: 3px 8px;
+  background: rgba(2,8,16,.75);
+  border: 1px solid rgba(255,255,255,.2);
+  color: rgba(255,255,255,.6);
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all .2s;
+  backdrop-filter: blur(4px);
+}
+.map-ctrl-btn:hover {
+  border-color: rgba(0,229,255,.5);
+  color: var(--c-cyan);
+}
+.map-ctrl-btn.active {
+  background: rgba(0,229,255,.15);
+  border-color: rgba(0,229,255,.6);
+  color: var(--c-cyan);
+}
+
+/* v4.1: NASA GIBS attribution (bottom-center, satellite mode only) */
+#map-gibs-attr {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 500;
+  font-family: 'Space Mono', monospace;
+  font-size: 7px;
+  letter-spacing: .06em;
+  color: rgba(255,255,255,.45);
+  background: rgba(2,8,16,.6);
+  padding: 2px 8px;
+  border-radius: 2px;
+  pointer-events: auto;
+  border: 1px solid rgba(255,255,255,.1);
+}
+#map-gibs-attr a { color: rgba(0,229,255,.7); text-decoration: none; }
+#map-gibs-attr a:hover { color: var(--c-cyan); }
+
+/* v4.1: Light mode — invert only dark base, not satellite */
+body.light-mode #map:not(.gibs-satellite-active) { filter: invert(1) hue-rotate(180deg); }
+
+/* ════════════════════════════════════════════════════════
+   v4.3 — Coral Bleaching Risk Card + DHW region rows
+   ════════════════════════════════════════════════════════ */
+.coral-risk-card {
+  margin: 8px 10px 4px;
+  padding: 9px 12px;
+  border: 1px solid rgba(0,229,255,.2);
+  border-radius: 4px;
+  background: rgba(0,180,216,.04);
+  flex-shrink: 0;
+  transition: border-color .3s;
+}
+.coral-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.coral-card-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: .12em;
+  color: #00b4d8;
+  font-weight: bold;
+}
+.coral-card-source {
+  font-family: 'Space Mono', monospace;
+  font-size: 7px;
+  letter-spacing: .08em;
+  color: var(--text-dim);
+  background: rgba(255,255,255,.06);
+  padding: 1px 5px;
+  border-radius: 2px;
+}
+.coral-alert-list { display: flex; flex-direction: column; gap: 3px; }
+.coral-region-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3px 4px;
+  border-radius: 2px;
+  background: rgba(255,255,255,.03);
+  font-size: 8px;
+}
+.coral-region-name { color: rgba(255,255,255,.7); flex: 1; }
+.coral-region-dhw  { font-family: 'Space Mono', monospace; font-size: 8.5px; font-weight: bold; margin: 0 8px; }
+.coral-region-alert { font-size: 7px; color: var(--text-dim); letter-spacing: .04em; }
+.coral-card-footer {
+  margin-top: 6px;
+  font-size: 7px;
+  color: rgba(255,255,255,.2);
+  letter-spacing: .05em;
+}
+
+/* ════════════════════════════════════════════════════════
+   v4.2 — El Niño 2026 Risk Card
+   ════════════════════════════════════════════════════════ */
+.enso-risk-card {
+  margin: 8px 10px 4px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255,109,0,.3);
+  border-radius: 4px;
+  background: rgba(255,109,0,.04);
+  flex-shrink: 0;
+  transition: border-color .3s;
+}
+.enso-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.enso-card-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .12em;
+  color: #ff6d00;
+  font-weight: bold;
+}
+.enso-card-source {
+  font-family: 'Space Mono', monospace;
+  font-size: 7px;
+  letter-spacing: .08em;
+  color: var(--text-dim);
+  background: rgba(255,255,255,.06);
+  padding: 1px 5px;
+  border-radius: 2px;
+}
+.enso-card-phase {
+  font-size: 18px;
+  font-weight: bold;
+  font-family: 'Space Mono', monospace;
+  letter-spacing: .06em;
+  margin-bottom: 8px;
+  line-height: 1;
+}
+.enso-card-prob-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.enso-card-prob-label {
+  font-size: 8px;
+  color: var(--text-dim);
+  letter-spacing: .05em;
+}
+.enso-card-prob-val {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  font-weight: bold;
+  color: #ff6d00;
+}
+.enso-card-gauge-track {
+  width: 100%;
+  height: 4px;
+  background: rgba(255,255,255,.08);
+  border-radius: 2px;
+  margin-bottom: 6px;
+  overflow: hidden;
+}
+.enso-card-gauge-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width .6s ease, background .3s;
+}
+.enso-card-anom {
+  font-size: 8px;
+  color: var(--text-dim);
+  letter-spacing: .05em;
+  margin-bottom: 3px;
+}
+.enso-card-consensus {
+  font-size: 7.5px;
+  color: rgba(255,255,255,.4);
+  line-height: 1.5;
+  margin-bottom: 4px;
+  font-style: italic;
+}
+.enso-card-footer {
+  font-size: 7px;
+  color: rgba(255,255,255,.2);
+  letter-spacing: .05em;
+}
+
+/* Light mode adjustments */
+body.light-mode .enso-risk-card { background: rgba(255,109,0,.06); border-color: rgba(255,109,0,.4); }
+
 .corr-hint{
   font-size:8px;color:var(--text-dim);line-height:1.7;padding:10px 12px;
   border:1px dashed rgba(0,229,255,.1);border-radius:3px;margin-bottom:8px;
@@ -509,6 +712,7 @@ body.right-collapsed #status-strip { right:0; }
   font-family:'Space Mono',monospace;
 }
 .da-close:hover{color:#fff;border-color:#fff;}
+.da-close:active{background:rgba(255,255,255,.12);color:#fff;}
 .da-body{flex:1;overflow:hidden;display:flex;flex-direction:column;}
 
 /* ── Leaflet popup dark theme ── */
@@ -674,6 +878,48 @@ canvas.sparkline { width:100%; height:52px; display:block; border-radius:2px; ba
   color:var(--text-dim); letter-spacing:.1em; line-height:1.9; }
 
 
+/* ══ v4.5: RIGHT PANEL CTA + CONTEXT HEADER + CAUSE SECTIONS ══ */
+.rpanel-deep-cta {
+  margin:8px 10px 4px;padding:7px 14px;
+  background:rgba(0,229,255,.06);border:1px solid rgba(0,229,255,.18);border-radius:3px;
+  font-size:8px;letter-spacing:.1em;color:var(--c-cyan);cursor:pointer;
+  display:flex;align-items:center;gap:8px;transition:background .15s;flex-shrink:0;
+}
+.rpanel-deep-cta:hover{background:rgba(0,229,255,.12);}
+.rpanel-cta-hint{color:var(--text-dim);font-size:7px;letter-spacing:.07em;}
+.da-context-header{
+  display:flex;align-items:center;gap:10px;padding:6px 16px;
+  background:rgba(0,229,255,.04);border-bottom:1px solid var(--border);
+  flex-shrink:0;flex-wrap:wrap;
+}
+.da-ctx-metric{font-size:7.5px;color:var(--text-dim);letter-spacing:.08em;font-family:'Space Mono',monospace;}
+.da-ctx-val{color:var(--text);font-weight:700;}
+.da-ctx-sep{flex:1;}
+.da-ctx-breadcrumb{font-size:7px;color:rgba(255,255,255,.25);letter-spacing:.06em;}
+#dac-tab-name{color:rgba(0,229,255,.6);}
+.da-cause-section{border-bottom:1px solid var(--border);}
+.da-cause-section:last-child{border-bottom:none;}
+.da-cause-head{
+  font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);
+  cursor:pointer;padding:8px 0 6px;list-style:none;display:flex;align-items:center;gap:4px;
+}
+.da-cause-head::-webkit-details-marker{display:none;}
+details.da-cause-section[open] .da-cause-head{color:var(--c-cyan);}
+details.da-cause-section>*:not(summary){padding:0 0 10px;}
+.da-section-head{
+  font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);
+  border-bottom:1px solid var(--border);padding-bottom:4px;margin-bottom:8px;
+}
+
+/* ══ v4.6/v4.7: THESIS CASCADE CHAIN PANELS ══ */
+.thesis-chain-node { display:flex; align-items:flex-start; gap:8px; margin-bottom:4px; }
+.thesis-chain-dot  { width:10px; height:10px; border-radius:50%; flex-shrink:0; margin-top:3px; }
+.thesis-chain-arrow{ font-size:10px; color:rgba(255,255,255,.2); text-align:center; line-height:1; margin:2px 0 2px 5px; }
+/* Compound risk gauge */
+.compound-gauge-wrap { margin:8px 0; }
+.compound-gauge-track { height:4px; background:rgba(255,255,255,.08); border-radius:2px; margin-top:3px; }
+.compound-gauge-fill  { height:4px; border-radius:2px; transition:width .4s; }
+
 /* ══ PATTERN DISCOVERY ENGINE ══ */
 #rpanel-discover { display:flex; flex-direction:column; overflow:hidden; }
 .disc-sub-tabs-wrap { position:relative; flex-shrink:0; }
@@ -768,7 +1014,41 @@ canvas.phase-canvas { width:100%; height:140px; display:block; background:var(--
   border: 1px solid var(--c-cyan); color: var(--c-cyan);
   background: none; cursor: pointer; transition: all .2s;
 }
-.chain-scan-btn:hover { background: rgba(0,229,255,.1); }
+.chain-scan-btn:hover  { background: rgba(0,229,255,.1); }
+.chain-scan-btn:active { background: rgba(0,229,255,.25); transform: scale(.96); }
+.chain-scan-btn.scanning {
+  color: #fff; border-color: #fff;
+  background: rgba(0,229,255,.18);
+  animation: eso-btn-pulse .6s ease-in-out 2;
+}
+
+/* ── Universal Deep Analysis button press feedback ── */
+.disc-tab:active                  { background: rgba(0,229,255,.15) !important; }
+.rpanel-deep-cta:active           { background: rgba(0,229,255,.22) !important; transform: scale(.99); }
+.da-cause-head:active             { color: var(--c-cyan) !important; }
+/* Selects: flash border on change — done via .select-flash class added by JS */
+.lag-select.select-flash,
+select.select-flash               { border-color: var(--c-cyan) !important; box-shadow: 0 0 0 1px var(--c-cyan); transition: border-color .05s, box-shadow .05s; }
+
+/* Thesis C/D toggle button active state */
+#thesis-cd-btn-c:active,
+#thesis-cd-btn-d:active           { filter: brightness(1.4); transform: scale(.97); }
+
+/* ── Pulse animation for loading states ── */
+@keyframes eso-btn-pulse {
+  0%   { opacity: 1; }
+  50%  { opacity: .45; }
+  100% { opacity: 1; }
+}
+
+/* ── Generic "did-press" flash — added/removed by JS ── */
+.eso-btn-flash {
+  animation: eso-btn-flash-anim .35s ease-out forwards;
+}
+@keyframes eso-btn-flash-anim {
+  0%   { background: rgba(0,229,255,.35) !important; }
+  100% { background: inherit; }
+}
 
 /* Trigger card */
 .trigger-card {
@@ -1880,3 +2160,75 @@ body.eso-thesis-mode #thesis-mode-indicator {
   margin-left: 6px;
 }
 #thesis-deactivate-btn:hover { background: rgba(255,82,82,.1); }
+
+/* ════════════════════════════════════════════════════════
+   v4.0 — Extracted utility classes (replacing repeated inline styles)
+   ════════════════════════════════════════════════════════ */
+
+/* Region filter / small pill buttons */
+.eso-pill-btn {
+  background: none;
+  border: 1px solid rgba(255,255,255,.15);
+  color: var(--text-dim);
+  padding: 1px 5px;
+  font-size: 7px;
+  cursor: pointer;
+  border-radius: 2px;
+  font-family: inherit;
+}
+.eso-pill-btn.active,
+.eso-pill-btn--active {
+  background: rgba(0,229,255,.2);
+  border-color: rgba(0,229,255,.5);
+  color: var(--c-cyan);
+}
+.eso-pill-btn:hover { border-color: rgba(255,255,255,.35); }
+
+/* Header action buttons (theme, tour, digest, etc.) */
+.eso-header-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border: 1px solid rgba(255,255,255,.15);
+  color: var(--text-dim);
+  background: none;
+  cursor: pointer;
+  transition: all .2s;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+.eso-header-btn:hover { border-color: rgba(255,255,255,.35); }
+
+/* Small dim labels (section headers, timestamps) */
+.eso-dim-label {
+  font-size: 7px;
+  color: var(--text-dim);
+  letter-spacing: .1em;
+}
+.eso-dim-sublabel {
+  font-size: 7px;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+
+/* Panel description / methodology text */
+.eso-panel-desc {
+  font-size: 9px;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+/* Flex center with equal columns */
+.eso-flex-center {
+  text-align: center;
+  flex: 1;
+}
+
+/* Status color utilities */
+.eso-c-red    { color: #ff3d3d; }
+.eso-c-orange { color: #ff6d00; }
+.eso-c-pink   { color: #ff4fa0; }
+.eso-c-blue   { color: #40c8ff; }

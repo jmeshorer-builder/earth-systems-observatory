@@ -739,7 +739,6 @@ body.right-collapsed #status-strip { right:0; }
   font-family:'Space Mono',monospace;
 }
 .da-close:hover{color:#fff;border-color:#fff;}
-.da-close:active{background:rgba(255,255,255,.12);color:#fff;}
 .da-body{flex:1;overflow:hidden;display:flex;flex-direction:column;}
 
 /* ── Leaflet popup dark theme ── */
@@ -1041,41 +1040,7 @@ canvas.phase-canvas { width:100%; height:140px; display:block; background:var(--
   border: 1px solid var(--c-cyan); color: var(--c-cyan);
   background: none; cursor: pointer; transition: all .2s;
 }
-.chain-scan-btn:hover  { background: rgba(0,229,255,.1); }
-.chain-scan-btn:active { background: rgba(0,229,255,.25); transform: scale(.96); }
-.chain-scan-btn.scanning {
-  color: #fff; border-color: #fff;
-  background: rgba(0,229,255,.18);
-  animation: eso-btn-pulse .6s ease-in-out 2;
-}
-
-/* ── Universal Deep Analysis button press feedback ── */
-.disc-tab:active                  { background: rgba(0,229,255,.15) !important; }
-.rpanel-deep-cta:active           { background: rgba(0,229,255,.22) !important; transform: scale(.99); }
-.da-cause-head:active             { color: var(--c-cyan) !important; }
-/* Selects: flash border on change — done via .select-flash class added by JS */
-.lag-select.select-flash,
-select.select-flash               { border-color: var(--c-cyan) !important; box-shadow: 0 0 0 1px var(--c-cyan); transition: border-color .05s, box-shadow .05s; }
-
-/* Thesis C/D toggle button active state */
-#thesis-cd-btn-c:active,
-#thesis-cd-btn-d:active           { filter: brightness(1.4); transform: scale(.97); }
-
-/* ── Pulse animation for loading states ── */
-@keyframes eso-btn-pulse {
-  0%   { opacity: 1; }
-  50%  { opacity: .45; }
-  100% { opacity: 1; }
-}
-
-/* ── Generic "did-press" flash — added/removed by JS ── */
-.eso-btn-flash {
-  animation: eso-btn-flash-anim .35s ease-out forwards;
-}
-@keyframes eso-btn-flash-anim {
-  0%   { background: rgba(0,229,255,.35) !important; }
-  100% { background: inherit; }
-}
+.chain-scan-btn:hover { background: rgba(0,229,255,.1); }
 
 /* Trigger card */
 .trigger-card {
@@ -2574,7 +2539,7 @@ body.eso-thesis-mode #thesis-mode-indicator {
 
   </div>
   <div id="left-panel-footer" style="padding:8px 14px;border-top:1px solid var(--border);font-size:8px;color:var(--text-dim);line-height:1.6;flex-shrink:0;display:flex;justify-content:space-between;align-items:center;gap:8px;">
-    <span>💡 17 layers · 5 domains · <span style="color:var(--c-cyan)">Phase 4 · v4.9.1</span></span>
+    <span>💡 17 layers · 5 domains · <span style="color:var(--c-cyan)">Phase 4 · v4.9</span></span>
     <span style="cursor:pointer;color:var(--text-dim);font-size:10px;" onclick="this.parentElement.style.display='none'" title="Dismiss">✕</span>
   </div>
 </div>
@@ -4189,8 +4154,6 @@ function switchTab(tab) {
 function openDeepAnalysis() {
   var ov = document.getElementById('deep-analysis-overlay');
   if (ov) ov.classList.add('open');
-  // Seed history for all active layers so analysis tools have data immediately
-  try { state.activeLayers.forEach(function(id) { seedSeriesHistory(id); }); } catch(e) {}
   // trigger active sub-tool renders + v4.5 context header
   try { updateDiscoverSelects(); renderStressIndex(); renderNovelIndices(); renderPlanets(); runChainScan(); _updateDaContextHeader(); } catch(e) {}
 }
@@ -4472,8 +4435,6 @@ async function loadLayer(id) {
     enso:  loadEnso,
   };
   if (loaders[id]) await loaders[id]();
-  // Seed history after layer loads so Deep Analysis has immediate data
-  setTimeout(function() { try { seedSeriesHistory(id); } catch(e) {} }, 200);
   renderDataCards();
 }
 function removeMapLayer(id) {
@@ -5177,34 +5138,6 @@ function pushSeriesPoint(layerId) {
   timeSeriesData[layerId][i] = val;
   timeSeriesHead[layerId]    = (i + 1) % SERIES_LEN;
   timeSeriesCount[layerId]   = Math.min(timeSeriesCount[layerId] + 1, SERIES_LEN);
-}
-
-// ── SERIES SEEDER ────────────────────────────────────────────
-// Pre-fills ring buffer with physics-plausible history so Deep Analysis
-// tools have data immediately on first activation (no wait needed).
-// Uses the current live value as anchor, adds realistic noise + drift.
-function seedSeriesHistory(layerId) {
-  const meta = LAYER_META[layerId];
-  if (!meta) return;
-  const currentVal = meta.getValue();
-  if (currentVal === null || isNaN(currentVal)) return;
-  initSeries(layerId);
-  // Only seed if <10 real points (not enough for analysis)
-  if (timeSeriesCount[layerId] >= 10) return;
-
-  const range = (meta.max - meta.min) || 1;
-  const noise = range * 0.04;  // 4% noise — realistic for most geophysical series
-  // Fill entire ring buffer backwards from current value
-  for (let i = 0; i < SERIES_LEN; i++) {
-    // Gentle autoregressive drift: AR(1) with φ=0.92
-    const t = (SERIES_LEN - 1 - i) / SERIES_LEN;
-    const drift = Math.sin(t * Math.PI * 2) * noise * 0.5;
-    const n = (Math.random() - 0.5) * noise;
-    const v = Math.max(meta.min, Math.min(meta.max, currentVal + drift + n));
-    timeSeriesData[layerId][i] = v;
-  }
-  timeSeriesHead[layerId]  = 0;
-  timeSeriesCount[layerId] = SERIES_LEN;
 }
 
 // Push a point for every active layer every 8 seconds
@@ -10367,11 +10300,9 @@ function switchDiscTab(tab) {
     cause:    function() { runChainScan(); renderPlanets(); renderNovelIndices(); renderDiscoveryLog(); renderHindcastPanel(); renderHypothesisBoard();
                            if (typeof ThesisFramework !== 'undefined') ThesisFramework.renderThesisPanel(); },
   };
-  // Delay renders so panel has non-zero dimensions (CSS transition completes)
-  setTimeout(function() {
-    if (renders[resolved]) renders[resolved]();
-    _updateDaContextHeader();
-  }, 60);
+  if (renders[resolved]) renders[resolved]();
+  // Update context header metrics
+  _updateDaContextHeader();
 }
 
 // ── UPDATE switchTab for 5-tab system ──────────────────
@@ -10502,8 +10433,8 @@ function renderLagExplorer() {
   const corrResults=crossCorr(a,b,maxLag);
   const best=corrResults.reduce((m,c)=>Math.abs(c.r)>Math.abs(m.r)?c:m);
 
-  // Draw lag chart — offsetWidth may be 0 if panel just opened; use parent or fallback
-  const W=Math.max(200, canvas.offsetWidth || (canvas.parentElement && canvas.parentElement.offsetWidth) || 400), H=90;
+  // Draw lag chart
+  const W=canvas.offsetWidth||262, H=90;
   canvas.width=W*window.devicePixelRatio; canvas.height=H*window.devicePixelRatio;
   canvas.style.width=W+'px'; canvas.style.height=H+'px';
   const ctx=canvas.getContext('2d');
@@ -10577,14 +10508,14 @@ function renderFFT() {
   if(!id) { peaksEl.textContent='Select a layer'; return; }
 
   const data=getSeriesOrdered(id);
-  if(data.length<6) { peaksEl.innerHTML='<span style="color:var(--c-gold)">Collecting data — activate the layer and wait a moment, or open Deep Analysis.</span>'; return; }
+  if(data.length<8) { peaksEl.innerHTML='<span style="color:var(--c-gold)">Need 8+ data points</span>'; return; }
 
   // Detrend
   const m=mean(data);
   const detrended=data.map(v=>v-m);
   const spectrum=powerSpectrum(detrended);
 
-  const W=Math.max(200, canvas.offsetWidth || (canvas.parentElement && canvas.parentElement.offsetWidth) || 400), H=80;
+  const W=canvas.offsetWidth||262, H=80;
   canvas.width=W*window.devicePixelRatio; canvas.height=H*window.devicePixelRatio;
   canvas.style.width=W+'px'; canvas.style.height=H+'px';
   const ctx=canvas.getContext('2d'); ctx.scale(window.devicePixelRatio,window.devicePixelRatio);
@@ -10604,20 +10535,17 @@ function renderFFT() {
 
   // Find top 3 peaks
   const peaks=spectrum.map((p,i)=>({p,i})).sort((a,b)=>b.p-a.p).slice(0,3);
-  // Period in "steps" (1 step = 8s live session; seeded history uses same interval)
-  // At 60 points: step 1 = 8s, step 6 = 48s (~1 min), step 30 = 4 min
+  const sampleInterval=8; // seconds between data points
+  const totalTime=data.length*sampleInterval;
+
   const peakDescs=peaks.map(pk=>{
-    const periodSteps=data.length/(pk.i+1);
-    const periodSec=periodSteps*8;
-    const pStr=periodSec<90?periodSec.toFixed(0)+'s':periodSec<3600?((periodSec/60).toFixed(1)+' min'):'—';
+    const period=totalTime/(pk.i+1);
+    const pStr=period<120?(period.toFixed(0)+'s'):period<3600?((period/60).toFixed(1)+'min'):((period/3600).toFixed(1)+'hr');
     const strength=(pk.p/maxP*100).toFixed(0);
-    return `<span style="color:${col}">▲ ${pStr}</span> <span style="color:rgba(255,255,255,.5)">(${strength}% power)</span>`;
+    return `<span style="color:${col}">▲ ${pStr}</span> (${strength}% power)`;
   });
 
-  const dataNote = data.length < 30
-    ? ' <span style="color:rgba(255,214,0,.6);font-size:7px">— session data (' + data.length + ' pts). Longer sessions reveal real geophysical cycles.</span>'
-    : '';
-  peaksEl.innerHTML='<b style="color:#fff">Top periods:</b> '+peakDescs.join(' · ')+dataNote;
+  peaksEl.innerHTML='<b style="color:#fff">Top periods:</b> '+peakDescs.join(' · ');
 
   if(peaks[0].p/maxP>0.6) logDiscovery({
     title:`Dominant Periodicity in ${(meta && meta.label)||id}`,
@@ -10648,7 +10576,7 @@ function renderPhaseSpace() {
     resultEl.textContent='One series has no variance — cannot plot phase space.'; return;
   }
 
-  const W=Math.max(200, canvas.offsetWidth || (canvas.parentElement && canvas.parentElement.offsetWidth) || 400), H=140;
+  const W=canvas.offsetWidth||262, H=140;
   canvas.width=W*window.devicePixelRatio; canvas.height=H*window.devicePixelRatio;
   canvas.style.width=W+'px'; canvas.style.height=H+'px';
   const ctx=canvas.getContext('2d'); ctx.scale(window.devicePixelRatio,window.devicePixelRatio);
@@ -11844,39 +11772,10 @@ function buildChainSummary(evaluated) {
   </div>`;
 }
 
-// ── Button press feedback utility ────────────────────────
-function _esoFlashBtn(el, doneLabel, ms) {
-  if (!el) return;
-  var orig = el.textContent;
-  el.classList.add('scanning');
-  if (doneLabel) el.textContent = doneLabel;
-  setTimeout(function() {
-    el.classList.remove('scanning');
-    el.classList.add('eso-btn-flash');
-    if (doneLabel) el.textContent = orig;
-    setTimeout(function() { el.classList.remove('eso-btn-flash'); }, 400);
-  }, ms || 400);
-}
-// Flash any element briefly on click
-function _esoFlash(el) {
-  if (!el) return;
-  el.classList.add('eso-btn-flash');
-  setTimeout(function() { el.classList.remove('eso-btn-flash'); }, 400);
-}
-// Flash select border on change
-function _flashSelect(el) {
-  if (!el) return;
-  el.classList.add('select-flash');
-  setTimeout(function() { el.classList.remove('select-flash'); }, 500);
-}
-
 function runChainScan() {
   const listEl = document.getElementById('chain-triggers-list');
   const summaryEl = document.getElementById('chain-summary-box');
   if (!listEl) return;
-  // Flash the scan button
-  var scanBtn = document.querySelector('.chain-scan-btn');
-  _esoFlashBtn(scanBtn, '↻ SCANNING…', 500);
 
   const evaluated = EVENT_CHAINS.map(chain => ({
     chain,
@@ -14096,19 +13995,6 @@ function initPhase4() {
   // Initial status strip + baseline + periodic refresh
   setTimeout(function() { updateStatusStrip(); updateBaselineCards(); }, 500);
   setInterval(function() { updateStatusStrip(); updateBaselineCards(); }, 30000);
-
-  // ── v4.9.1: Deep Analysis button press feedback ──────────
-  // Delegated listener on the overlay — catches all selects + rpanel CTAs
-  var daOverlay = document.getElementById('deep-analysis-overlay');
-  if (daOverlay) {
-    daOverlay.addEventListener('change', function(e) {
-      if (e.target && e.target.tagName === 'SELECT') _flashSelect(e.target);
-    });
-  }
-  // rpanel-deep-cta click flash
-  document.querySelectorAll('.rpanel-deep-cta').forEach(function(el) {
-    el.addEventListener('click', function() { _esoFlash(el); });
-  });
 }
 
 // Hook into existing init
@@ -14116,7 +14002,7 @@ var _origOnLoad = window.onload;
 window.addEventListener('load', function() {
   setTimeout(initPhase4, 1500);
   // ── v4.5: version banner in console ─────────────────
-  var _ESO_VERSION = 'v4.9.1';
+  var _ESO_VERSION = 'v4.9';
   var _ESO_LIVE    = 'https://jmeshorer-builder.github.io/earth-systems-observatory/earth-observatory-p3.html';
   var _ESO_REPO    = 'https://github.com/jmeshorer-builder/earth-systems-observatory';
   console.log(
@@ -14256,118 +14142,125 @@ document.addEventListener('keydown', function(e) {
 // ════════════════════════════════════════════════════════
 
 function renderWaveletCoherence() {
-  // v4.5+: wavelet lives inside dsp-spectral, not its own panel
-  // We use the existing wco-canvas from the HTML — do NOT rewrite the container
-  var statusEl = document.getElementById('wco-status');
-  var canvas   = document.getElementById('wco-canvas');
-  if (!canvas) return;
+  var container = document.getElementById('dsp-wavelet');
+  if (!container) return;
 
-  var selA = document.getElementById('wco-layer-a');
-  var selB = document.getElementById('wco-layer-b');
-
-  // Populate selects with active layers if empty
   var active = Array.from(state.activeLayers);
-  if (selA && selA.options.length <= 1 && active.length >= 2) {
-    var opts = ['kp','eq','sfi','dst','swspd','bz'].concat(active).filter(function(v,i,a){ return a.indexOf(v)===i; });
-    opts.forEach(function(v) {
-      var o = document.createElement('option');
-      o.value = v;
-      o.textContent = (LAYER_META && LAYER_META[v] && LAYER_META[v].label) || v;
-      if (selA) selA.appendChild(o.cloneNode(true));
-      if (selB) selB.appendChild(o.cloneNode(true));
-    });
-    if (selA && active[0]) selA.value = active[0];
-    if (selB && active[1]) selB.value = active[1] || active[0];
+  if (active.length < 2) {
+    container.innerHTML = '<div style="color:var(--text-dim);font-size:9px;text-align:center;padding:24px 0;">Activate at least 2 layers to compute wavelet coherence.</div>';
+    return;
   }
 
-  var layerA = (selA && selA.value) || (active[0] || 'kp');
-  var layerB = (selB && selB.value) || (active[1] || 'eq');
-
-  var labelA = (LAYER_META && LAYER_META[layerA] && LAYER_META[layerA].label) || layerA;
-  var labelB = (LAYER_META && LAYER_META[layerB] && LAYER_META[layerB].label) || layerB;
+  // Get the two most recently active layers (or user-selected)
+  var layerA = active[0], layerB = active[1];
+  var selA = document.getElementById('wco-layer-a');
+  var selB = document.getElementById('wco-layer-b');
+  if (selA && selA.value) layerA = selA.value;
+  if (selB && selB.value) layerB = selB.value;
 
   var seriesA = typeof getSeriesOrdered === 'function' ? getSeriesOrdered(layerA) : [];
   var seriesB = typeof getSeriesOrdered === 'function' ? getSeriesOrdered(layerB) : [];
 
+  var labelA = (LAYER_META && LAYER_META[layerA] && LAYER_META[layerA].label) || layerA;
+  var labelB = (LAYER_META && LAYER_META[layerB] && LAYER_META[layerB].label) || layerB;
+
   if (seriesA.length < 8 || seriesB.length < 8) {
-    if (statusEl) statusEl.textContent = 'Need 8+ data points per layer. Activate layers and open Deep Analysis.';
-    var ctx0 = canvas.getContext('2d');
-    ctx0.fillStyle = '#060f1a'; ctx0.fillRect(0, 0, canvas.width, canvas.height);
-    ctx0.fillStyle = 'rgba(255,255,255,.2)'; ctx0.font = '10px Space Mono,monospace'; ctx0.textAlign = 'center';
-    ctx0.fillText('Activate layers to populate data', canvas.width/2, canvas.height/2);
+    container.innerHTML = '<div style="color:var(--text-dim);font-size:9px;text-align:center;padding:24px 0;">Need at least 8 data points per layer. Keep layers active for a few minutes.</div>';
     return;
   }
 
   var result = typeof waveletCoherence === 'function' ? waveletCoherence(seriesA, seriesB) : null;
   if (!result) {
-    if (statusEl) statusEl.textContent = 'waveletCoherence() not available.';
+    container.innerHTML = '<div style="color:var(--text-dim);font-size:9px;text-align:center;padding:24px 0;">Computing wavelet coherence…</div>';
     return;
   }
 
-  // Draw heatmap — fixed colormap: 0=dark navy → 0.5=teal → 1=bright yellow
-  var W = canvas.offsetWidth || 560;
-  var H = canvas.offsetHeight || 200;
-  canvas.width  = W * (window.devicePixelRatio || 1);
-  canvas.height = H * (window.devicePixelRatio || 1);
-  canvas.style.width  = W + 'px';
-  canvas.style.height = H + 'px';
+  // Build layer selector UI
+  var optionsHtml = active.map(function(l) {
+    var label = (LAYER_META && LAYER_META[l] && LAYER_META[l].label) || l;
+    return '<option value="' + l + '">' + label + '</option>';
+  }).join('');
 
-  var ctx = canvas.getContext('2d');
-  ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+  container.innerHTML =
+    '<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap;">' +
+      '<select id="wco-layer-a" onchange="renderWaveletCoherence()" style="font-size:8px;background:var(--surface2);color:var(--text);border:1px solid var(--border);padding:2px 4px;">' + optionsHtml + '</select>' +
+      '<span style="font-size:9px;color:var(--text-dim)">vs</span>' +
+      '<select id="wco-layer-b" onchange="renderWaveletCoherence()" style="font-size:8px;background:var(--surface2);color:var(--text);border:1px solid var(--border);padding:2px 4px;">' + optionsHtml + '</select>' +
+    '</div>' +
+    '<canvas id="wco-canvas" width="480" height="160" style="width:100%;height:160px;background:var(--surface2);border-radius:3px;"></canvas>' +
+    '<div style="display:flex;justify-content:space-between;font-size:7px;color:var(--text-dim);margin-top:2px;">' +
+      '<span>← earlier</span>' +
+      '<span>Coherence²: 0 (dark) → 1 (bright)</span>' +
+      '<span>later →</span>' +
+    '</div>' +
+    '<div id="wco-summary" style="font-size:8px;color:var(--text-dim);margin-top:6px;"></div>' +
+    '<details class="chart-help"><summary>📐 What am I looking at?</summary><p>' +
+    'Morlet wavelet coherence shows WHERE IN TIME and at WHAT PERIOD (timescale) two layers share variance. ' +
+    'Bright areas = high coherence (the signals move together at that period during that window). ' +
+    'Dark areas = independent. Horizontal axis = time (left = older). Vertical axis = period (short periods top, long bottom). ' +
+    'Use this instead of cross-correlation when you suspect the relationship is non-stationary (changes over time).' +
+    '</p></details>';
 
-  var S = result.S, N = result.N;
-  // Find actual max coherence for rescaling (avoids all-blue when range is tiny)
-  var maxCoh = 0;
-  result.coherence.forEach(function(row){ row.forEach(function(v){ if(v>maxCoh) maxCoh=v; }); });
-  if (maxCoh < 0.01) maxCoh = 1; // fallback
+  // Restore selector values
+  var selANew = document.getElementById('wco-layer-a');
+  var selBNew = document.getElementById('wco-layer-b');
+  if (selANew) selANew.value = layerA;
+  if (selBNew) selBNew.value = layerB;
 
-  var imgData = ctx.createImageData(W, H);
-  for (var sy = 0; sy < H; sy++) {
-    var si = Math.min(S-1, Math.floor((sy / H) * S));
-    for (var tx = 0; tx < W; tx++) {
-      var ti = Math.min(N-1, Math.floor((tx / W) * N));
-      var coh = Math.min(1, Math.max(0, result.coherence[si][ti] / maxCoh)); // rescaled
-      // Colormap: navy(0) → teal(0.4) → green(0.6) → yellow(0.8) → white(1)
-      var r, g, b;
-      if (coh < 0.4) {
-        var t = coh / 0.4;
-        r = Math.round(t * 0);  g = Math.round(t * 180); b = Math.round(50 + t * 155);
-      } else if (coh < 0.7) {
-        var t = (coh - 0.4) / 0.3;
-        r = Math.round(t * 200); g = Math.round(180 + t * 50); b = Math.round(205 - t * 205);
-      } else {
-        var t = (coh - 0.7) / 0.3;
-        r = Math.round(200 + t * 55); g = Math.round(230 + t * 25); b = Math.round(t * 180);
+  // Draw heatmap on canvas
+  setTimeout(function() {
+    var canvas = document.getElementById('wco-canvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var W = canvas.width, H = canvas.height;
+    var S = result.S, N = result.N;
+
+    // Render coherence as color heatmap: low=dark blue, high=yellow-red
+    var imgData = ctx.createImageData(W, H);
+    for (var sy = 0; sy < H; sy++) {
+      var si = Math.floor((sy / H) * S);          // scale index
+      if (si >= S) si = S - 1;
+      for (var tx = 0; tx < W; tx++) {
+        var ti = Math.floor((tx / W) * N);         // time index
+        if (ti >= N) ti = N - 1;
+        var coh = Math.min(1, Math.max(0, result.coherence[si][ti]));
+        // Colormap: 0=black/blue, 0.5=green, 1=yellow
+        var r = Math.floor(Math.min(255, coh * 2 * 255));
+        var g = Math.floor(coh < 0.5 ? coh * 2 * 180 : (1 - (coh - 0.5) * 2) * 180 + 100);
+        var b = Math.floor(Math.max(0, (1 - coh * 2) * 200));
+        var idx = (sy * W + tx) * 4;
+        imgData.data[idx]   = r;
+        imgData.data[idx+1] = g;
+        imgData.data[idx+2] = b;
+        imgData.data[idx+3] = 255;
       }
-      var idx = (sy * W + tx) * 4;
-      imgData.data[idx] = r; imgData.data[idx+1] = g; imgData.data[idx+2] = b; imgData.data[idx+3] = 255;
     }
-  }
-  ctx.putImageData(imgData, 0, 0);
+    ctx.putImageData(imgData, 0, 0);
 
-  // Y-axis period labels
-  ctx.fillStyle = 'rgba(255,255,255,.55)'; ctx.font = '7px Space Mono,monospace'; ctx.textAlign = 'left';
-  result.periods.forEach(function(p, i) {
-    if (i % Math.max(1, Math.floor(S/5)) !== 0) return;
-    var y = Math.floor((i / S) * H);
-    var pSec = p * 8; // 8s per step
-    var label = pSec < 120 ? pSec.toFixed(0) + 's' : (pSec/60).toFixed(1) + 'm';
-    ctx.fillText(label, 3, Math.min(H-2, y + 8));
-  });
+    // Period labels on y-axis
+    ctx.fillStyle = 'rgba(192,216,236,.7)';
+    ctx.font = '8px Space Mono, monospace';
+    result.periods.filter(function(_, i) { return i % Math.max(1, Math.floor(S/4)) === 0; })
+      .forEach(function(p, i) {
+        var y = Math.floor((i * Math.max(1, Math.floor(S/4)) / S) * H);
+        ctx.fillText(p.toFixed(0) + 'dt', 4, Math.min(H-2, y + 9));
+      });
 
-  // Summary
-  var peakCoh = 0, peakPeriod = 0;
-  result.coherence.forEach(function(row, si) {
-    var rowMean = row.reduce(function(s,v){return s+v;},0) / row.length;
-    if (rowMean > peakCoh) { peakCoh = rowMean; peakPeriod = result.periods[si]; }
-  });
-  var peakNorm = peakCoh / maxCoh;
-  if (statusEl) {
-    statusEl.textContent = peakNorm > 0.6
-      ? ('Peak coherence at ≈' + (peakPeriod*8).toFixed(0) + 's period. ' + labelA + ' and ' + labelB + ' share variance at this timescale.')
-      : ('Low coherence overall — ' + labelA + ' and ' + labelB + ' appear largely independent at current session timescales.');
-    statusEl.style.color = peakNorm > 0.6 ? '#00e5ff' : 'var(--text-dim)';
-  }
+    // Summary: find peak coherence period
+    var peakCoh = 0, peakPeriod = 0;
+    result.coherence.forEach(function(row, si) {
+      var rowMean = row.reduce(function(s,v){return s+v;},0) / row.length;
+      if (rowMean > peakCoh) { peakCoh = rowMean; peakPeriod = result.periods[si]; }
+    });
+    var sumEl = document.getElementById('wco-summary');
+    if (sumEl) {
+      sumEl.textContent = peakCoh > 0.5
+        ? ('Peak coherence at period ≈' + peakPeriod.toFixed(0) + ' samples (mean coherence²=' + peakCoh.toFixed(2) + '). '
+         + labelA + ' and ' + labelB + ' share significant variance at this timescale.')
+        : ('Mean coherence below 0.5 — ' + labelA + ' and ' + labelB + ' appear largely independent at all tested timescales.');
+      sumEl.style.color = peakCoh > 0.5 ? '#00e5ff' : 'var(--text-dim)';
+    }
+  }, 50);
 }
 
 // ════════════════════════════════════════════════════════

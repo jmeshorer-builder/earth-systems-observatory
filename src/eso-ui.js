@@ -7,17 +7,138 @@ let map = null;
 let _leafletMap = null;   // Leaflet instance when not using Google Maps
 let _leafletIW = null;  // initialized inside initLeafletMap()
 
+// ── v4.1: Base layer registry ─────────────────────────────────
+// Holds references to switchable base layers and GIBS overlays
+var _mapBaseLayerCurrent = 'dark';  // 'dark' | 'satellite'
+var _mapBaseLayerDark    = null;    // CartoDB dark (default)
+var _mapBaseLayerSat     = null;    // NASA GIBS True Color
+var _mapGibsSSTLayer     = null;    // NASA GIBS GHRSST SST overlay
+var _mapGibsSSTActive    = false;
+
+// ── NASA GIBS WMTS endpoint builder ───────────────────────────
+// GIBS serves science-grade NASA imagery (MODIS/VIIRS/GHRSST) as
+// standard WMTS tiles. Free, no API key required.
+// Docs: https://wiki.earthdata.nasa.gov/display/GIBS/GIBS+API+for+Developers
+var _GIBS_BASE = 'https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/';
+
+function _gibsTileUrl(layer) {
+  // WMTS tile template compatible with Leaflet tileLayer
+  return _GIBS_BASE + layer + '/default/GoogleMapsCompatible/{z}/{y}/{x}.jpg';
+}
+
+function _gibsTileUrlPng(layer) {
+  return _GIBS_BASE + layer + '/default/GoogleMapsCompatible/{z}/{y}/{x}.png';
+}
+
+/**
+ * setBaseLayer(type) — switch the map base tile between dark and satellite.
+ * type: 'dark' | 'satellite'
+ * Updates the toggle button state and attribution.
+ */
+function setBaseLayer(type) {
+  if (!_leafletMap || !_mapBaseLayerDark || !_mapBaseLayerSat) return;
+
+  if (type === 'satellite' && _mapBaseLayerCurrent !== 'satellite') {
+    _leafletMap.removeLayer(_mapBaseLayerDark);
+    _mapBaseLayerSat.addTo(_leafletMap);
+    // Ensure satellite is below data overlays (pane z-index)
+    _mapBaseLayerSat.bringToBack();
+    _mapBaseLayerCurrent = 'satellite';
+    // Health check
+    updateApiHealth('nasa-gibs', 'ok');
+  } else if (type === 'dark' && _mapBaseLayerCurrent !== 'dark') {
+    _leafletMap.removeLayer(_mapBaseLayerSat);
+    _mapBaseLayerDark.addTo(_leafletMap);
+    _mapBaseLayerDark.bringToBack();
+    _mapBaseLayerCurrent = 'dark';
+  }
+
+  // Update toggle button appearance
+  var btn = document.getElementById('map-base-toggle');
+  if (btn) {
+    btn.textContent = type === 'satellite' ? '🛰 SAT' : '🗺 MAP';
+    btn.title = type === 'satellite' ? 'Switch to dark map view' : 'Switch to NASA satellite view';
+    btn.classList.toggle('active', type === 'satellite');
+  }
+  // Show/hide attribution
+  var attr = document.getElementById('map-gibs-attr');
+  if (attr) attr.style.display = type === 'satellite' ? 'block' : 'none';
+  // Add class to map div so CSS light-mode invert can skip satellite imagery
+  var mapEl = document.getElementById('map');
+  if (mapEl) mapEl.classList.toggle('gibs-satellite-active', type === 'satellite');
+}
+
+/**
+ * toggleGibsSST() — toggle NASA GIBS GHRSST sea surface temperature overlay.
+ * Uses GHRSST_L4_MUR_Sea_Surface_Temperature (science-grade, daily).
+ */
+function toggleGibsSST() {
+  if (!_leafletMap || !_mapGibsSSTLayer) return;
+  _mapGibsSSTActive = !_mapGibsSSTActive;
+
+  if (_mapGibsSSTActive) {
+    _mapGibsSSTLayer.addTo(_leafletMap);
+    _mapGibsSSTLayer.bringToBack();
+    // Keep it above base but below data markers
+    if (_mapBaseLayerCurrent === 'dark') _mapGibsSSTLayer.bringToFront();
+  } else {
+    _leafletMap.removeLayer(_mapGibsSSTLayer);
+  }
+
+  var btn = document.getElementById('map-gibs-sst-btn');
+  if (btn) btn.classList.toggle('active', _mapGibsSSTActive);
+}
+
 // ── Initialise Leaflet (default, always works) ─────────────────
 function initLeafletMap() {
   _leafletMap = L.map('map', {
     center: [20, 0], zoom: 2,
     zoomControl: true, attributionControl: false,
   });
+
+  // ── Base layers (v4.1) ──────────────────────────────────────
+  // Dark (default): CartoDB dark, no text labels
+  _mapBaseLayerDark = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
+    maxZoom: 19, subdomains: 'abcd', pane: 'tilePane',
+  });
+  _mapBaseLayerDark.addTo(_leafletMap);
+
+  // Satellite: NASA GIBS MODIS Terra True Color (daily updated)
+  // Layer: MODIS_Terra_CorrectedReflectance_TrueColor
+  _mapBaseLayerSat = L.tileLayer(
+    _GIBS_BASE + 'MODIS_Terra_CorrectedReflectance_TrueColor/default/{time}/GoogleMapsCompatible/{z}/{y}/{x}.jpg'
+      .replace('{time}', (function() {
+        // Use yesterday's date for guaranteed tile availability
+        var d = new Date(); d.setDate(d.getDate() - 1);
+        return d.toISOString().slice(0, 10);
+      })()), {
+    maxZoom: 9,   // GIBS MODIS is 250m resolution, limited zoom
+    bounds: [[-90, -180], [90, 180]],
+    tileSize: 256,
+    noWrap: true,
+    errorTileUrl: '',  // silent on missing tiles
+  });
+  // Don't add to map yet — only added when user switches to satellite
+
+  // ── GIBS GHRSST Sea Surface Temperature overlay (v4.1) ────────
+  // MUR SST (JPL, science-grade, 1km resolution, daily)
+  _mapGibsSSTLayer = L.tileLayer(
+    _GIBS_BASE + 'MUR-JPL-L4-GLOB-v4.1_Sea_Surface_Temperature/default/{time}/GoogleMapsCompatible/{z}/{y}/{x}.png'
+      .replace('{time}', (function() {
+        var d = new Date(); d.setDate(d.getDate() - 2); // 2-day lag for processing
+        return d.toISOString().slice(0, 10);
+      })()), {
+    maxZoom: 9,
+    bounds: [[-90, -180], [90, 180]],
+    tileSize: 256,
+    opacity: 0.7,
+    noWrap: true,
+    errorTileUrl: '',
+  });
+  // Don't add to map yet — only added when toggled
+
   // dark_nolabels = dark background with coastlines/borders but NO text
   // → guarantees English-only map; labels added programmatically below
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
-    maxZoom: 19, subdomains: 'abcd',
-  }).addTo(_leafletMap);
 
   // ── ENGLISH GEOGRAPHIC LABELS ────────────────────────────
   // Permanent tooltips for oceans, continents, key seas
@@ -104,29 +225,67 @@ function resizeMap() {
 //          auto-discovery log with statistical testing
 // ════════════════════════════════════════════════════════
 
-// ── DISCOVERY TAB SWITCHER ──────────────────────────────
+// ── DISCOVERY TAB SWITCHER — v4.5: 5 consolidated tabs ──
+// Legacy aliases: fft/wavelet→spectral, phase/mi→chaos,
+//   planets/indices/chain/log/hindcast/hyp/thesis→cause
+var _discTabAlias = {
+  fft:'spectral', wavelet:'spectral',
+  phase:'chaos',  mi:'chaos',
+  planets:'cause', indices:'cause', chain:'cause',
+  log:'cause',     hindcast:'cause', hyp:'cause', thesis:'cause',
+};
+var _discTabLabels = {
+  stress:'Stress Index', lag:'Lag Explorer',
+  spectral:'Spectral + Wavelet', chaos:'Phase Space + MI',
+  cause:'Cause — Chains & Discovery',
+};
 function switchDiscTab(tab) {
+  // Resolve legacy aliases
+  var resolved = _discTabAlias[tab] || tab;
   document.querySelectorAll('.disc-tab').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.disc-panel').forEach(p => p.classList.remove('active'));
-  const btn = document.getElementById('dst-' + tab);
-  const panel = document.getElementById('dsp-' + tab);
-  if (btn) btn.classList.add('active');
+  var btn   = document.getElementById('dst-' + resolved);
+  var panel = document.getElementById('dsp-' + resolved);
+  if (btn)   btn.classList.add('active');
   if (panel) panel.classList.add('active');
-  const renders = {
-    stress: renderStressIndex, lag: renderLagExplorer,
-    fft: renderFFT, phase: renderPhaseSpace,
-    mi: renderMutualInfo, planets: renderPlanets,
-    indices: renderNovelIndices, chain: runChainScan,
-    log: renderDiscoveryLog, wavelet: renderWaveletCoherence,
-    hyp: renderHypothesisBoard, hindcast: renderHindcastPanel,
-    thesis: function() { if (typeof ThesisFramework !== 'undefined') ThesisFramework.renderThesisPanel(); },
+  // Update context header breadcrumb
+  var nameEl = document.getElementById('dac-tab-name');
+  if (nameEl) nameEl.textContent = _discTabLabels[resolved] || resolved;
+  // Trigger renders
+  var renders = {
+    stress:   renderStressIndex,
+    lag:      renderLagExplorer,
+    spectral: function() { renderFFT(); renderWaveletCoherence(); },
+    chaos:    function() { renderPhaseSpace(); renderMutualInfo(); },
+    cause:    function() { runChainScan(); renderPlanets(); renderNovelIndices(); renderDiscoveryLog(); renderHindcastPanel(); renderHypothesisBoard();
+                           if (typeof ThesisFramework !== 'undefined') ThesisFramework.renderThesisPanel(); },
   };
-  if (renders[tab]) renders[tab]();
+  // Delay renders so panel has non-zero dimensions (CSS transition completes)
+  setTimeout(function() {
+    if (renders[resolved]) renders[resolved]();
+    _updateDaContextHeader();
+  }, 60);
 }
 
 // ── UPDATE switchTab for 5-tab system ──────────────────
 // switchTab fully implemented above
 ;
+
+// ── v4.5: DEEP ANALYSIS CONTEXT HEADER ──────────────────
+function _updateDaContextHeader() {
+  var kp   = state.data.geomagnetic ? (state.data.geomagnetic.kp || '—') : '—';
+  var eq   = (typeof computeEQRiskScore === 'function') ? computeEQRiskScore() : (state.data.seismic ? state.data.seismic.count : '—');
+  var enso = state.data.enso ? state.data.enso.phase : (typeof _ensoLiveData !== 'undefined' && _ensoLiveData ? _ensoLiveData.phase : '—');
+  var fire = state.data.fire ? (state.data.fire.totalFires > 999 ? Math.round(state.data.fire.totalFires/1000) + 'k' : state.data.fire.totalFires) : '—';
+  var kpEl = document.getElementById('dac-kp');
+  var eqEl = document.getElementById('dac-eq');
+  var ensoEl = document.getElementById('dac-enso');
+  var fireEl = document.getElementById('dac-fire');
+  if (kpEl) kpEl.textContent = kp;
+  if (eqEl) eqEl.textContent = eq;
+  if (ensoEl) { ensoEl.textContent = enso; ensoEl.style.color = enso === 'El Niño' ? '#ff6d00' : enso === 'La Niña' ? '#40c8ff' : 'var(--text)'; }
+  if (fireEl) fireEl.textContent = fire;
+}
 
 // ── POPULATE SELECT DROPDOWNS ───────────────────────────
 function updateDiscoverSelects() {
@@ -236,8 +395,8 @@ function renderLagExplorer() {
   const corrResults=crossCorr(a,b,maxLag);
   const best=corrResults.reduce((m,c)=>Math.abs(c.r)>Math.abs(m.r)?c:m);
 
-  // Draw lag chart
-  const W=canvas.offsetWidth||262, H=90;
+  // Draw lag chart — offsetWidth may be 0 if panel just opened; use parent or fallback
+  const W=Math.max(200, canvas.offsetWidth || (canvas.parentElement && canvas.parentElement.offsetWidth) || 400), H=90;
   canvas.width=W*window.devicePixelRatio; canvas.height=H*window.devicePixelRatio;
   canvas.style.width=W+'px'; canvas.style.height=H+'px';
   const ctx=canvas.getContext('2d');
@@ -311,14 +470,14 @@ function renderFFT() {
   if(!id) { peaksEl.textContent='Select a layer'; return; }
 
   const data=getSeriesOrdered(id);
-  if(data.length<8) { peaksEl.innerHTML='<span style="color:var(--c-gold)">Need 8+ data points</span>'; return; }
+  if(data.length<6) { peaksEl.innerHTML='<span style="color:var(--c-gold)">Collecting data — activate the layer and wait a moment, or open Deep Analysis.</span>'; return; }
 
   // Detrend
   const m=mean(data);
   const detrended=data.map(v=>v-m);
   const spectrum=powerSpectrum(detrended);
 
-  const W=canvas.offsetWidth||262, H=80;
+  const W=Math.max(200, canvas.offsetWidth || (canvas.parentElement && canvas.parentElement.offsetWidth) || 400), H=80;
   canvas.width=W*window.devicePixelRatio; canvas.height=H*window.devicePixelRatio;
   canvas.style.width=W+'px'; canvas.style.height=H+'px';
   const ctx=canvas.getContext('2d'); ctx.scale(window.devicePixelRatio,window.devicePixelRatio);
@@ -338,17 +497,20 @@ function renderFFT() {
 
   // Find top 3 peaks
   const peaks=spectrum.map((p,i)=>({p,i})).sort((a,b)=>b.p-a.p).slice(0,3);
-  const sampleInterval=8; // seconds between data points
-  const totalTime=data.length*sampleInterval;
-
+  // Period in "steps" (1 step = 8s live session; seeded history uses same interval)
+  // At 60 points: step 1 = 8s, step 6 = 48s (~1 min), step 30 = 4 min
   const peakDescs=peaks.map(pk=>{
-    const period=totalTime/(pk.i+1);
-    const pStr=period<120?(period.toFixed(0)+'s'):period<3600?((period/60).toFixed(1)+'min'):((period/3600).toFixed(1)+'hr');
+    const periodSteps=data.length/(pk.i+1);
+    const periodSec=periodSteps*8;
+    const pStr=periodSec<90?periodSec.toFixed(0)+'s':periodSec<3600?((periodSec/60).toFixed(1)+' min'):'—';
     const strength=(pk.p/maxP*100).toFixed(0);
-    return `<span style="color:${col}">▲ ${pStr}</span> (${strength}% power)`;
+    return `<span style="color:${col}">▲ ${pStr}</span> <span style="color:rgba(255,255,255,.5)">(${strength}% power)</span>`;
   });
 
-  peaksEl.innerHTML='<b style="color:#fff">Top periods:</b> '+peakDescs.join(' · ');
+  const dataNote = data.length < 30
+    ? ' <span style="color:rgba(255,214,0,.6);font-size:7px">— session data (' + data.length + ' pts). Longer sessions reveal real geophysical cycles.</span>'
+    : '';
+  peaksEl.innerHTML='<b style="color:#fff">Top periods:</b> '+peakDescs.join(' · ')+dataNote;
 
   if(peaks[0].p/maxP>0.6) logDiscovery({
     title:`Dominant Periodicity in ${(meta && meta.label)||id}`,
@@ -379,7 +541,7 @@ function renderPhaseSpace() {
     resultEl.textContent='One series has no variance — cannot plot phase space.'; return;
   }
 
-  const W=canvas.offsetWidth||262, H=140;
+  const W=Math.max(200, canvas.offsetWidth || (canvas.parentElement && canvas.parentElement.offsetWidth) || 400), H=140;
   canvas.width=W*window.devicePixelRatio; canvas.height=H*window.devicePixelRatio;
   canvas.style.width=W+'px'; canvas.style.height=H+'px';
   const ctx=canvas.getContext('2d'); ctx.scale(window.devicePixelRatio,window.devicePixelRatio);
@@ -1575,10 +1737,39 @@ function buildChainSummary(evaluated) {
   </div>`;
 }
 
+// ── Button press feedback utility ────────────────────────
+function _esoFlashBtn(el, doneLabel, ms) {
+  if (!el) return;
+  var orig = el.textContent;
+  el.classList.add('scanning');
+  if (doneLabel) el.textContent = doneLabel;
+  setTimeout(function() {
+    el.classList.remove('scanning');
+    el.classList.add('eso-btn-flash');
+    if (doneLabel) el.textContent = orig;
+    setTimeout(function() { el.classList.remove('eso-btn-flash'); }, 400);
+  }, ms || 400);
+}
+// Flash any element briefly on click
+function _esoFlash(el) {
+  if (!el) return;
+  el.classList.add('eso-btn-flash');
+  setTimeout(function() { el.classList.remove('eso-btn-flash'); }, 400);
+}
+// Flash select border on change
+function _flashSelect(el) {
+  if (!el) return;
+  el.classList.add('select-flash');
+  setTimeout(function() { el.classList.remove('select-flash'); }, 500);
+}
+
 function runChainScan() {
   const listEl = document.getElementById('chain-triggers-list');
   const summaryEl = document.getElementById('chain-summary-box');
   if (!listEl) return;
+  // Flash the scan button
+  var scanBtn = document.querySelector('.chain-scan-btn');
+  _esoFlashBtn(scanBtn, '↻ SCANNING…', 500);
 
   const evaluated = EVENT_CHAINS.map(chain => ({
     chain,
@@ -2212,6 +2403,49 @@ const _origRunForecastDataFetch = runForecastDataFetch;
 window.runForecastDataFetch = async function() {
   await _origRunForecastDataFetch();
   runNotifScan();
+  renderElNinoCascadeCard();  // v4.6: refresh cascade on each forecast refresh
+};
+
+// ── v4.6/v4.7: EL NIÑO CASCADE CARD (Risk tab) ───────────────
+var _activeElNinoThesis = 'C';
+function switchElNinoThesis(which) {
+  _activeElNinoThesis = which;
+  var btnC = document.getElementById('thesis-cd-btn-c');
+  var btnD = document.getElementById('thesis-cd-btn-d');
+  if (btnC) { btnC.style.background = which === 'C' ? 'rgba(255,109,0,.3)' : 'none'; btnC.style.borderColor = which === 'C' ? '#ff6d00' : 'rgba(255,255,255,.2)'; btnC.style.color = which === 'C' ? '#ff9900' : 'var(--text-dim)'; }
+  if (btnD) { btnD.style.background = which === 'D' ? 'rgba(255,102,0,.25)' : 'none'; btnD.style.borderColor = which === 'D' ? '#ff6600' : 'rgba(255,255,255,.2)'; btnD.style.color = which === 'D' ? '#ff9900' : 'var(--text-dim)'; }
+  renderElNinoCascadeCard();
+}
+
+function renderElNinoCascadeCard() {
+  var el = document.getElementById('elnino-cascade-content');
+  if (!el) return;
+  // Delegate to eso-elnino.js renderers
+  if (_activeElNinoThesis === 'C' && typeof evaluateThesisCChain === 'function') {
+    el.innerHTML = '<div id="risk-tab-cascade-c"></div>';
+    renderThesisCCascade('risk-tab-cascade-c');
+  } else if (_activeElNinoThesis === 'D' && typeof evaluateThesisDChain === 'function') {
+    el.innerHTML = '<div id="risk-tab-cascade-d"></div>';
+    renderThesisDCascade('risk-tab-cascade-d');
+  } else {
+    el.innerHTML = '<div style="color:var(--text-dim);font-size:8px;">Activate ENSO + Fire layers to enable cascade tracking.</div>';
+  }
+  // Compound risk gauge
+  if (typeof getCompoundRisk === 'function') {
+    var cr = getCompoundRisk();
+    var color = cr > 70 ? '#ff3d3d' : cr > 45 ? '#ff9900' : '#00ffc8';
+    el.innerHTML += '<div class="compound-gauge-wrap">' +
+      '<div style="font-size:7.5px;color:var(--text-dim);">Compound risk: <span style="color:' + color + ';font-weight:700;">' + cr + '/100</span></div>' +
+      '<div class="compound-gauge-track"><div class="compound-gauge-fill" style="width:' + cr + '%;background:' + color + ';"></div></div>' +
+      '</div>';
+  }
+}
+
+// Auto-render cascade card when Risk tab becomes active
+var _origSwitchTab_v46 = switchTab;
+switchTab = function(tab) {
+  _origSwitchTab_v46(tab);
+  if (tab === 'risk') setTimeout(renderElNinoCascadeCard, 100);
 };
 
 
@@ -2747,6 +2981,12 @@ if (typeof _origRenderSSTMarkers === 'function') {
   window.renderSSTMarkers = function(data) {
     _origRenderSSTMarkers(data);
     setTimeout(computeENSO, 200);
+    // v4.3: if Copernicus hasn't loaded yet, populate DHW from SST grid as fallback
+    setTimeout(function() {
+      if (typeof _getCopernicusFallback === 'function' && !_copernicusMarineData) {
+        _getCopernicusFallback();
+      }
+    }, 400);
   };
 }
 window.addEventListener('load', function() {
@@ -2756,6 +2996,11 @@ window.addEventListener('load', function() {
     window.renderSSTMarkers = function(data) {
       orig(data);
       setTimeout(computeENSO, 200);
+      setTimeout(function() {
+        if (typeof _getCopernicusFallback === 'function' && !_copernicusMarineData) {
+          _getCopernicusFallback();
+        }
+      }, 400);
     };
   }
 });
@@ -3094,6 +3339,32 @@ function generateSitrep() {
       lines.push('+ ' + (activeNotifs.length - criticals.length - watches.length) + ' advisory/info alerts (see notification drawer)');
     }
   }
+  // v4.8: El Niño section — auto-added when ENSO ≠ Neutral
+  try {
+    var _eSit = state.data['enso'];
+    if (_eSit && _eSit.phase !== 'Neutral') {
+      var _cRSit = typeof getCompoundRisk === 'function' ? getCompoundRisk() : '—';
+      var _fireSit = state.data['fire'] ? state.data['fire'].totalFires : '—';
+      var _regSit = typeof getFIRMSRegionalCounts === 'function' ? getFIRMSRegionalCounts() : null;
+      var _cCSit = (typeof evaluateThesisCChain === 'function')
+        ? evaluateThesisCChain().filter(function(l){ return l.active; }).map(function(l){ return l.label; }).join(', ') || 'none'
+        : '—';
+      var _dCSit = (typeof evaluateThesisDChain === 'function')
+        ? evaluateThesisDChain().filter(function(l){ return l.active; }).map(function(l){ return l.label; }).join(', ') || 'none'
+        : '—';
+      lines.push('');
+      lines.push('── EL NIÑO / ENSO ─────────────────────────────────────');
+      lines.push('Phase           : ' + _eSit.phase);
+      lines.push('Niño3.4 anomaly : ' + _eSit.nino34 + '°C');
+      lines.push('IRI probability : ' + _eSit.probability + '%');
+      lines.push('ONI trend       : ' + (_eSit.oniTrend || '—'));
+      lines.push('Compound risk   : ' + _cRSit + '/100');
+      lines.push('Marine cascade  : ' + _cCSit);
+      lines.push('Wildfire chain  : ' + _dCSit);
+      lines.push('Active fires    : ' + (typeof _fireSit === 'number' ? _fireSit.toLocaleString() : _fireSit) + ' detections (24h global)');
+      if (_regSit) lines.push('  SE Asia: ' + _regSit.seAsia + ' · Australia: ' + _regSit.australia + ' · Amazon: ' + _regSit.amazon);
+    }
+  } catch(e) {}
   lines.push('');
   lines.push('── DATA QUALITY ────────────────────────────────────────');
   var apiLines = Object.keys(_apiHealthState || {}).map(function(k) {
@@ -3309,6 +3580,25 @@ function buildESOContext() {
     calPeek = 'Today score: ' + (cal[0] ? cal[0].score : '?') + '/100 · Watch days (30d): ' + watchDays.length;
   } catch(e) { calPeek = 'calendar computing'; }
 
+  // v4.8: El Niño cross-domain context
+  var ensoCtx = '';
+  try {
+    var _eCtx = state.data['enso'];
+    if (_eCtx && _eCtx.phase !== 'Neutral') {
+      var _cR = typeof getCompoundRisk === 'function' ? getCompoundRisk() : '—';
+      var _cC = (typeof evaluateThesisCChain === 'function') ? evaluateThesisCChain().filter(function(l){ return l.active; }).map(function(l){ return l.label; }).join(', ') : '';
+      var _dC = (typeof evaluateThesisDChain === 'function') ? evaluateThesisDChain().filter(function(l){ return l.active; }).map(function(l){ return l.label; }).join(', ') : '';
+      var _reg = (typeof getFIRMSRegionalCounts === 'function') ? getFIRMSRegionalCounts() : null;
+      ensoCtx = 'EL NIÑO / CROSS-DOMAIN STATE (v4.8):\n' +
+        '- ENSO phase: ' + _eCtx.phase + ' · Niño3.4: ' + _eCtx.nino34 + '°C · IRI probability: ' + _eCtx.probability + '%\n' +
+        '- Compound risk score: ' + _cR + '/100\n' +
+        '- Marine heatwave chain active links: ' + (_cC || 'none') + '\n' +
+        '- Wildfire-carbon chain active links: ' + (_dC || 'none') + '\n' +
+        (_reg ? '- FIRMS regional fires: SE Asia ' + _reg.seAsia + ' · Australia ' + _reg.australia + ' · Amazon ' + _reg.amazon + '\n' : '') +
+        '- Total active fires (24h): ' + (state.data['fire'] ? state.data['fire'].totalFires : '—') + '\n';
+    }
+  } catch(e) {}
+
   return 'ESO GEOPHYSICAL INTELLIGENCE — CURRENT STATE:\n' +
     'PHYSICS MODELS (always active, network-independent):\n' +
     '- Geomagnetic Kp: ' + kp.toFixed(1) + (kp >= 5 ? ' [G' + Math.min(5,Math.floor(kp-3)) + ' STORM]' : kp >= 4 ? ' [ACTIVE]' : ' [QUIET]') + ' · ' + histKpNote + '\n' +
@@ -3330,7 +3620,8 @@ function buildESOContext() {
     '- 30-day calendar: ' + calPeek + '\n' +
     'SYNTHESIS INSIGHTS (1-month window):\n' + (synthInsights || 'all systems nominal') + '\n' +
     'CORRELATION CLUSTERS (15 active pathways):\n' + clusterSummary + '\n' +
-    'ACTIVE ALERTS:\n' + (activeNotifs || 'None');
+    'ACTIVE ALERTS:\n' + (activeNotifs || 'None') +
+    (ensoCtx ? '\n' + ensoCtx : '');
 }
 
 async function answerESOQuestion(question, target) {
@@ -3483,6 +3774,29 @@ function localESOAnswer(question, context) {
       '**Solar flares (7d):** ' + (xCount > 0 ? '**' + xCount + ' X-class**' : 'no X-class') + ' · ' + mCount + ' M-class · ' + ((_xrayFlares||[]).length - xCount - mCount) + ' C-class\n' +
       '**Cosmic ray flux:** ' + (s.crFlux||1820).toFixed(0) + ' cpm\n' +
       '**Ionospheric TEC:** ' + (s.tecPeak||30).toFixed(0) + ' TECU';
+  }
+
+  // v4.8: El Niño mode — triggered by ENSO/fire/cascade keywords
+  if (q.match(/el.ni[ñn]o|enso|la.ni[ñn]a|marine.heatwave|wildfire.carbon|coral.bleach|dhw|firms|elnino/i)) {
+    var _eAsk = state.data['enso'] || {};
+    var _cRAsk = typeof getCompoundRisk === 'function' ? getCompoundRisk() : '—';
+    var _cCAsk = (typeof evaluateThesisCChain === 'function')
+      ? evaluateThesisCChain().filter(function(l){ return l.active; }).map(function(l){ return l.icon + ' ' + l.label + ' (' + l.val + ')'; }).join('\n  · ')
+      : 'activate ENSO + SST layers';
+    var _dCAsk = (typeof evaluateThesisDChain === 'function')
+      ? evaluateThesisDChain().filter(function(l){ return l.active; }).map(function(l){ return l.icon + ' ' + l.label; }).join(', ')
+      : 'activate ENSO + Fire layers';
+    var _regAsk = typeof getFIRMSRegionalCounts === 'function' ? getFIRMSRegionalCounts() : null;
+    return '**El Niño / ENSO Cross-Domain Status**\n\n' +
+      '**Phase:** ' + (_eAsk.phase || 'Unknown') + '\n' +
+      '**Niño3.4 anomaly:** ' + (_eAsk.nino34 || '—') + '°C · **IRI probability:** ' + (_eAsk.probability || '—') + '%\n' +
+      '**ONI trend:** ' + (_eAsk.oniTrend || '—') + '\n' +
+      '**Compound risk score:** **' + _cRAsk + '/100**\n\n' +
+      '**Thesis C — Marine Heatwave Cascade (active links):**\n  · ' + (_cCAsk || 'No links active') + '\n\n' +
+      '**Thesis D — Wildfire-Carbon Chain (active links):** ' + (_dCAsk || 'No links active') + '\n' +
+      (_regAsk ? '\n**FIRMS Regional fires (24h):** SE Asia ' + _regAsk.seAsia + ' · Australia ' + _regAsk.australia + ' · Amazon ' + _regAsk.amazon : '') +
+      '\n**Active fires global:** ' + (state.data['fire'] ? state.data['fire'].totalFires.toLocaleString() : '—') + ' detections' +
+      '\n\n*Source: NOAA ONI · IRI/CPC · NASA FIRMS MODIS · Copernicus Marine DHW*';
   }
 
   if (q.includes('tsunami')) {
@@ -3675,12 +3989,36 @@ function initPhase4() {
   // Initial status strip + baseline + periodic refresh
   setTimeout(function() { updateStatusStrip(); updateBaselineCards(); }, 500);
   setInterval(function() { updateStatusStrip(); updateBaselineCards(); }, 30000);
+
+  // ── v4.9.1: Deep Analysis button press feedback ──────────
+  // Delegated listener on the overlay — catches all selects + rpanel CTAs
+  var daOverlay = document.getElementById('deep-analysis-overlay');
+  if (daOverlay) {
+    daOverlay.addEventListener('change', function(e) {
+      if (e.target && e.target.tagName === 'SELECT') _flashSelect(e.target);
+    });
+  }
+  // rpanel-deep-cta click flash
+  document.querySelectorAll('.rpanel-deep-cta').forEach(function(el) {
+    el.addEventListener('click', function() { _esoFlash(el); });
+  });
 }
 
 // Hook into existing init
 var _origOnLoad = window.onload;
 window.addEventListener('load', function() {
   setTimeout(initPhase4, 1500);
+  // ── v4.5: version banner in console ─────────────────
+  var _ESO_VERSION = 'v4.9.1';
+  var _ESO_LIVE    = 'https://jmeshorer-builder.github.io/earth-systems-observatory/earth-observatory-p3.html';
+  var _ESO_REPO    = 'https://github.com/jmeshorer-builder/earth-systems-observatory';
+  console.log(
+    '%c ESO ' + _ESO_VERSION + ' %c Earth Systems Observatory — Phase 4 ',
+    'background:#00e5ff;color:#020810;font-weight:700;font-size:11px;padding:2px 6px;border-radius:3px 0 0 3px;',
+    'background:#0a1929;color:#00e5ff;font-size:11px;padding:2px 8px;border-radius:0 3px 3px 0;border:1px solid #00e5ff33;'
+  );
+  console.log('%c🌐 Live  %c' + _ESO_LIVE,  'color:#40c8ff;font-size:10px;', 'color:#aaa;font-size:10px;');
+  console.log('%c📦 Repo  %c' + _ESO_REPO,  'color:#40c8ff;font-size:10px;', 'color:#aaa;font-size:10px;');
 });
 
 
@@ -3811,125 +4149,118 @@ document.addEventListener('keydown', function(e) {
 // ════════════════════════════════════════════════════════
 
 function renderWaveletCoherence() {
-  var container = document.getElementById('dsp-wavelet');
-  if (!container) return;
+  // v4.5+: wavelet lives inside dsp-spectral, not its own panel
+  // We use the existing wco-canvas from the HTML — do NOT rewrite the container
+  var statusEl = document.getElementById('wco-status');
+  var canvas   = document.getElementById('wco-canvas');
+  if (!canvas) return;
 
-  var active = Array.from(state.activeLayers);
-  if (active.length < 2) {
-    container.innerHTML = '<div style="color:var(--text-dim);font-size:9px;text-align:center;padding:24px 0;">Activate at least 2 layers to compute wavelet coherence.</div>';
-    return;
-  }
-
-  // Get the two most recently active layers (or user-selected)
-  var layerA = active[0], layerB = active[1];
   var selA = document.getElementById('wco-layer-a');
   var selB = document.getElementById('wco-layer-b');
-  if (selA && selA.value) layerA = selA.value;
-  if (selB && selB.value) layerB = selB.value;
 
-  var seriesA = typeof getSeriesOrdered === 'function' ? getSeriesOrdered(layerA) : [];
-  var seriesB = typeof getSeriesOrdered === 'function' ? getSeriesOrdered(layerB) : [];
+  // Populate selects with active layers if empty
+  var active = Array.from(state.activeLayers);
+  if (selA && selA.options.length <= 1 && active.length >= 2) {
+    var opts = ['kp','eq','sfi','dst','swspd','bz'].concat(active).filter(function(v,i,a){ return a.indexOf(v)===i; });
+    opts.forEach(function(v) {
+      var o = document.createElement('option');
+      o.value = v;
+      o.textContent = (LAYER_META && LAYER_META[v] && LAYER_META[v].label) || v;
+      if (selA) selA.appendChild(o.cloneNode(true));
+      if (selB) selB.appendChild(o.cloneNode(true));
+    });
+    if (selA && active[0]) selA.value = active[0];
+    if (selB && active[1]) selB.value = active[1] || active[0];
+  }
+
+  var layerA = (selA && selA.value) || (active[0] || 'kp');
+  var layerB = (selB && selB.value) || (active[1] || 'eq');
 
   var labelA = (LAYER_META && LAYER_META[layerA] && LAYER_META[layerA].label) || layerA;
   var labelB = (LAYER_META && LAYER_META[layerB] && LAYER_META[layerB].label) || layerB;
 
+  var seriesA = typeof getSeriesOrdered === 'function' ? getSeriesOrdered(layerA) : [];
+  var seriesB = typeof getSeriesOrdered === 'function' ? getSeriesOrdered(layerB) : [];
+
   if (seriesA.length < 8 || seriesB.length < 8) {
-    container.innerHTML = '<div style="color:var(--text-dim);font-size:9px;text-align:center;padding:24px 0;">Need at least 8 data points per layer. Keep layers active for a few minutes.</div>';
+    if (statusEl) statusEl.textContent = 'Need 8+ data points per layer. Activate layers and open Deep Analysis.';
+    var ctx0 = canvas.getContext('2d');
+    ctx0.fillStyle = '#060f1a'; ctx0.fillRect(0, 0, canvas.width, canvas.height);
+    ctx0.fillStyle = 'rgba(255,255,255,.2)'; ctx0.font = '10px Space Mono,monospace'; ctx0.textAlign = 'center';
+    ctx0.fillText('Activate layers to populate data', canvas.width/2, canvas.height/2);
     return;
   }
 
   var result = typeof waveletCoherence === 'function' ? waveletCoherence(seriesA, seriesB) : null;
   if (!result) {
-    container.innerHTML = '<div style="color:var(--text-dim);font-size:9px;text-align:center;padding:24px 0;">Computing wavelet coherence…</div>';
+    if (statusEl) statusEl.textContent = 'waveletCoherence() not available.';
     return;
   }
 
-  // Build layer selector UI
-  var optionsHtml = active.map(function(l) {
-    var label = (LAYER_META && LAYER_META[l] && LAYER_META[l].label) || l;
-    return '<option value="' + l + '">' + label + '</option>';
-  }).join('');
+  // Draw heatmap — fixed colormap: 0=dark navy → 0.5=teal → 1=bright yellow
+  var W = canvas.offsetWidth || 560;
+  var H = canvas.offsetHeight || 200;
+  canvas.width  = W * (window.devicePixelRatio || 1);
+  canvas.height = H * (window.devicePixelRatio || 1);
+  canvas.style.width  = W + 'px';
+  canvas.style.height = H + 'px';
 
-  container.innerHTML =
-    '<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap;">' +
-      '<select id="wco-layer-a" onchange="renderWaveletCoherence()" style="font-size:8px;background:var(--surface2);color:var(--text);border:1px solid var(--border);padding:2px 4px;">' + optionsHtml + '</select>' +
-      '<span style="font-size:9px;color:var(--text-dim)">vs</span>' +
-      '<select id="wco-layer-b" onchange="renderWaveletCoherence()" style="font-size:8px;background:var(--surface2);color:var(--text);border:1px solid var(--border);padding:2px 4px;">' + optionsHtml + '</select>' +
-    '</div>' +
-    '<canvas id="wco-canvas" width="480" height="160" style="width:100%;height:160px;background:var(--surface2);border-radius:3px;"></canvas>' +
-    '<div style="display:flex;justify-content:space-between;font-size:7px;color:var(--text-dim);margin-top:2px;">' +
-      '<span>← earlier</span>' +
-      '<span>Coherence²: 0 (dark) → 1 (bright)</span>' +
-      '<span>later →</span>' +
-    '</div>' +
-    '<div id="wco-summary" style="font-size:8px;color:var(--text-dim);margin-top:6px;"></div>' +
-    '<details class="chart-help"><summary>📐 What am I looking at?</summary><p>' +
-    'Morlet wavelet coherence shows WHERE IN TIME and at WHAT PERIOD (timescale) two layers share variance. ' +
-    'Bright areas = high coherence (the signals move together at that period during that window). ' +
-    'Dark areas = independent. Horizontal axis = time (left = older). Vertical axis = period (short periods top, long bottom). ' +
-    'Use this instead of cross-correlation when you suspect the relationship is non-stationary (changes over time).' +
-    '</p></details>';
+  var ctx = canvas.getContext('2d');
+  ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
 
-  // Restore selector values
-  var selANew = document.getElementById('wco-layer-a');
-  var selBNew = document.getElementById('wco-layer-b');
-  if (selANew) selANew.value = layerA;
-  if (selBNew) selBNew.value = layerB;
+  var S = result.S, N = result.N;
+  // Find actual max coherence for rescaling (avoids all-blue when range is tiny)
+  var maxCoh = 0;
+  result.coherence.forEach(function(row){ row.forEach(function(v){ if(v>maxCoh) maxCoh=v; }); });
+  if (maxCoh < 0.01) maxCoh = 1; // fallback
 
-  // Draw heatmap on canvas
-  setTimeout(function() {
-    var canvas = document.getElementById('wco-canvas');
-    if (!canvas) return;
-    var ctx = canvas.getContext('2d');
-    var W = canvas.width, H = canvas.height;
-    var S = result.S, N = result.N;
-
-    // Render coherence as color heatmap: low=dark blue, high=yellow-red
-    var imgData = ctx.createImageData(W, H);
-    for (var sy = 0; sy < H; sy++) {
-      var si = Math.floor((sy / H) * S);          // scale index
-      if (si >= S) si = S - 1;
-      for (var tx = 0; tx < W; tx++) {
-        var ti = Math.floor((tx / W) * N);         // time index
-        if (ti >= N) ti = N - 1;
-        var coh = Math.min(1, Math.max(0, result.coherence[si][ti]));
-        // Colormap: 0=black/blue, 0.5=green, 1=yellow
-        var r = Math.floor(Math.min(255, coh * 2 * 255));
-        var g = Math.floor(coh < 0.5 ? coh * 2 * 180 : (1 - (coh - 0.5) * 2) * 180 + 100);
-        var b = Math.floor(Math.max(0, (1 - coh * 2) * 200));
-        var idx = (sy * W + tx) * 4;
-        imgData.data[idx]   = r;
-        imgData.data[idx+1] = g;
-        imgData.data[idx+2] = b;
-        imgData.data[idx+3] = 255;
+  var imgData = ctx.createImageData(W, H);
+  for (var sy = 0; sy < H; sy++) {
+    var si = Math.min(S-1, Math.floor((sy / H) * S));
+    for (var tx = 0; tx < W; tx++) {
+      var ti = Math.min(N-1, Math.floor((tx / W) * N));
+      var coh = Math.min(1, Math.max(0, result.coherence[si][ti] / maxCoh)); // rescaled
+      // Colormap: navy(0) → teal(0.4) → green(0.6) → yellow(0.8) → white(1)
+      var r, g, b;
+      if (coh < 0.4) {
+        var t = coh / 0.4;
+        r = Math.round(t * 0);  g = Math.round(t * 180); b = Math.round(50 + t * 155);
+      } else if (coh < 0.7) {
+        var t = (coh - 0.4) / 0.3;
+        r = Math.round(t * 200); g = Math.round(180 + t * 50); b = Math.round(205 - t * 205);
+      } else {
+        var t = (coh - 0.7) / 0.3;
+        r = Math.round(200 + t * 55); g = Math.round(230 + t * 25); b = Math.round(t * 180);
       }
+      var idx = (sy * W + tx) * 4;
+      imgData.data[idx] = r; imgData.data[idx+1] = g; imgData.data[idx+2] = b; imgData.data[idx+3] = 255;
     }
-    ctx.putImageData(imgData, 0, 0);
+  }
+  ctx.putImageData(imgData, 0, 0);
 
-    // Period labels on y-axis
-    ctx.fillStyle = 'rgba(192,216,236,.7)';
-    ctx.font = '8px Space Mono, monospace';
-    result.periods.filter(function(_, i) { return i % Math.max(1, Math.floor(S/4)) === 0; })
-      .forEach(function(p, i) {
-        var y = Math.floor((i * Math.max(1, Math.floor(S/4)) / S) * H);
-        ctx.fillText(p.toFixed(0) + 'dt', 4, Math.min(H-2, y + 9));
-      });
+  // Y-axis period labels
+  ctx.fillStyle = 'rgba(255,255,255,.55)'; ctx.font = '7px Space Mono,monospace'; ctx.textAlign = 'left';
+  result.periods.forEach(function(p, i) {
+    if (i % Math.max(1, Math.floor(S/5)) !== 0) return;
+    var y = Math.floor((i / S) * H);
+    var pSec = p * 8; // 8s per step
+    var label = pSec < 120 ? pSec.toFixed(0) + 's' : (pSec/60).toFixed(1) + 'm';
+    ctx.fillText(label, 3, Math.min(H-2, y + 8));
+  });
 
-    // Summary: find peak coherence period
-    var peakCoh = 0, peakPeriod = 0;
-    result.coherence.forEach(function(row, si) {
-      var rowMean = row.reduce(function(s,v){return s+v;},0) / row.length;
-      if (rowMean > peakCoh) { peakCoh = rowMean; peakPeriod = result.periods[si]; }
-    });
-    var sumEl = document.getElementById('wco-summary');
-    if (sumEl) {
-      sumEl.textContent = peakCoh > 0.5
-        ? ('Peak coherence at period ≈' + peakPeriod.toFixed(0) + ' samples (mean coherence²=' + peakCoh.toFixed(2) + '). '
-         + labelA + ' and ' + labelB + ' share significant variance at this timescale.')
-        : ('Mean coherence below 0.5 — ' + labelA + ' and ' + labelB + ' appear largely independent at all tested timescales.');
-      sumEl.style.color = peakCoh > 0.5 ? '#00e5ff' : 'var(--text-dim)';
-    }
-  }, 50);
+  // Summary
+  var peakCoh = 0, peakPeriod = 0;
+  result.coherence.forEach(function(row, si) {
+    var rowMean = row.reduce(function(s,v){return s+v;},0) / row.length;
+    if (rowMean > peakCoh) { peakCoh = rowMean; peakPeriod = result.periods[si]; }
+  });
+  var peakNorm = peakCoh / maxCoh;
+  if (statusEl) {
+    statusEl.textContent = peakNorm > 0.6
+      ? ('Peak coherence at ≈' + (peakPeriod*8).toFixed(0) + 's period. ' + labelA + ' and ' + labelB + ' share variance at this timescale.')
+      : ('Low coherence overall — ' + labelA + ' and ' + labelB + ' appear largely independent at current session timescales.');
+    statusEl.style.color = peakNorm > 0.6 ? '#00e5ff' : 'var(--text-dim)';
+  }
 }
 
 // ════════════════════════════════════════════════════════

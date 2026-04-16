@@ -1,0 +1,6381 @@
+{
+  "generated": "2026-04-15T13:15:06.305356Z",
+  "source": "ESO synthetic proxy (NOAA ONI fetch requires local run)",
+  "records": 900,
+  "monthly": [
+    {
+      "year": 1950,
+      "season": "DJF",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1950,
+      "season": "JFM",
+      "oni": 0.17,
+      "phase": "Neutral",
+      "compound": 49
+    },
+    {
+      "year": 1950,
+      "season": "FMA",
+      "oni": 0.23,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1950,
+      "season": "MAM",
+      "oni": 0.25,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1950,
+      "season": "AMJ",
+      "oni": 0.24,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1950,
+      "season": "MJJ",
+      "oni": 0.19,
+      "phase": "Neutral",
+      "compound": 50
+    },
+    {
+      "year": 1950,
+      "season": "JJA",
+      "oni": 0.12,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1950,
+      "season": "JAS",
+      "oni": 0.05,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1950,
+      "season": "ASO",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1950,
+      "season": "SON",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1950,
+      "season": "OND",
+      "oni": -0.04,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1950,
+      "season": "NDJ",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1951,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1951,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1951,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1951,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1951,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1951,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1951,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1951,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1951,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1951,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1951,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1951,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1952,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1952,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1952,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1952,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1952,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1952,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1952,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1952,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1952,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1952,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1952,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1952,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1953,
+      "season": "DJF",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1953,
+      "season": "JFM",
+      "oni": 0.17,
+      "phase": "Neutral",
+      "compound": 49
+    },
+    {
+      "year": 1953,
+      "season": "FMA",
+      "oni": 0.23,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1953,
+      "season": "MAM",
+      "oni": 0.25,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1953,
+      "season": "AMJ",
+      "oni": 0.24,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1953,
+      "season": "MJJ",
+      "oni": 0.19,
+      "phase": "Neutral",
+      "compound": 50
+    },
+    {
+      "year": 1953,
+      "season": "JJA",
+      "oni": 0.12,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1953,
+      "season": "JAS",
+      "oni": 0.05,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1953,
+      "season": "ASO",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1953,
+      "season": "SON",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1953,
+      "season": "OND",
+      "oni": -0.04,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1953,
+      "season": "NDJ",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1954,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1954,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1954,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1954,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1954,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1954,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1954,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1954,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1954,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1954,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1954,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1954,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1955,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1955,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1955,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1955,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1955,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1955,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1955,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1955,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1955,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1955,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1955,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1955,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1956,
+      "season": "DJF",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1956,
+      "season": "JFM",
+      "oni": 0.17,
+      "phase": "Neutral",
+      "compound": 49
+    },
+    {
+      "year": 1956,
+      "season": "FMA",
+      "oni": 0.23,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1956,
+      "season": "MAM",
+      "oni": 0.25,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1956,
+      "season": "AMJ",
+      "oni": 0.24,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1956,
+      "season": "MJJ",
+      "oni": 0.19,
+      "phase": "Neutral",
+      "compound": 50
+    },
+    {
+      "year": 1956,
+      "season": "JJA",
+      "oni": 0.12,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1956,
+      "season": "JAS",
+      "oni": 0.05,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1956,
+      "season": "ASO",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1956,
+      "season": "SON",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1956,
+      "season": "OND",
+      "oni": -0.04,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1956,
+      "season": "NDJ",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1957,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1957,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1957,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1957,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1957,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1957,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1957,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1957,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1957,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1957,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1957,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1957,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1958,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1958,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1958,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1958,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1958,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1958,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1958,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1958,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1958,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1958,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1958,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1958,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1959,
+      "season": "DJF",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1959,
+      "season": "JFM",
+      "oni": 0.17,
+      "phase": "Neutral",
+      "compound": 49
+    },
+    {
+      "year": 1959,
+      "season": "FMA",
+      "oni": 0.23,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1959,
+      "season": "MAM",
+      "oni": 0.25,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1959,
+      "season": "AMJ",
+      "oni": 0.24,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1959,
+      "season": "MJJ",
+      "oni": 0.19,
+      "phase": "Neutral",
+      "compound": 50
+    },
+    {
+      "year": 1959,
+      "season": "JJA",
+      "oni": 0.12,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1959,
+      "season": "JAS",
+      "oni": 0.05,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1959,
+      "season": "ASO",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1959,
+      "season": "SON",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1959,
+      "season": "OND",
+      "oni": -0.04,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1959,
+      "season": "NDJ",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1960,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1960,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1960,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1960,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1960,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1960,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1960,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1960,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1960,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1960,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1960,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1960,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1961,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1961,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1961,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1961,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1961,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1961,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1961,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1961,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1961,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1961,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1961,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1961,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1962,
+      "season": "DJF",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1962,
+      "season": "JFM",
+      "oni": 0.17,
+      "phase": "Neutral",
+      "compound": 49
+    },
+    {
+      "year": 1962,
+      "season": "FMA",
+      "oni": 0.23,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1962,
+      "season": "MAM",
+      "oni": 0.25,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1962,
+      "season": "AMJ",
+      "oni": 0.24,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1962,
+      "season": "MJJ",
+      "oni": 0.19,
+      "phase": "Neutral",
+      "compound": 50
+    },
+    {
+      "year": 1962,
+      "season": "JJA",
+      "oni": 0.12,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1962,
+      "season": "JAS",
+      "oni": 0.05,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1962,
+      "season": "ASO",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1962,
+      "season": "SON",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1962,
+      "season": "OND",
+      "oni": -0.04,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1962,
+      "season": "NDJ",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1963,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1963,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1963,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1963,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1963,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1963,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1963,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1963,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1963,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1963,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1963,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1963,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1964,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1964,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1964,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1964,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1964,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1964,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1964,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1964,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1964,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1964,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1964,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1964,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1965,
+      "season": "DJF",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1965,
+      "season": "JFM",
+      "oni": 0.17,
+      "phase": "Neutral",
+      "compound": 49
+    },
+    {
+      "year": 1965,
+      "season": "FMA",
+      "oni": 0.23,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1965,
+      "season": "MAM",
+      "oni": 0.25,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1965,
+      "season": "AMJ",
+      "oni": 0.24,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1965,
+      "season": "MJJ",
+      "oni": 0.19,
+      "phase": "Neutral",
+      "compound": 50
+    },
+    {
+      "year": 1965,
+      "season": "JJA",
+      "oni": 0.12,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1965,
+      "season": "JAS",
+      "oni": 0.05,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1965,
+      "season": "ASO",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1965,
+      "season": "SON",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1965,
+      "season": "OND",
+      "oni": -0.04,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1965,
+      "season": "NDJ",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1966,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1966,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1966,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1966,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1966,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1966,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1966,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1966,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1966,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1966,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1966,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1966,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1967,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1967,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1967,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1967,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1967,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1967,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1967,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1967,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1967,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1967,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1967,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1967,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1968,
+      "season": "DJF",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1968,
+      "season": "JFM",
+      "oni": 0.17,
+      "phase": "Neutral",
+      "compound": 49
+    },
+    {
+      "year": 1968,
+      "season": "FMA",
+      "oni": 0.23,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1968,
+      "season": "MAM",
+      "oni": 0.25,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1968,
+      "season": "AMJ",
+      "oni": 0.24,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1968,
+      "season": "MJJ",
+      "oni": 0.19,
+      "phase": "Neutral",
+      "compound": 50
+    },
+    {
+      "year": 1968,
+      "season": "JJA",
+      "oni": 0.12,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1968,
+      "season": "JAS",
+      "oni": 0.05,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1968,
+      "season": "ASO",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1968,
+      "season": "SON",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1968,
+      "season": "OND",
+      "oni": -0.04,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1968,
+      "season": "NDJ",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1969,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1969,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1969,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1969,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1969,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1969,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1969,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1969,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1969,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1969,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1969,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1969,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1970,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1970,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1970,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1970,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1970,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1970,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1970,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1970,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1970,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1970,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1970,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1970,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1971,
+      "season": "DJF",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1971,
+      "season": "JFM",
+      "oni": 0.17,
+      "phase": "Neutral",
+      "compound": 49
+    },
+    {
+      "year": 1971,
+      "season": "FMA",
+      "oni": 0.23,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1971,
+      "season": "MAM",
+      "oni": 0.25,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1971,
+      "season": "AMJ",
+      "oni": 0.24,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1971,
+      "season": "MJJ",
+      "oni": 0.19,
+      "phase": "Neutral",
+      "compound": 50
+    },
+    {
+      "year": 1971,
+      "season": "JJA",
+      "oni": 0.12,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1971,
+      "season": "JAS",
+      "oni": 0.05,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1971,
+      "season": "ASO",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1971,
+      "season": "SON",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1971,
+      "season": "OND",
+      "oni": -0.04,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1971,
+      "season": "NDJ",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1972,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1972,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1972,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1972,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1972,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1972,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1972,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1972,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1972,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1972,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1972,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1972,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1973,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1973,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1973,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1973,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1973,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1973,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1973,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1973,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1973,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1973,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1973,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1973,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1974,
+      "season": "DJF",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1974,
+      "season": "JFM",
+      "oni": 0.17,
+      "phase": "Neutral",
+      "compound": 49
+    },
+    {
+      "year": 1974,
+      "season": "FMA",
+      "oni": 0.23,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1974,
+      "season": "MAM",
+      "oni": 0.25,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1974,
+      "season": "AMJ",
+      "oni": 0.24,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1974,
+      "season": "MJJ",
+      "oni": 0.19,
+      "phase": "Neutral",
+      "compound": 50
+    },
+    {
+      "year": 1974,
+      "season": "JJA",
+      "oni": 0.12,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1974,
+      "season": "JAS",
+      "oni": 0.05,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1974,
+      "season": "ASO",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1974,
+      "season": "SON",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1974,
+      "season": "OND",
+      "oni": -0.04,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1974,
+      "season": "NDJ",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1975,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1975,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1975,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1975,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1975,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1975,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1975,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1975,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1975,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1975,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1975,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1975,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1976,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1976,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1976,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1976,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1976,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1976,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1976,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1976,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1976,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1976,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1976,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1976,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1977,
+      "season": "DJF",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1977,
+      "season": "JFM",
+      "oni": 0.17,
+      "phase": "Neutral",
+      "compound": 49
+    },
+    {
+      "year": 1977,
+      "season": "FMA",
+      "oni": 0.23,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1977,
+      "season": "MAM",
+      "oni": 0.25,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1977,
+      "season": "AMJ",
+      "oni": 0.24,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1977,
+      "season": "MJJ",
+      "oni": 0.19,
+      "phase": "Neutral",
+      "compound": 50
+    },
+    {
+      "year": 1977,
+      "season": "JJA",
+      "oni": 0.12,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1977,
+      "season": "JAS",
+      "oni": 0.05,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1977,
+      "season": "ASO",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1977,
+      "season": "SON",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1977,
+      "season": "OND",
+      "oni": -0.04,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1977,
+      "season": "NDJ",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1978,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1978,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1978,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1978,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1978,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1978,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1978,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1978,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1978,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1978,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1978,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1978,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1979,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1979,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1979,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1979,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1979,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1979,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1979,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1979,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1979,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1979,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1979,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1979,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1980,
+      "season": "DJF",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1980,
+      "season": "JFM",
+      "oni": 0.17,
+      "phase": "Neutral",
+      "compound": 49
+    },
+    {
+      "year": 1980,
+      "season": "FMA",
+      "oni": 0.23,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1980,
+      "season": "MAM",
+      "oni": 0.25,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1980,
+      "season": "AMJ",
+      "oni": 0.24,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1980,
+      "season": "MJJ",
+      "oni": 0.19,
+      "phase": "Neutral",
+      "compound": 50
+    },
+    {
+      "year": 1980,
+      "season": "JJA",
+      "oni": 0.12,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1980,
+      "season": "JAS",
+      "oni": 0.05,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1980,
+      "season": "ASO",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1980,
+      "season": "SON",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1980,
+      "season": "OND",
+      "oni": -0.04,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1980,
+      "season": "NDJ",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1981,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1981,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1981,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1981,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1981,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1981,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1981,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1981,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1981,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1981,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1981,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1981,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1982,
+      "season": "DJF",
+      "oni": 1.84,
+      "phase": "El Ni\u00f1o",
+      "compound": 91
+    },
+    {
+      "year": 1982,
+      "season": "JFM",
+      "oni": 1.91,
+      "phase": "El Ni\u00f1o",
+      "compound": 93
+    },
+    {
+      "year": 1982,
+      "season": "FMA",
+      "oni": 1.97,
+      "phase": "El Ni\u00f1o",
+      "compound": 94
+    },
+    {
+      "year": 1982,
+      "season": "MAM",
+      "oni": 1.99,
+      "phase": "El Ni\u00f1o",
+      "compound": 95
+    },
+    {
+      "year": 1982,
+      "season": "AMJ",
+      "oni": 1.98,
+      "phase": "El Ni\u00f1o",
+      "compound": 94
+    },
+    {
+      "year": 1982,
+      "season": "MJJ",
+      "oni": 1.93,
+      "phase": "El Ni\u00f1o",
+      "compound": 93
+    },
+    {
+      "year": 1982,
+      "season": "JJA",
+      "oni": 1.86,
+      "phase": "El Ni\u00f1o",
+      "compound": 92
+    },
+    {
+      "year": 1982,
+      "season": "JAS",
+      "oni": 1.79,
+      "phase": "El Ni\u00f1o",
+      "compound": 90
+    },
+    {
+      "year": 1982,
+      "season": "ASO",
+      "oni": 1.73,
+      "phase": "El Ni\u00f1o",
+      "compound": 88
+    },
+    {
+      "year": 1982,
+      "season": "SON",
+      "oni": 1.69,
+      "phase": "El Ni\u00f1o",
+      "compound": 87
+    },
+    {
+      "year": 1982,
+      "season": "OND",
+      "oni": 1.7,
+      "phase": "El Ni\u00f1o",
+      "compound": 88
+    },
+    {
+      "year": 1982,
+      "season": "NDJ",
+      "oni": 1.73,
+      "phase": "El Ni\u00f1o",
+      "compound": 88
+    },
+    {
+      "year": 1983,
+      "season": "DJF",
+      "oni": 1.72,
+      "phase": "El Ni\u00f1o",
+      "compound": 88
+    },
+    {
+      "year": 1983,
+      "season": "JFM",
+      "oni": 1.79,
+      "phase": "El Ni\u00f1o",
+      "compound": 90
+    },
+    {
+      "year": 1983,
+      "season": "FMA",
+      "oni": 1.85,
+      "phase": "El Ni\u00f1o",
+      "compound": 91
+    },
+    {
+      "year": 1983,
+      "season": "MAM",
+      "oni": 1.87,
+      "phase": "El Ni\u00f1o",
+      "compound": 92
+    },
+    {
+      "year": 1983,
+      "season": "AMJ",
+      "oni": 1.86,
+      "phase": "El Ni\u00f1o",
+      "compound": 92
+    },
+    {
+      "year": 1983,
+      "season": "MJJ",
+      "oni": 1.81,
+      "phase": "El Ni\u00f1o",
+      "compound": 90
+    },
+    {
+      "year": 1983,
+      "season": "JJA",
+      "oni": 1.74,
+      "phase": "El Ni\u00f1o",
+      "compound": 88
+    },
+    {
+      "year": 1983,
+      "season": "JAS",
+      "oni": 1.67,
+      "phase": "El Ni\u00f1o",
+      "compound": 87
+    },
+    {
+      "year": 1983,
+      "season": "ASO",
+      "oni": 1.61,
+      "phase": "El Ni\u00f1o",
+      "compound": 85
+    },
+    {
+      "year": 1983,
+      "season": "SON",
+      "oni": 1.57,
+      "phase": "El Ni\u00f1o",
+      "compound": 84
+    },
+    {
+      "year": 1983,
+      "season": "OND",
+      "oni": 1.58,
+      "phase": "El Ni\u00f1o",
+      "compound": 84
+    },
+    {
+      "year": 1983,
+      "season": "NDJ",
+      "oni": 1.61,
+      "phase": "El Ni\u00f1o",
+      "compound": 85
+    },
+    {
+      "year": 1984,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1984,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1984,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1984,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1984,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1984,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1984,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1984,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1984,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1984,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1984,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1984,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1985,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1985,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1985,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1985,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1985,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1985,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1985,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1985,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1985,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1985,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1985,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1985,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1986,
+      "season": "DJF",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1986,
+      "season": "JFM",
+      "oni": 0.17,
+      "phase": "Neutral",
+      "compound": 49
+    },
+    {
+      "year": 1986,
+      "season": "FMA",
+      "oni": 0.23,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1986,
+      "season": "MAM",
+      "oni": 0.25,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1986,
+      "season": "AMJ",
+      "oni": 0.24,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1986,
+      "season": "MJJ",
+      "oni": 0.19,
+      "phase": "Neutral",
+      "compound": 50
+    },
+    {
+      "year": 1986,
+      "season": "JJA",
+      "oni": 0.12,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1986,
+      "season": "JAS",
+      "oni": 0.05,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1986,
+      "season": "ASO",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1986,
+      "season": "SON",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1986,
+      "season": "OND",
+      "oni": -0.04,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1986,
+      "season": "NDJ",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1987,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1987,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1987,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1987,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1987,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1987,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1987,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1987,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1987,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1987,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1987,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1987,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1988,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1988,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1988,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1988,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1988,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1988,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1988,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1988,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1988,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1988,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1988,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1988,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1989,
+      "season": "DJF",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1989,
+      "season": "JFM",
+      "oni": 0.17,
+      "phase": "Neutral",
+      "compound": 49
+    },
+    {
+      "year": 1989,
+      "season": "FMA",
+      "oni": 0.23,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1989,
+      "season": "MAM",
+      "oni": 0.25,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1989,
+      "season": "AMJ",
+      "oni": 0.24,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1989,
+      "season": "MJJ",
+      "oni": 0.19,
+      "phase": "Neutral",
+      "compound": 50
+    },
+    {
+      "year": 1989,
+      "season": "JJA",
+      "oni": 0.12,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1989,
+      "season": "JAS",
+      "oni": 0.05,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1989,
+      "season": "ASO",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1989,
+      "season": "SON",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1989,
+      "season": "OND",
+      "oni": -0.04,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1989,
+      "season": "NDJ",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1990,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1990,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1990,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1990,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1990,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1990,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1990,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1990,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1990,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1990,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1990,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1990,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1991,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1991,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1991,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1991,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1991,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1991,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1991,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1991,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1991,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1991,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1991,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1991,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1992,
+      "season": "DJF",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1992,
+      "season": "JFM",
+      "oni": 0.17,
+      "phase": "Neutral",
+      "compound": 49
+    },
+    {
+      "year": 1992,
+      "season": "FMA",
+      "oni": 0.23,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1992,
+      "season": "MAM",
+      "oni": 0.25,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1992,
+      "season": "AMJ",
+      "oni": 0.24,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1992,
+      "season": "MJJ",
+      "oni": 0.19,
+      "phase": "Neutral",
+      "compound": 50
+    },
+    {
+      "year": 1992,
+      "season": "JJA",
+      "oni": 0.12,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1992,
+      "season": "JAS",
+      "oni": 0.05,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1992,
+      "season": "ASO",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1992,
+      "season": "SON",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1992,
+      "season": "OND",
+      "oni": -0.04,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1992,
+      "season": "NDJ",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1993,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1993,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1993,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1993,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1993,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1993,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1993,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1993,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1993,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1993,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1993,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1993,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1994,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1994,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1994,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1994,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1994,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1994,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1994,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1994,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1994,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1994,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1994,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1994,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1995,
+      "season": "DJF",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1995,
+      "season": "JFM",
+      "oni": 0.17,
+      "phase": "Neutral",
+      "compound": 49
+    },
+    {
+      "year": 1995,
+      "season": "FMA",
+      "oni": 0.23,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1995,
+      "season": "MAM",
+      "oni": 0.25,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1995,
+      "season": "AMJ",
+      "oni": 0.24,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 1995,
+      "season": "MJJ",
+      "oni": 0.19,
+      "phase": "Neutral",
+      "compound": 50
+    },
+    {
+      "year": 1995,
+      "season": "JJA",
+      "oni": 0.12,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1995,
+      "season": "JAS",
+      "oni": 0.05,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1995,
+      "season": "ASO",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1995,
+      "season": "SON",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1995,
+      "season": "OND",
+      "oni": -0.04,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1995,
+      "season": "NDJ",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1996,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1996,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1996,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1996,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1996,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1996,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1996,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1996,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1996,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1996,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1996,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1996,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1997,
+      "season": "DJF",
+      "oni": 2.11,
+      "phase": "El Ni\u00f1o",
+      "compound": 98
+    },
+    {
+      "year": 1997,
+      "season": "JFM",
+      "oni": 2.18,
+      "phase": "El Ni\u00f1o",
+      "compound": 100
+    },
+    {
+      "year": 1997,
+      "season": "FMA",
+      "oni": 2.24,
+      "phase": "El Ni\u00f1o",
+      "compound": 100
+    },
+    {
+      "year": 1997,
+      "season": "MAM",
+      "oni": 2.26,
+      "phase": "El Ni\u00f1o",
+      "compound": 100
+    },
+    {
+      "year": 1997,
+      "season": "AMJ",
+      "oni": 2.25,
+      "phase": "El Ni\u00f1o",
+      "compound": 100
+    },
+    {
+      "year": 1997,
+      "season": "MJJ",
+      "oni": 2.2,
+      "phase": "El Ni\u00f1o",
+      "compound": 100
+    },
+    {
+      "year": 1997,
+      "season": "JJA",
+      "oni": 2.13,
+      "phase": "El Ni\u00f1o",
+      "compound": 98
+    },
+    {
+      "year": 1997,
+      "season": "JAS",
+      "oni": 2.06,
+      "phase": "El Ni\u00f1o",
+      "compound": 96
+    },
+    {
+      "year": 1997,
+      "season": "ASO",
+      "oni": 2.0,
+      "phase": "El Ni\u00f1o",
+      "compound": 95
+    },
+    {
+      "year": 1997,
+      "season": "SON",
+      "oni": 1.96,
+      "phase": "El Ni\u00f1o",
+      "compound": 94
+    },
+    {
+      "year": 1997,
+      "season": "OND",
+      "oni": 1.97,
+      "phase": "El Ni\u00f1o",
+      "compound": 94
+    },
+    {
+      "year": 1997,
+      "season": "NDJ",
+      "oni": 2.0,
+      "phase": "El Ni\u00f1o",
+      "compound": 95
+    },
+    {
+      "year": 1998,
+      "season": "DJF",
+      "oni": 1.81,
+      "phase": "El Ni\u00f1o",
+      "compound": 90
+    },
+    {
+      "year": 1998,
+      "season": "JFM",
+      "oni": 1.88,
+      "phase": "El Ni\u00f1o",
+      "compound": 92
+    },
+    {
+      "year": 1998,
+      "season": "FMA",
+      "oni": 1.94,
+      "phase": "El Ni\u00f1o",
+      "compound": 94
+    },
+    {
+      "year": 1998,
+      "season": "MAM",
+      "oni": 1.96,
+      "phase": "El Ni\u00f1o",
+      "compound": 94
+    },
+    {
+      "year": 1998,
+      "season": "AMJ",
+      "oni": 1.95,
+      "phase": "El Ni\u00f1o",
+      "compound": 94
+    },
+    {
+      "year": 1998,
+      "season": "MJJ",
+      "oni": 1.9,
+      "phase": "El Ni\u00f1o",
+      "compound": 92
+    },
+    {
+      "year": 1998,
+      "season": "JJA",
+      "oni": 1.83,
+      "phase": "El Ni\u00f1o",
+      "compound": 91
+    },
+    {
+      "year": 1998,
+      "season": "JAS",
+      "oni": 1.76,
+      "phase": "El Ni\u00f1o",
+      "compound": 89
+    },
+    {
+      "year": 1998,
+      "season": "ASO",
+      "oni": 1.7,
+      "phase": "El Ni\u00f1o",
+      "compound": 88
+    },
+    {
+      "year": 1998,
+      "season": "SON",
+      "oni": 1.66,
+      "phase": "El Ni\u00f1o",
+      "compound": 86
+    },
+    {
+      "year": 1998,
+      "season": "OND",
+      "oni": 1.67,
+      "phase": "El Ni\u00f1o",
+      "compound": 87
+    },
+    {
+      "year": 1998,
+      "season": "NDJ",
+      "oni": 1.7,
+      "phase": "El Ni\u00f1o",
+      "compound": 88
+    },
+    {
+      "year": 1999,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1999,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1999,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1999,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 1999,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 1999,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 1999,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1999,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1999,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1999,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1999,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 1999,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2000,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2000,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2000,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2000,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2000,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2000,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2000,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2000,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2000,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2000,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2000,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2000,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2001,
+      "season": "DJF",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2001,
+      "season": "JFM",
+      "oni": 0.17,
+      "phase": "Neutral",
+      "compound": 49
+    },
+    {
+      "year": 2001,
+      "season": "FMA",
+      "oni": 0.23,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 2001,
+      "season": "MAM",
+      "oni": 0.25,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 2001,
+      "season": "AMJ",
+      "oni": 0.24,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 2001,
+      "season": "MJJ",
+      "oni": 0.19,
+      "phase": "Neutral",
+      "compound": 50
+    },
+    {
+      "year": 2001,
+      "season": "JJA",
+      "oni": 0.12,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2001,
+      "season": "JAS",
+      "oni": 0.05,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2001,
+      "season": "ASO",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2001,
+      "season": "SON",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2001,
+      "season": "OND",
+      "oni": -0.04,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2001,
+      "season": "NDJ",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2002,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2002,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2002,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2002,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2002,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2002,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2002,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2002,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2002,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2002,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2002,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2002,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2003,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2003,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2003,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2003,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2003,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2003,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2003,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2003,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2003,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2003,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2003,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2003,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2004,
+      "season": "DJF",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2004,
+      "season": "JFM",
+      "oni": 0.17,
+      "phase": "Neutral",
+      "compound": 49
+    },
+    {
+      "year": 2004,
+      "season": "FMA",
+      "oni": 0.23,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 2004,
+      "season": "MAM",
+      "oni": 0.25,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 2004,
+      "season": "AMJ",
+      "oni": 0.24,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 2004,
+      "season": "MJJ",
+      "oni": 0.19,
+      "phase": "Neutral",
+      "compound": 50
+    },
+    {
+      "year": 2004,
+      "season": "JJA",
+      "oni": 0.12,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2004,
+      "season": "JAS",
+      "oni": 0.05,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2004,
+      "season": "ASO",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2004,
+      "season": "SON",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2004,
+      "season": "OND",
+      "oni": -0.04,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2004,
+      "season": "NDJ",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2005,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2005,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2005,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2005,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2005,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2005,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2005,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2005,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2005,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2005,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2005,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2005,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2006,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2006,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2006,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2006,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2006,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2006,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2006,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2006,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2006,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2006,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2006,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2006,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2007,
+      "season": "DJF",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2007,
+      "season": "JFM",
+      "oni": 0.17,
+      "phase": "Neutral",
+      "compound": 49
+    },
+    {
+      "year": 2007,
+      "season": "FMA",
+      "oni": 0.23,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 2007,
+      "season": "MAM",
+      "oni": 0.25,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 2007,
+      "season": "AMJ",
+      "oni": 0.24,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 2007,
+      "season": "MJJ",
+      "oni": 0.19,
+      "phase": "Neutral",
+      "compound": 50
+    },
+    {
+      "year": 2007,
+      "season": "JJA",
+      "oni": 0.12,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2007,
+      "season": "JAS",
+      "oni": 0.05,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2007,
+      "season": "ASO",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2007,
+      "season": "SON",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2007,
+      "season": "OND",
+      "oni": -0.04,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2007,
+      "season": "NDJ",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2008,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2008,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2008,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2008,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2008,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2008,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2008,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2008,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2008,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2008,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2008,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2008,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2009,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2009,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2009,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2009,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2009,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2009,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2009,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2009,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2009,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2009,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2009,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2009,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2010,
+      "season": "DJF",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2010,
+      "season": "JFM",
+      "oni": 0.17,
+      "phase": "Neutral",
+      "compound": 49
+    },
+    {
+      "year": 2010,
+      "season": "FMA",
+      "oni": 0.23,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 2010,
+      "season": "MAM",
+      "oni": 0.25,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 2010,
+      "season": "AMJ",
+      "oni": 0.24,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 2010,
+      "season": "MJJ",
+      "oni": 0.19,
+      "phase": "Neutral",
+      "compound": 50
+    },
+    {
+      "year": 2010,
+      "season": "JJA",
+      "oni": 0.12,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2010,
+      "season": "JAS",
+      "oni": 0.05,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2010,
+      "season": "ASO",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2010,
+      "season": "SON",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2010,
+      "season": "OND",
+      "oni": -0.04,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2010,
+      "season": "NDJ",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2011,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2011,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2011,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2011,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2011,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2011,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2011,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2011,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2011,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2011,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2011,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2011,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2012,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2012,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2012,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2012,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2012,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2012,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2012,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2012,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2012,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2012,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2012,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2012,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2013,
+      "season": "DJF",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2013,
+      "season": "JFM",
+      "oni": 0.17,
+      "phase": "Neutral",
+      "compound": 49
+    },
+    {
+      "year": 2013,
+      "season": "FMA",
+      "oni": 0.23,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 2013,
+      "season": "MAM",
+      "oni": 0.25,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 2013,
+      "season": "AMJ",
+      "oni": 0.24,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 2013,
+      "season": "MJJ",
+      "oni": 0.19,
+      "phase": "Neutral",
+      "compound": 50
+    },
+    {
+      "year": 2013,
+      "season": "JJA",
+      "oni": 0.12,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2013,
+      "season": "JAS",
+      "oni": 0.05,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2013,
+      "season": "ASO",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2013,
+      "season": "SON",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2013,
+      "season": "OND",
+      "oni": -0.04,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2013,
+      "season": "NDJ",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2014,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2014,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2014,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2014,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2014,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2014,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2014,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2014,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2014,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2014,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2014,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2014,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2015,
+      "season": "DJF",
+      "oni": 2.29,
+      "phase": "El Ni\u00f1o",
+      "compound": 100
+    },
+    {
+      "year": 2015,
+      "season": "JFM",
+      "oni": 2.36,
+      "phase": "El Ni\u00f1o",
+      "compound": 100
+    },
+    {
+      "year": 2015,
+      "season": "FMA",
+      "oni": 2.42,
+      "phase": "El Ni\u00f1o",
+      "compound": 100
+    },
+    {
+      "year": 2015,
+      "season": "MAM",
+      "oni": 2.44,
+      "phase": "El Ni\u00f1o",
+      "compound": 100
+    },
+    {
+      "year": 2015,
+      "season": "AMJ",
+      "oni": 2.43,
+      "phase": "El Ni\u00f1o",
+      "compound": 100
+    },
+    {
+      "year": 2015,
+      "season": "MJJ",
+      "oni": 2.38,
+      "phase": "El Ni\u00f1o",
+      "compound": 100
+    },
+    {
+      "year": 2015,
+      "season": "JJA",
+      "oni": 2.31,
+      "phase": "El Ni\u00f1o",
+      "compound": 100
+    },
+    {
+      "year": 2015,
+      "season": "JAS",
+      "oni": 2.24,
+      "phase": "El Ni\u00f1o",
+      "compound": 100
+    },
+    {
+      "year": 2015,
+      "season": "ASO",
+      "oni": 2.18,
+      "phase": "El Ni\u00f1o",
+      "compound": 100
+    },
+    {
+      "year": 2015,
+      "season": "SON",
+      "oni": 2.14,
+      "phase": "El Ni\u00f1o",
+      "compound": 98
+    },
+    {
+      "year": 2015,
+      "season": "OND",
+      "oni": 2.15,
+      "phase": "El Ni\u00f1o",
+      "compound": 99
+    },
+    {
+      "year": 2015,
+      "season": "NDJ",
+      "oni": 2.18,
+      "phase": "El Ni\u00f1o",
+      "compound": 100
+    },
+    {
+      "year": 2016,
+      "season": "DJF",
+      "oni": 1.36,
+      "phase": "El Ni\u00f1o",
+      "compound": 79
+    },
+    {
+      "year": 2016,
+      "season": "JFM",
+      "oni": 1.43,
+      "phase": "El Ni\u00f1o",
+      "compound": 81
+    },
+    {
+      "year": 2016,
+      "season": "FMA",
+      "oni": 1.49,
+      "phase": "El Ni\u00f1o",
+      "compound": 82
+    },
+    {
+      "year": 2016,
+      "season": "MAM",
+      "oni": 1.51,
+      "phase": "El Ni\u00f1o",
+      "compound": 83
+    },
+    {
+      "year": 2016,
+      "season": "AMJ",
+      "oni": 1.5,
+      "phase": "El Ni\u00f1o",
+      "compound": 82
+    },
+    {
+      "year": 2016,
+      "season": "MJJ",
+      "oni": 1.45,
+      "phase": "El Ni\u00f1o",
+      "compound": 81
+    },
+    {
+      "year": 2016,
+      "season": "JJA",
+      "oni": 1.38,
+      "phase": "El Ni\u00f1o",
+      "compound": 80
+    },
+    {
+      "year": 2016,
+      "season": "JAS",
+      "oni": 1.31,
+      "phase": "El Ni\u00f1o",
+      "compound": 78
+    },
+    {
+      "year": 2016,
+      "season": "ASO",
+      "oni": 1.25,
+      "phase": "El Ni\u00f1o",
+      "compound": 76
+    },
+    {
+      "year": 2016,
+      "season": "SON",
+      "oni": 1.21,
+      "phase": "El Ni\u00f1o",
+      "compound": 75
+    },
+    {
+      "year": 2016,
+      "season": "OND",
+      "oni": 1.22,
+      "phase": "El Ni\u00f1o",
+      "compound": 76
+    },
+    {
+      "year": 2016,
+      "season": "NDJ",
+      "oni": 1.25,
+      "phase": "El Ni\u00f1o",
+      "compound": 76
+    },
+    {
+      "year": 2017,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2017,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2017,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2017,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2017,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2017,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2017,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2017,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2017,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2017,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2017,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2017,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2018,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2018,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2018,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2018,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2018,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2018,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2018,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2018,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2018,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2018,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2018,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2018,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2019,
+      "season": "DJF",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2019,
+      "season": "JFM",
+      "oni": 0.17,
+      "phase": "Neutral",
+      "compound": 49
+    },
+    {
+      "year": 2019,
+      "season": "FMA",
+      "oni": 0.23,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 2019,
+      "season": "MAM",
+      "oni": 0.25,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 2019,
+      "season": "AMJ",
+      "oni": 0.24,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 2019,
+      "season": "MJJ",
+      "oni": 0.19,
+      "phase": "Neutral",
+      "compound": 50
+    },
+    {
+      "year": 2019,
+      "season": "JJA",
+      "oni": 0.12,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2019,
+      "season": "JAS",
+      "oni": 0.05,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2019,
+      "season": "ASO",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2019,
+      "season": "SON",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2019,
+      "season": "OND",
+      "oni": -0.04,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2019,
+      "season": "NDJ",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2020,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2020,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2020,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2020,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2020,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2020,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2020,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2020,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2020,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2020,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2020,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2020,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2021,
+      "season": "DJF",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2021,
+      "season": "JFM",
+      "oni": 0.02,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2021,
+      "season": "FMA",
+      "oni": 0.08,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2021,
+      "season": "MAM",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2021,
+      "season": "AMJ",
+      "oni": 0.09,
+      "phase": "Neutral",
+      "compound": 47
+    },
+    {
+      "year": 2021,
+      "season": "MJJ",
+      "oni": 0.04,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2021,
+      "season": "JJA",
+      "oni": -0.03,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2021,
+      "season": "JAS",
+      "oni": -0.1,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2021,
+      "season": "ASO",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2021,
+      "season": "SON",
+      "oni": -0.2,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2021,
+      "season": "OND",
+      "oni": -0.19,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2021,
+      "season": "NDJ",
+      "oni": -0.16,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2022,
+      "season": "DJF",
+      "oni": 0.1,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2022,
+      "season": "JFM",
+      "oni": 0.17,
+      "phase": "Neutral",
+      "compound": 49
+    },
+    {
+      "year": 2022,
+      "season": "FMA",
+      "oni": 0.23,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 2022,
+      "season": "MAM",
+      "oni": 0.25,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 2022,
+      "season": "AMJ",
+      "oni": 0.24,
+      "phase": "Neutral",
+      "compound": 51
+    },
+    {
+      "year": 2022,
+      "season": "MJJ",
+      "oni": 0.19,
+      "phase": "Neutral",
+      "compound": 50
+    },
+    {
+      "year": 2022,
+      "season": "JJA",
+      "oni": 0.12,
+      "phase": "Neutral",
+      "compound": 48
+    },
+    {
+      "year": 2022,
+      "season": "JAS",
+      "oni": 0.05,
+      "phase": "Neutral",
+      "compound": 46
+    },
+    {
+      "year": 2022,
+      "season": "ASO",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2022,
+      "season": "SON",
+      "oni": -0.05,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2022,
+      "season": "OND",
+      "oni": -0.04,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2022,
+      "season": "NDJ",
+      "oni": -0.01,
+      "phase": "Neutral",
+      "compound": 15
+    },
+    {
+      "year": 2023,
+      "season": "DJF",
+      "oni": 1.75,
+      "phase": "El Ni\u00f1o",
+      "compound": 89
+    },
+    {
+      "year": 2023,
+      "season": "JFM",
+      "oni": 1.82,
+      "phase": "El Ni\u00f1o",
+      "compound": 90
+    },
+    {
+      "year": 2023,
+      "season": "FMA",
+      "oni": 1.88,
+      "phase": "El Ni\u00f1o",
+      "compound": 92
+    },
+    {
+      "year": 2023,
+      "season": "MAM",
+      "oni": 1.9,
+      "phase": "El Ni\u00f1o",
+      "compound": 92
+    },
+    {
+      "year": 2023,
+      "season": "AMJ",
+      "oni": 1.89,
+      "phase": "El Ni\u00f1o",
+      "compound": 92
+    },
+    {
+      "year": 2023,
+      "season": "MJJ",
+      "oni": 1.84,
+      "phase": "El Ni\u00f1o",
+      "compound": 91
+    },
+    {
+      "year": 2023,
+      "season": "JJA",
+      "oni": 1.77,
+      "phase": "El Ni\u00f1o",
+      "compound": 89
+    },
+    {
+      "year": 2023,
+      "season": "JAS",
+      "oni": 1.7,
+      "phase": "El Ni\u00f1o",
+      "compound": 88
+    },
+    {
+      "year": 2023,
+      "season": "ASO",
+      "oni": 1.64,
+      "phase": "El Ni\u00f1o",
+      "compound": 86
+    },
+    {
+      "year": 2023,
+      "season": "SON",
+      "oni": 1.6,
+      "phase": "El Ni\u00f1o",
+      "compound": 85
+    },
+    {
+      "year": 2023,
+      "season": "OND",
+      "oni": 1.61,
+      "phase": "El Ni\u00f1o",
+      "compound": 85
+    },
+    {
+      "year": 2023,
+      "season": "NDJ",
+      "oni": 1.64,
+      "phase": "El Ni\u00f1o",
+      "compound": 86
+    },
+    {
+      "year": 2024,
+      "season": "DJF",
+      "oni": 1.03,
+      "phase": "El Ni\u00f1o",
+      "compound": 71
+    },
+    {
+      "year": 2024,
+      "season": "JFM",
+      "oni": 1.1,
+      "phase": "El Ni\u00f1o",
+      "compound": 72
+    },
+    {
+      "year": 2024,
+      "season": "FMA",
+      "oni": 1.16,
+      "phase": "El Ni\u00f1o",
+      "compound": 74
+    },
+    {
+      "year": 2024,
+      "season": "MAM",
+      "oni": 1.18,
+      "phase": "El Ni\u00f1o",
+      "compound": 74
+    },
+    {
+      "year": 2024,
+      "season": "AMJ",
+      "oni": 1.17,
+      "phase": "El Ni\u00f1o",
+      "compound": 74
+    },
+    {
+      "year": 2024,
+      "season": "MJJ",
+      "oni": 1.12,
+      "phase": "El Ni\u00f1o",
+      "compound": 73
+    },
+    {
+      "year": 2024,
+      "season": "JJA",
+      "oni": 1.05,
+      "phase": "El Ni\u00f1o",
+      "compound": 71
+    },
+    {
+      "year": 2024,
+      "season": "JAS",
+      "oni": 0.98,
+      "phase": "El Ni\u00f1o",
+      "compound": 70
+    },
+    {
+      "year": 2024,
+      "season": "ASO",
+      "oni": 0.92,
+      "phase": "El Ni\u00f1o",
+      "compound": 68
+    },
+    {
+      "year": 2024,
+      "season": "SON",
+      "oni": 0.88,
+      "phase": "El Ni\u00f1o",
+      "compound": 67
+    },
+    {
+      "year": 2024,
+      "season": "OND",
+      "oni": 0.89,
+      "phase": "El Ni\u00f1o",
+      "compound": 67
+    },
+    {
+      "year": 2024,
+      "season": "NDJ",
+      "oni": 0.92,
+      "phase": "El Ni\u00f1o",
+      "compound": 68
+    }
+  ],
+  "known_events": [
+    {
+      "label": "1957-58",
+      "start": "1957-08",
+      "end": "1958-02",
+      "peak_oni": 1.7,
+      "strength": "moderate",
+      "notes": ""
+    },
+    {
+      "label": "1972-73",
+      "start": "1972-08",
+      "end": "1973-02",
+      "peak_oni": 2.0,
+      "strength": "strong",
+      "notes": ""
+    },
+    {
+      "label": "1982-83",
+      "start": "1982-09",
+      "end": "1983-06",
+      "peak_oni": 2.1,
+      "strength": "very_strong",
+      "notes": "Major drought and flood impacts globally."
+    },
+    {
+      "label": "1997-98",
+      "start": "1997-06",
+      "end": "1998-04",
+      "peak_oni": 2.4,
+      "strength": "super",
+      "notes": "First global coral bleaching event. Indonesia peat fires ~13-40% annual CO2. Peru fishery collapsed."
+    },
+    {
+      "label": "2002-03",
+      "start": "2002-07",
+      "end": "2003-02",
+      "peak_oni": 1.2,
+      "strength": "moderate",
+      "notes": ""
+    },
+    {
+      "label": "2009-10",
+      "start": "2009-07",
+      "end": "2010-02",
+      "peak_oni": 1.6,
+      "strength": "moderate",
+      "notes": ""
+    },
+    {
+      "label": "2015-16",
+      "start": "2015-04",
+      "end": "2016-05",
+      "peak_oni": 2.6,
+      "strength": "super",
+      "notes": "Third global bleaching event. 2.1 Gt C SE Asia fires. Great Barrier Reef 67% bleached."
+    },
+    {
+      "label": "2023-24",
+      "start": "2023-05",
+      "end": "2024-04",
+      "peak_oni": 2.0,
+      "strength": "strong",
+      "notes": "Fourth global bleaching event confirmed (NOAA CRW)."
+    }
+  ],
+  "weights": {
+    "enso_prob": 0.3,
+    "dhw_proxy": 0.25,
+    "fire_proxy": 0.2,
+    "solar": 0.15,
+    "seismic": 0.1
+  },
+  "note": "Synthetic proxy for sandbox environment. Run backfill-elnino.py locally for live NOAA ONI data."
+}

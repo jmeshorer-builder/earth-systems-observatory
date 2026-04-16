@@ -10,3 +10,14 @@
 # Python cache
 __pycache__/
 *.pyc
+
+# Editor backup files
+*~
+*.bak
+*.swp
+
+# Large data output files (run backfill scripts locally to regenerate)
+# data/*.json  ← commented out: keeping json in git for reproducibility
+
+# Node (if ever added)
+node_modules/

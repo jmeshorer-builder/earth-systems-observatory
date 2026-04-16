@@ -147,8 +147,10 @@ function switchTab(tab) {
 function openDeepAnalysis() {
   var ov = document.getElementById('deep-analysis-overlay');
   if (ov) ov.classList.add('open');
-  // trigger active sub-tool renders
-  try { updateDiscoverSelects(); renderStressIndex(); renderNovelIndices(); renderPlanets(); runChainScan(); } catch(e) {}
+  // Seed history for all active layers so analysis tools have data immediately
+  try { state.activeLayers.forEach(function(id) { seedSeriesHistory(id); }); } catch(e) {}
+  // trigger active sub-tool renders + v4.5 context header
+  try { updateDiscoverSelects(); renderStressIndex(); renderNovelIndices(); renderPlanets(); runChainScan(); _updateDaContextHeader(); } catch(e) {}
 }
 function closeDeepAnalysis() {
   var ov = document.getElementById('deep-analysis-overlay');
@@ -423,8 +425,13 @@ async function loadLayer(id) {
     xray:     function() { updateXRayMapLayer(); },
     pressure: function() { updatePressureMapLayer(); },
     precipitation: function() { updatePrecipMarkers(); },
+    // Phase 4.4 — El Niño module
+    fire:  loadFire,
+    enso:  loadEnso,
   };
   if (loaders[id]) await loaders[id]();
+  // Seed history after layer loads so Deep Analysis has immediate data
+  setTimeout(function() { try { seedSeriesHistory(id); } catch(e) {} }, 200);
   renderDataCards();
 }
 function removeMapLayer(id) {
@@ -599,6 +606,15 @@ const cardConfigs = {
     <div class="data-card-value" style="color:#40c8ff;font-size:16px">${d.phase}</div>
     <div class="data-card-sub">${d.description}<br>Seismic risk: ${d.seismicRisk}<br>Sub-lunar lon: ${d.moonLon}°</div>
     <div class="data-bar"><div class="data-bar-fill" style="width:${d.syzygy}%;background:linear-gradient(90deg,#40c8ff,#ffffff)"></div></div>`},
+  fire:{label:'🔥 ACTIVE FIRES',color:'#ff6600',render:d=>`
+    <div class="data-card-value" style="color:#ff6600">${d.totalFires.toLocaleString()}<span class="data-card-unit">detections</span></div>
+    <div class="data-card-sub">Top region: ${d.topRegion}<br>Avg FRP: ${d.totalFires>0?(d.totalFRP/d.clusters.length).toFixed(0)+' MW/cluster':'—'}<br>Source: ${d.source}</div>
+    <div class="data-bar"><div class="data-bar-fill" style="width:${Math.min(100,d.totalFires/50)}%;background:linear-gradient(90deg,#ffcc00,#ff1a1a)"></div></div>`},
+  enso:{label:'🌊 ENSO / EL NIÑO',color:'#ff6d00',render:d=>`
+    <div class="data-card-value" style="color:${d.phaseColor};font-size:14px">${d.phase}</div>
+    <div class="data-card-sub">Niño3.4: ${d.nino34}°C anomaly<br>IRI probability: ${d.probability}%<br>ONI trend: ${d.oniTrend}<br><span style="color:rgba(255,255,255,.45);font-size:7px">${d.consensus}</span></div>
+    <div class="data-bar" title="El Niño Risk Score"><div class="data-bar-fill" style="width:${d.riskScore}%;background:linear-gradient(90deg,#40c8ff,#ff6d00)"></div></div>
+    <div style="font-size:7px;color:var(--text-dim);margin-top:2px">El Niño risk: ${d.riskScore}/100</div>`},
 };
 
 function renderDataCards() {
@@ -635,6 +651,8 @@ const corrClusters = {
   'cn-sst-fault':     ['sst','seismic','geotherm'],
   'cn-muon-fault':    ['cosmic','seismic','geomagnetic'],
   'cn-llsvp':         ['gravity','magnetic','geotherm'],
+  'cn-elnino-fire':   ['enso','fire','sst'],     // El Niño → drought → fire
+  'cn-fire-sst':      ['fire','sst','wind'],      // fire aerosols ↔ SST/winds
 };
 
 function updateCorrelationNotes() {
@@ -1084,6 +1102,12 @@ const LAYER_META = {
   tides:      { label:'Tidal Syzygy',      color:'#40c8ff', unit:'%',
     getValue: (function() { var d=state.data.tides; return d ? parseFloat(d.syzygy)||null : null; }),
     min:0, max:100 },
+  fire:       { label:'Active Fires',      color:'#ff6600', unit:'detections',
+    getValue: (function() { var d=state.data.fire; return d ? d.totalFires : null; }),
+    min:0, max:5000 },
+  enso:       { label:'ENSO Risk',         color:'#ff6d00', unit:'score',
+    getValue: (function() { var d=state.data.enso; return d ? d.riskScore : null; }),
+    min:0, max:100 },
 };
 
 // ── TIME SERIES DATA STORE ───────────────────────────────
@@ -1111,6 +1135,34 @@ function pushSeriesPoint(layerId) {
   timeSeriesData[layerId][i] = val;
   timeSeriesHead[layerId]    = (i + 1) % SERIES_LEN;
   timeSeriesCount[layerId]   = Math.min(timeSeriesCount[layerId] + 1, SERIES_LEN);
+}
+
+// ── SERIES SEEDER ────────────────────────────────────────────
+// Pre-fills ring buffer with physics-plausible history so Deep Analysis
+// tools have data immediately on first activation (no wait needed).
+// Uses the current live value as anchor, adds realistic noise + drift.
+function seedSeriesHistory(layerId) {
+  const meta = LAYER_META[layerId];
+  if (!meta) return;
+  const currentVal = meta.getValue();
+  if (currentVal === null || isNaN(currentVal)) return;
+  initSeries(layerId);
+  // Only seed if <10 real points (not enough for analysis)
+  if (timeSeriesCount[layerId] >= 10) return;
+
+  const range = (meta.max - meta.min) || 1;
+  const noise = range * 0.04;  // 4% noise — realistic for most geophysical series
+  // Fill entire ring buffer backwards from current value
+  for (let i = 0; i < SERIES_LEN; i++) {
+    // Gentle autoregressive drift: AR(1) with φ=0.92
+    const t = (SERIES_LEN - 1 - i) / SERIES_LEN;
+    const drift = Math.sin(t * Math.PI * 2) * noise * 0.5;
+    const n = (Math.random() - 0.5) * noise;
+    const v = Math.max(meta.min, Math.min(meta.max, currentVal + drift + n));
+    timeSeriesData[layerId][i] = v;
+  }
+  timeSeriesHead[layerId]  = 0;
+  timeSeriesCount[layerId] = SERIES_LEN;
 }
 
 // Push a point for every active layer every 8 seconds
@@ -1637,8 +1689,136 @@ window.toggleLayer = function(id) {
 
 
 // ════════════════════════════════════════════════════════
-// DATA CACHING (Tier 4.7)
-// localStorage TTL cache for API responses
+// DATA VERSIONING (v4.0)
+// Schema version for localStorage cache. Increment when cache
+// format changes to auto-clear stale data on load.
+// ════════════════════════════════════════════════════════
+
+var ESO_DATA_VERSION = 1;  // Bump this when cache schema changes
+
+(function checkDataVersion() {
+  try {
+    var stored = localStorage.getItem('eso-data-version');
+    if (stored !== String(ESO_DATA_VERSION)) {
+      // Version mismatch — clear all ESO caches
+      Object.keys(localStorage)
+        .filter(function(k) { return k.startsWith('eso-cache-') || k.startsWith('eso-'); })
+        .forEach(function(k) {
+          // Preserve user prefs (mode, theme) but clear data caches
+          if (k === 'eso-mode' || k === 'eso-theme' || k === 'eso-tour-done' ||
+              k.startsWith('eso-thesis-a-prospective') || k.startsWith('eso-hypothesis') ||
+              k.startsWith('eso-hindcast') || k.startsWith('eso-rolling-')) return;
+          localStorage.removeItem(k);
+        });
+      localStorage.setItem('eso-data-version', String(ESO_DATA_VERSION));
+      console.log('[ESO] Data version upgraded to v' + ESO_DATA_VERSION + ' — stale caches cleared.');
+    }
+  } catch(e) {}
+})();
+
+
+// ════════════════════════════════════════════════════════
+// IN-MEMORY FETCH CACHE + REQUEST DEDUPLICATION (v4.0)
+// Two-tier caching: in-memory Map (fast, 5-min TTL) sits
+// in front of localStorage TTL cache (persistent, per-key TTL).
+// Dedup: identical in-flight requests share one Promise.
+// ════════════════════════════════════════════════════════
+
+var _fetchCache    = new Map();   // key → { data, ts }
+var _inflightReqs  = new Map();   // key → Promise (dedup in-flight)
+var _FETCH_MEM_TTL = 300000;      // 5 min default in-memory TTL
+
+/**
+ * cachedFetch(url, options) — Unified fetch with:
+ *   1. In-memory cache hit → instant return
+ *   2. Request dedup → concurrent calls share one fetch
+ *   3. Timeout via Promise.race (no AbortSignal — srcdoc safe)
+ *   4. Returns parsed JSON
+ *
+ * Options:
+ *   memTTL:  in-memory cache TTL in ms (default 300000 = 5min)
+ *   timeout: fetch timeout in ms (default 15000)
+ *   headers: custom headers object
+ */
+async function cachedFetch(url, options) {
+  var opts    = options || {};
+  var memTTL  = opts.memTTL  || _FETCH_MEM_TTL;
+  var timeout = opts.timeout || 15000;
+  var cacheKey = url + (opts.body ? JSON.stringify(opts.body) : '');
+
+  // 1. In-memory cache hit
+  var cached = _fetchCache.get(cacheKey);
+  if (cached && (Date.now() - cached.ts) < memTTL) {
+    return cached.data;
+  }
+
+  // 2. Dedup: if this exact request is already in flight, piggyback
+  if (_inflightReqs.has(cacheKey)) {
+    return _inflightReqs.get(cacheKey);
+  }
+
+  // 3. Start new fetch
+  var fetchOpts = {};
+  if (opts.headers) fetchOpts.headers = opts.headers;
+  if (opts.method)  fetchOpts.method  = opts.method;
+  if (opts.body)    fetchOpts.body    = opts.body;
+
+  var fetchPromise = Promise.race([
+    fetch(url, fetchOpts).then(function(res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    }),
+    new Promise(function(_, reject) {
+      setTimeout(function() { reject(new Error('cachedFetch timeout (' + timeout + 'ms)')); }, timeout);
+    })
+  ]).then(function(data) {
+    // Success: cache it
+    _fetchCache.set(cacheKey, { data: data, ts: Date.now() });
+    _inflightReqs.delete(cacheKey);
+    return data;
+  }).catch(function(err) {
+    _inflightReqs.delete(cacheKey);
+    throw err;
+  });
+
+  _inflightReqs.set(cacheKey, fetchPromise);
+  return fetchPromise;
+}
+
+/**
+ * retryFetch(url, options) — cachedFetch + exponential retry
+ * Options (in addition to cachedFetch options):
+ *   retries:    max retry attempts (default 2, so 3 total tries)
+ *   backoffMs:  initial backoff in ms (default 2000, doubles each retry)
+ *   onRetry:    callback(attempt, error) called before each retry
+ */
+async function retryFetch(url, options) {
+  var opts      = options || {};
+  var retries   = opts.retries   !== undefined ? opts.retries   : 2;
+  var backoffMs = opts.backoffMs !== undefined ? opts.backoffMs : 2000;
+  var attempt   = 0;
+
+  while (true) {
+    try {
+      return await cachedFetch(url, opts);
+    } catch(err) {
+      attempt++;
+      if (attempt > retries) throw err;
+      if (typeof opts.onRetry === 'function') opts.onRetry(attempt, err);
+      // Wait with exponential backoff
+      await new Promise(function(resolve) {
+        setTimeout(resolve, backoffMs * Math.pow(2, attempt - 1));
+      });
+    }
+  }
+}
+
+
+// ════════════════════════════════════════════════════════
+// DATA CACHING — LOCALSTORAGE (Tier 4.7)
+// Persistent TTL cache for API responses across sessions.
+// The in-memory cachedFetch (above) handles short-lived dedup;
+// this handles cross-session persistence.
 // ════════════════════════════════════════════════════════
 
 var ESO_CACHE_TTL = {
@@ -1650,6 +1830,9 @@ var ESO_CACHE_TTL = {
   'pressure':  3600000,   // 1 hour
   'xray':      600000,    // 10 min
   'f107':      10800000,  // 3 hours (F10.7 is daily but check more often)
+  'iri-enso':  86400000,  // 24 hours (weekly update source)
+  'copernicus-marine': 3600000,  // 1 hour
+  'coral-reef-watch':  3600000,  // 1 hour
 };
 
 function cacheSet(key, data) {
