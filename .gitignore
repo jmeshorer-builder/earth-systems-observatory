@@ -21,3 +21,6 @@ __pycache__/
 
 # Node (if ever added)
 node_modules/
+
+# Private strategic documents — not for public repo
+private/
